@@ -1,0 +1,63 @@
+$background-image: url('../assets/background.png');
+
+body {
+    margin: 0;
+}
+
+.app_wrapper {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+
+    .background-image {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+    
+        &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: $background-image;
+        background-repeat: repeat; /* Repeat the background image */
+        background-size: auto; /* Adjust as needed */
+        opacity: 0.5; /* Adjust to make the image pale */
+        z-index: -1; /* Ensure the pseudo-element is behind the content */
+        }
+    
+        /* Ensure the children are positioned above the pseudo-element */
+        & > * {
+        position: relative;
+        z-index: 1;
+        }
+    }
+
+
+    .app_content {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: absolute;
+    }
+}
+
+.full_center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.div_test_border {
+    border: 1px dashed gold;
+}
+
+#root {
+    max-width: fit-content;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+}

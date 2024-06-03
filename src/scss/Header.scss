@@ -1,0 +1,25 @@
+@import 'variables';
+
+.header_wrapper {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: var(--header_side_chunk_width);
+    display: flex;
+
+    .logo_wrapper {
+        width: 100%;
+
+        .logo_img {
+            width: 100px;
+        }
+    }
+
+    .header_left {
+        width: var(--header_side_chunk_width);
+    }
+
+    .header_right {
+        width: var(--header_side_chunk_width);
+    }
+}
