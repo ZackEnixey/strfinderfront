@@ -1,63 +1,63 @@
-$background-image: url('../assets/background.png');
+$background-image: url("../assets/background.png");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 body {
-    margin: 0;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
 }
 
 .app_wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+  .background-image {
+    position: absolute;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
 
-    .background-image {
-        position: absolute;
-        width: 100vw;
-        height: 100vh;
-        overflow: hidden;
-    
-        &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: $background-image;
-        background-repeat: repeat; /* Repeat the background image */
-        background-size: auto; /* Adjust as needed */
-        opacity: 0.5; /* Adjust to make the image pale */
-        z-index: -1; /* Ensure the pseudo-element is behind the content */
-        }
-    
-        /* Ensure the children are positioned above the pseudo-element */
-        & > * {
-        position: relative;
-        z-index: 1;
-        }
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-repeat: repeat; /* Repeat the background image */
+      background-size: auto; /* Adjust as needed */
+      opacity: 0.5; /* Adjust to make the image pale */
+      z-index: -1; /* Ensure the pseudo-element is behind the content */
     }
 
-
-    .app_content {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        position: absolute;
+    /* Ensure the children are positioned above the pseudo-element */
+    & > * {
+      position: relative;
+      z-index: 1;
     }
+  }
+
+  .app_content {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    #router_wrapper {
+      width: 80%;
+      height: 70%;
+    }
+  }
 }
 
 .full_center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-.div_test_border {
-    border: 1px dashed gold;
-}
-
 #root {
-    max-width: fit-content;
-    margin: 0 auto;
-    padding: 0;
-    text-align: center;
+  max-width: fit-content;
+  margin: 0 auto;
+  padding: 0;
 }
