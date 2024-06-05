@@ -1,42 +1,116 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import StrFinderButton from '../reusableParts/StrFinderButton';
+import { Button, Divider, List, Skeleton, message } from "antd";
+import { useEffect, useState } from "react";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import InfiniteScroll from "react-infinite-scroll-component";
+import StrFinderButton from "../reusableParts/StrFinderButton";
+import { getUserId } from "../../utils/decodedToken";
+import { GET_USER_INFOS, DELETE_GAME_CODE } from "../../apis/apiUrls";
 
-const InitialPage = () => {
-    const navigate = useNavigate();
-    const [initialPageTest, setInitialPageTest] = useState<number>(1);
+const DashboardPage = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const token = localStorage.getItem("token") || "";
+  const userId = getUserId(token);
 
-    const testFunction = (value: number) => {
-        setInitialPageTest(initialPageTest + value);
+  const fetchData = () => {
+    if (loading) {
+      return;
     }
+    setLoading(true);
+    fetch(`${GET_USER_INFOS}/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((body) => {
+        setData(body.gameCodes);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  };
 
-    const routToAnotherPage = (pageUrl: string) => {
-        navigate(pageUrl);
-    }
+  const handleDelete = (gameCode: string) => {
+    const requestBody = {
+      userId: userId,
+      gameCode: gameCode,
+    };
+    fetch(`${DELETE_GAME_CODE}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(requestBody),
+    }).then((res) => {
+      if (res.ok) {
+        setData(data.filter((code) => code !== gameCode));
+        message.success("Game code deleted successfully.");
+      } else {
+        message.error("Failed to delete game code.");
+      }
+    });
+  };
 
-    return (
-        <div>
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-            <div>
-                <div>Count: {initialPageTest} </div>
-                <button onClick={() => testFunction(1)}>counter</button>
-            </div>
-
-            <div>
-                <div>If you already have a CODE: </div>
-                <div onClick={() => routToAnotherPage('/gameHomePage')}>
-                    <StrFinderButton textContent={"Play the existing game"} btnHeight={"25vh"} />
-                </div>
-            </div>
-
-            <div>
-                <div>If you are a creator and need to create a new game or to update an exiting one:</div>
-                <div onClick={() => routToAnotherPage('/creatorLoginPage')}>
-                    <StrFinderButton textContent={"Create a new  game"} btnHeight={"25vh"} />
-                </div>
-            </div>
+  return (
+    <div className="dashboard-container">
+      <div>
+        <div className="main-label">YOUR GAME CODES:</div>
+        <div
+          id="scrollableDiv"
+          style={{
+            height: 400,
+            overflow: "auto",
+            padding: "0 16px",
+            border: "1px solid rgba(140, 140, 140, 0.35)",
+          }}
+        >
+          <InfiniteScroll
+            dataLength={data.length}
+            next={fetchData}
+            hasMore={data.length < 0}
+            loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
+            endMessage={<Divider plain>No more game codes</Divider>}
+            scrollableTarget="scrollableDiv"
+          >
+            <List
+              dataSource={data}
+              renderItem={(item, index) => (
+                <List.Item key={index}>
+                  <List.Item.Meta
+                    title={<a href="https://ant.design">{item}</a>}
+                  />
+                  <div className="buttons">
+                    <Button
+                      type="text"
+                      shape="circle"
+                      icon={<EditOutlined />}
+                    />{" "}
+                    <Button
+                      type="text"
+                      shape="circle"
+                      icon={<DeleteOutlined />}
+                      onClick={() => handleDelete(item)}
+                    />{" "}
+                  </div>
+                </List.Item>
+              )}
+            />
+          </InfiniteScroll>
         </div>
-    )
-}
+      </div>
+      <div>
+        <p className="description">If you want to create a new game:</p>
+        <StrFinderButton btnColor="green" textContent="CREATE A NEW MATCH" />
+      </div>
+    </div>
+  );
+};
 
-export default InitialPage
+export default DashboardPage;

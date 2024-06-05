@@ -52,6 +52,7 @@ const CreatorLoginPage = () => {
       }
     } catch (error) {
       setErrorMessage("Something went wrong");
+      setButtonLoading(false);
     }
   };
 

@@ -14,10 +14,12 @@
     "antd": "^5.18.0",
     "axios": "^1.7.0",
     "i18next-browser-languagedetector": "^8.0.0",
+    "jwt-decode": "^4.0.0",
     "node-sass": "^9.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^14.1.1",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-router-dom": "^6.23.1",
     "sass": "^1.77.2",
     "sass-loader": "^14.2.1"
