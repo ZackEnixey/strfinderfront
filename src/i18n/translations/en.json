@@ -1,7 +1,12 @@
 {
-    "common": {
-        "hello": "Hello",
-        "howAreYou": "How are you?",
-        "welcomeToTheGame": "Wecome to the gamasdkfj aklsdjf lkasjdfl k e"
-    }
+    "hello": "Hello",
+    "ifYouHaveCode": "If you already have a CODE",
+    "ifCreatorCreateNewGame": "If you are a creator and need to create a new game or to update an existing one",
+    "count": "Count",
+    "counter": "Counter",
+    "pageNotFoud": "PAGE NOT FOUND",
+    "goBAckToStart": "Go back to START",
+    "playTheExistingGame": "Play the existing game",
+    "useYourStrText": "Use your strengths and play with positive psychology to unleash your potential and elevate your workout experience.",
+    "gameCodes": "Game Code"
 }

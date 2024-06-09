@@ -75,7 +75,6 @@ const Languages = () => {
         console.log("language selected", selectedLanguageId);
         i18n.changeLanguage(selectedLanguageId);
         handlePopup(false);
-        alert('sdf')
     }
 
     const desktopUI = (

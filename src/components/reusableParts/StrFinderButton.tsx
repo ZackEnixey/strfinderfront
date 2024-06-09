@@ -12,8 +12,6 @@ const StrFinderButton: FC<StrFinderButtonProps> = (props) => {
   const btnHeightLocal = btnHeight ?? "8vh";
   const btnColorLocal = btnColor ?? "default";
 
-  console.log(btnHeightLocal);
-
   let btnLight = "";
   let btnDark = "";
 

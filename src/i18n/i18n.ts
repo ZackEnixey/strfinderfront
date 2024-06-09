@@ -29,12 +29,16 @@ const resources = {
 
 export const availableLanguages = Object.keys(resources);
 
-i18n.use(initReactI18next)
+i18n
   .use(LanguageDetector)
+  .use(initReactI18next)
   .init({
-    resources,
-    defaultNS: "common",
-    fallbackLng: "en",
+    debug: true,
+    fallbackLng: 'en',
+    interpolation: {
+      escapeValue: false,
+    },
+    resources: resources
   });
 
 export default i18n;
