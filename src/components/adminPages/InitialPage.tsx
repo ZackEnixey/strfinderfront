@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from "react-i18next";
 import StrFinderButton from '../reusableParts/StrFinderButton';
 
 const InitialPage = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [initialPageTest, setInitialPageTest] = useState<number>(1);
 
@@ -18,19 +20,19 @@ const InitialPage = () => {
         <div>
 
             <div>
-                <div>Count: {initialPageTest} </div>
-                <button onClick={() => testFunction(1)}>counter</button>
+                <div>{t('count')}: {initialPageTest} </div>
+                <button onClick={() => testFunction(1)}>{t('counter')}</button>
             </div>
 
             <div>
-                <div>If you already have a CODE: </div>
+                <div>{t('ifYouHaveCode')}: </div>
                 <div onClick={() => routToAnotherPage('/gameHomePage')}>
                     <StrFinderButton textContent={"Play the existing game"} btnHeight={"25vh"} />
                 </div>
             </div>
 
             <div>
-                <div>If you are a creator and need to create a new game or to update an exiting one:</div>
+                <div>{t('ifCreatorCreateNewGame')}:</div>
                 <div onClick={() => routToAnotherPage('/creatorLoginPage')}>
                     <StrFinderButton textContent={"Create a new  game"} btnHeight={"25vh"} />
                 </div>

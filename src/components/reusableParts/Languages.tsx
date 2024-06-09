@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Dropdown, Menu } from 'antd';
+import { useTranslation } from "react-i18next";
 import languagesIcon from '../../assets/languages.svg';
 import closexIcon from '../../assets/closex.svg';
 
@@ -16,6 +17,10 @@ const initialLanguages: ILanguage[] = [
     {
         id: "es",
         name: "Spanish Español"
+    },
+    {
+        id: "fr",
+        name: "Franch Français"
     },
     {
         id: "it",
@@ -38,6 +43,10 @@ const initialLanguages: ILanguage[] = [
         name: "Russian Русский"
     },
     {
+        id: "he",
+        name: "Hebrew עִברִית"
+    },
+    {
         id: "zh",
         name: "Chinese 中文"
     },
@@ -50,6 +59,7 @@ const initialLanguages: ILanguage[] = [
 const MOBILE_WIDTH_THRESHOLD = 768;
 
 const Languages = () => {
+    const { i18n } = useTranslation();
     const [isMobileVersin, setIsMobileVersion] = useState<boolean>(false);
     const [isMobilePopupOpen, setIsMobilePopupOpen] = useState<boolean>(false);
 
@@ -61,14 +71,16 @@ const Languages = () => {
         setIsMobileVersion(isMobile());
     }, [])
 
-    const selectLanguage = () => {
-        console.log("language selected");
+    const selectLanguage = (selectedLanguageId: string) => {
+        console.log("language selected", selectedLanguageId);
+        i18n.changeLanguage(selectedLanguageId);
+        handlePopup(false);
     }
 
     const desktopUI = (
         <Menu style={{ width: "150px", maxHeight: '200px', overflowY: 'auto' }}>
           {initialLanguages.map( (language: ILanguage, index: number) => (
-            <Menu.Item key={index} onClick={selectLanguage}>{language.name}</Menu.Item>
+            <Menu.Item key={index} onClick={() => selectLanguage(language.id)}>{language.name}</Menu.Item>
           ))}
         </Menu>
     );
@@ -87,7 +99,7 @@ const Languages = () => {
                     <div className="language_item_wrapper"> 
                         {initialLanguages.map( (language: ILanguage, index: number) => {
                             return (
-                                <div key={index} className="language_item">{language.name}</div>
+                                <div key={index} className="language_item" onClick={() => selectLanguage(language.id)}>{language.name}</div>
                             )
                         })}
                     </div>
