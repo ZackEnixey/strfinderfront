@@ -95,8 +95,9 @@ const CreatorLoginPage = () => {
           {errorMessage && <p id="error-text">{errorMessage}</p>}
         </div>
       </div>
-      <div onClick={() => handleSubmit()}>
+      <div>
         <StrFinderButton
+          onClick={() => handleSubmit()}
           btnColor="green"
           textContent={buttonLoading ? "Loading ..." : "LOGIN"}
         />

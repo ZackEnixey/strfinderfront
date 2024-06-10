@@ -4,10 +4,11 @@ interface StrFinderButtonProps {
   textContent?: string;
   btnHeight?: string;
   btnColor?: string;
+  onClick?: () => void;
 }
 
 const StrFinderButton: FC<StrFinderButtonProps> = (props) => {
-  const { textContent, btnHeight, btnColor } = props;
+  const { textContent, btnHeight, btnColor, onClick } = props;
   const textContentLocal = textContent ?? "Default Text";
   const btnHeightLocal = btnHeight ?? "8vh";
   const btnColorLocal = btnColor ?? "default";
@@ -44,7 +45,9 @@ const StrFinderButton: FC<StrFinderButtonProps> = (props) => {
   }
 
   return (
-    <div className="button_holder full_center">
+    <div className="button_holder full_center" onClick={onClick}>
+      {" "}
+      {/* Attach the onClick handler here */}
       <div className="button_wrapper" style={{ height: btnHeightLocal }}>
         <div
           className="button_shadow"

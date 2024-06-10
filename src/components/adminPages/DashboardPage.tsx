@@ -1,62 +1,17 @@
-import { Button, Divider, List, Skeleton, message } from "antd";
-import { useEffect, useState } from "react";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import React from "react";
+import { Button, Divider, List, Skeleton } from "antd";
+import { useNavigate } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import StrFinderButton from "../reusableParts/StrFinderButton";
-import { getUserId } from "../../utils/decodedToken";
-import { GET_USER_INFOS, DELETE_GAME_CODE } from "../../apis/apiUrls";
+import { useFetchUserGameCodes } from "../../hooks/useFetchUserGameCodes";
+import { useDeleteGameCode } from "../../hooks/useDeleteGameCode";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
-const DashboardPage = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+const DashboardPage: React.FC = () => {
+  const navigate = useNavigate();
   const token = localStorage.getItem("token") || "";
-  const userId = getUserId(token);
-
-  const fetchData = () => {
-    if (loading) {
-      return;
-    }
-    setLoading(true);
-    fetch(`${GET_USER_INFOS}/${userId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((body) => {
-        setData(body.gameCodes);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  };
-
-  const handleDelete = (gameCode: string) => {
-    const requestBody = {
-      userId: userId,
-      gameCode: gameCode,
-    };
-    fetch(`${DELETE_GAME_CODE}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(requestBody),
-    }).then((res) => {
-      if (res.ok) {
-        setData(data.filter((code) => code !== gameCode));
-        message.success("Game code deleted successfully.");
-      } else {
-        message.error("Failed to delete game code.");
-      }
-    });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { data, fetchData, setData } = useFetchUserGameCodes(token);
+  const { handleDelete } = useDeleteGameCode(token, setData);
 
   return (
     <div className="dashboard-container">
@@ -72,7 +27,7 @@ const DashboardPage = () => {
           }}
         >
           <InfiniteScroll
-            dataLength={data.length}
+            dataLength={data && data.length}
             next={fetchData}
             hasMore={data.length < 0}
             loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
@@ -107,7 +62,12 @@ const DashboardPage = () => {
       </div>
       <div>
         <p className="description">If you want to create a new game:</p>
-        <StrFinderButton btnColor="green" textContent="CREATE A NEW MATCH" />
+        <div></div>
+        <StrFinderButton
+          onClick={() => navigate("/strengths")}
+          btnColor="green"
+          textContent="CREATE A NEW MATCH"
+        />
       </div>
     </div>
   );
