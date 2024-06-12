@@ -61,3 +61,36 @@ body {
   margin: 0 auto;
   padding: 0;
 }
+.pop-up-container {
+  position: fixed;
+  top: 50%;
+  background-color: #ffd8e0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 20px;
+  border-radius: 8px;
+}
+.pop-up-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+}
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  .input-label {
+    font-size: 16;
+    font-weight: 700;
+  }
+  .custom-input {
+    border: 1px solid;
+  }
+  .big {
+    height: 10vh;
+  }
+}

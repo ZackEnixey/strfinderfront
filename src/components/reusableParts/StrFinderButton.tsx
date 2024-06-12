@@ -27,9 +27,9 @@ const StrFinderButton: FC<StrFinderButtonProps> = (props) => {
       btnDark = "#3D9169"; // Dark pastel green
       break;
     }
-    case "red": {
-      btnLight = "#FFC0CB"; // Light pastel red
-      btnDark = "#DC143C"; // Dark pastel red
+    case "pink": {
+      btnLight = "#FF6E8D"; // Light pastel red
+      btnDark = "#AA4258"; // Dark pastel red
       break;
     }
     case "yellow": {

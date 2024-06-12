@@ -8,6 +8,8 @@ import { getUserId } from "../../utils/decodedToken";
 import { useFetchStrengths } from "../../hooks/useFetchStrenghts";
 import { useState } from "react";
 import { StrengthItem } from "../../types/types";
+import { PlusSquareOutlined } from "@ant-design/icons";
+import CreationPopUp from "../reusableParts/CreationPopUp";
 
 const CheckboxGroup = Checkbox.Group;
 const plainOptions = [""];
@@ -15,6 +17,7 @@ const defaultCheckedList = [""];
 
 const StrengthCreationPage = () => {
   const [checkedList, setCheckedList] = useState<string[]>(defaultCheckedList);
+  const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const navigate = useNavigate();
   const { type } = useParams();
   const token = localStorage.getItem("token") || "";
@@ -35,10 +38,16 @@ const StrengthCreationPage = () => {
   const handleNavigation = () => {
     navigate("/strengths");
   };
+  const togglePopUp = () => {
+    setIsPopUpVisible(!isPopUpVisible);
+  };
 
   return (
-    <div className="dashboard-container">
+    <div className={`dashboard-container ${isPopUpVisible ? "overlay" : ""}`}>
       <div>
+        <div className="add-icon-container" onClick={togglePopUp}>
+          <PlusSquareOutlined style={{ fontSize: "20px", color: "#1C274C" }} />
+        </div>
         <div className="check-all-container">
           <div className="check-all">
             <div className="check-all-label">Select all</div>
@@ -93,6 +102,7 @@ const StrengthCreationPage = () => {
           textContent="NEXT"
         />
       </div>
+      {isPopUpVisible && <CreationPopUp onClose={togglePopUp} />}
     </div>
   );
 };

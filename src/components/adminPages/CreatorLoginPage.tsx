@@ -81,6 +81,7 @@ const CreatorLoginPage = () => {
           <div>
             <Input
               size="large"
+              type="password"
               required
               className="custom-input"
               placeholder="Enter your password"
