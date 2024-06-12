@@ -1,34 +1,43 @@
-import { Navigate, Route, Routes } from "react-router-dom";
-import InitialPage from "../adminPages/InitialPage";
+import { Route, Routes } from "react-router-dom";
+import DashboardPage from "../adminPages/DashboardPage";
 import NotFoundPage from "../adminPages/NotFoundPage";
 import CreatorLoginPage from "../adminPages/CreatorLoginPage";
 import CreatorDashboardPage from "../adminPages/CreatorDashboardPage";
-import CreatingStrengthsPage from "../adminPages/CreatingStrengthsPage";
+import StrengthTypePage from "../adminPages/StrengthTypePage";
+import StrengthCreationPage from "../adminPages/StrengthCreationPage";
 import GameHomePage from "../gamePages/GameHomePage";
 import CreatePlayerPage from "../gamePages/CreatePlayerPage";
+import PrivateRoute from "./PrivateRoute";
 
 const RoutesHandler = () => {
+  const routes = [
+    { path: "/", element: <DashboardPage /> },
+    { path: "/login", element: <CreatorLoginPage /> },
+    { path: "/creatorDashboardPage", element: <CreatorDashboardPage /> },
+    { path: "/strengths", element: <StrengthTypePage /> },
+    { path: "/strengths/:type", element: <StrengthCreationPage /> },
+    { path: "/gameHomePage", element: <GameHomePage /> },
+    { path: "/createPlayerPage", element: <CreatePlayerPage /> },
+    { path: "*", element: <NotFoundPage /> },
+  ];
+
   return (
     <div>
       <Routes>
-        {/* ADMIN PAGE URLs */}
-        <Route path="/initialPage" element={<InitialPage />} />
-        <Route path="/login" element={<CreatorLoginPage />} />
-        <Route
-          path="/creatorDashboardPage"
-          element={<CreatorDashboardPage />}
-        />
-        <Route
-          path="/creatingStrengthsPage"
-          element={<CreatingStrengthsPage />}
-        />
-
-        {/* GAME URLs */}
-        <Route path="/gameHomePage" element={<GameHomePage />} />
-        <Route path="/createPlayerPage" element={<CreatePlayerPage />} />
-
-        <Route path="/" element={<Navigate to={`/initialPage`} />} />
-        <Route path="*" element={<NotFoundPage />} />
+        {/* Map over the routes array */}
+        {routes.map(({ path, element }) => (
+          <Route
+            key={path}
+            path={path}
+            element={
+              path === "/login" ? (
+                element
+              ) : (
+                <PrivateRoute>{element}</PrivateRoute>
+              )
+            }
+          />
+        ))}
       </Routes>
     </div>
   );
