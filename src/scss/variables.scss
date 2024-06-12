@@ -1,4 +1,25 @@
+$lightBlue: #ADD8E6;
+$darkBlue: #4169E1;
+$lightGreen: #53BD8B;
+$darkGreen: #3D9169;
+$lightRed: #FFC0CB;
+$darkRed: #DC143C;
+$lightYellow: #FFFFE0;
+$darkYellow: #FFD700;
+$grassGreen: #7CFC00;
+$darkGrassGreen: #556B2F;
+
 :root {
     --header_side_chunk_width: 80px;
+    --btnLightBlue: #{$lightBlue};
+    --btnDarkBlue: #{$darkBlue};
+    --btnLightGreen: #{$lightGreen};
+    --btnDarkGreen: #{$darkGreen};
+    --btnLightRed: #{$lightRed};
+    --btnDarkRed: #{$darkRed};
+    --btnLightYellow: #{$lightYellow};
+    --btnDarkYellow: #{$darkYellow};
+    --btnGrassGreen: #{$grassGreen};
+    --btnDarkGrassGreen: #{$darkGrassGreen};
 }
   

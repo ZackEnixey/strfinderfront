@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import strFinder from "../../assets/strFinder.png";
+import Languages from "../reusableParts/Languages";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -47,7 +48,9 @@ const Header = () => {
       <div className="logo_wrapper full_center">
         <img src={strFinder} alt="STRfinder logo" className="logo_img" />
       </div>
-      <div className="header_right div_test_border"></div>
+      <div className="header_right div_test_border">
+        <Languages />
+      </div>
     </div>
   );
 };
