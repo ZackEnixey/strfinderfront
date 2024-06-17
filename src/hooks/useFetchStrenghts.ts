@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { message } from "antd";
 import { GET_STRENGTHS_URL } from "../apis/apiUrls";
-export const useFetchStrengths = (id: string, type: string, token: string) => {
+export const useFetchStrengths = (id: string, type: string, token: string,refresh:boolean) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -31,7 +31,7 @@ export const useFetchStrengths = (id: string, type: string, token: string) => {
 
   useEffect(() => {
     fetchData();
-  }, [id, type, token]);
+  }, [id, type, token,refresh]);
 
   return { data, loading, fetchData };
 };

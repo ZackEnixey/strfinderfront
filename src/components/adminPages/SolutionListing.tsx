@@ -1,41 +1,50 @@
 import { Checkbox, CheckboxProps, Divider, List, Skeleton } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useNavigate, useParams } from "react-router-dom";
 import { Collapse } from "antd";
 import StrFinderButton from "../reusableParts/StrFinderButton";
-import { getUserId } from "../../utils/decodedToken";
-import { useFetchStrengths } from "../../hooks/useFetchStrenghts";
 import { useState } from "react";
 import { StrengthItem } from "../../types/types";
 import { PlusSquareOutlined } from "@ant-design/icons";
 import CreationPopUp from "../reusableParts/CreationPopUp";
-import { useCreateStrength } from "../../hooks/useCreateStrength";
+import { useParams } from "react-router-dom";
+import { useSolutions } from "../../hooks/useSolutions";
 
-const StrengthCreationPage = () => {
+const SolutionListing = () => {
   const [checkedList, setCheckedList] = useState<string[]>([]);
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
-  const [refresh, setRefresh] = useState(false);
-  const navigate = useNavigate();
-  const { type } = useParams();
-  const token = localStorage.getItem("token") || "";
-  const id = getUserId(token) || "";
-  const { data, fetchData } = useFetchStrengths(id, type!, token, refresh);
-  const { handleAddStrength } = useCreateStrength(token, setRefresh);
+  const { type } = useParams<{ type: string }>();
+  const {
+    emotionalSolutions,
+    mentalSolutions,
+    physicalSolutions,
+    relationsSolutions,
+  } = useSolutions();
+
+  let data: StrengthItem[] = [];
+
+  switch (type) {
+    case "emotional":
+      data = emotionalSolutions;
+      break;
+    case "mental":
+      data = mentalSolutions;
+      break;
+    case "physical":
+      data = physicalSolutions;
+      break;
+    case "relations":
+      data = relationsSolutions;
+      break;
+    default:
+      break;
+  }
 
   const checkAll = data.length > 0 && checkedList.length === data.length;
   const indeterminate =
     checkedList.length > 0 && checkedList.length < data.length;
 
-  const onChange = (list: string[]) => {
-    setCheckedList(list);
-  };
-
   const onCheckAllChange: CheckboxProps["onChange"] = (e) => {
     setCheckedList(e.target.checked ? data.map((item) => item.title) : []);
-  };
-
-  const handleNavigation = () => {
-    navigate("/strengths");
   };
 
   const togglePopUp = () => {
@@ -75,11 +84,18 @@ const StrengthCreationPage = () => {
             overflow: "auto",
             border: "1px solid rgba(140, 140, 140, 0.35)",
             borderRadius: "8px",
+            backgroundColor:
+              type === "emotional"
+                ? "#FF859F"
+                : type === "mental"
+                ? "#70B1E6"
+                : type === "physical"
+                ? "#53BD8B"
+                : "#FFD700",
           }}
         >
           <InfiniteScroll
             dataLength={data.length}
-            next={fetchData}
             hasMore={data.length < 0}
             loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
             endMessage={<Divider plain>No more strengths</Divider>}
@@ -89,7 +105,17 @@ const StrengthCreationPage = () => {
               dataSource={data}
               renderItem={(item: StrengthItem, index) => (
                 <List.Item key={index}>
-                  <Collapse className="list-collapse-item">
+                  <Collapse
+                    className={`list-collapse-item ${
+                      type === "emotional"
+                        ? "bg-pink"
+                        : type === "mental"
+                        ? "bg-blue"
+                        : type === "physical"
+                        ? "bg-green"
+                        : "bg-yellow"
+                    }`}
+                  >
                     <Collapse.Panel header={item.title} key={index}>
                       <p>{item.description}</p>
                     </Collapse.Panel>
@@ -106,7 +132,7 @@ const StrengthCreationPage = () => {
       </div>
       <div>
         <StrFinderButton
-          onClick={handleNavigation}
+          onClick={() => {}}
           btnColor="green"
           textContent="NEXT"
         />
@@ -114,7 +140,7 @@ const StrengthCreationPage = () => {
       {isPopUpVisible && (
         <CreationPopUp
           text="strength"
-          handleSubmit={handleAddStrength}
+          handleSubmit={() => {}}
           onClose={togglePopUp}
         />
       )}
@@ -122,4 +148,4 @@ const StrengthCreationPage = () => {
   );
 };
 
-export default StrengthCreationPage;
+export default SolutionListing;

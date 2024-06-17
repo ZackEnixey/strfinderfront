@@ -1,16 +1,27 @@
 import { CloseOutlined } from "@ant-design/icons";
 import StrFinderButton from "./StrFinderButton";
 import { Input } from "antd";
+import { useState } from "react";
 
 interface CreationPopUpProps {
+  text:string
   onClose: () => void;
+  handleSubmit: (title: string, description: string, additionalText: string) => void;
+
 }
 
-const CreationPopUp: React.FC<CreationPopUpProps> = ({ onClose }) => {
+const CreationPopUp: React.FC<CreationPopUpProps> = ({ text,onClose,handleSubmit }) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [additionalText, setAdditionalText] = useState("");
+  const handleSubmitForm = () => {
+    handleSubmit(title,description,additionalText);
+    onClose();
+  };
   return (
     <div className="pop-up-container">
       <div className="pop-up-header">
-        <h3>Create a new Emotional Card</h3>
+        <h3>Create a new {text} Card</h3>
         <div onClick={onClose}>
           <CloseOutlined style={{ fontSize: "30px", color: "#AA4258" }} />
         </div>
@@ -25,33 +36,43 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({ onClose }) => {
                 size="large"
                 required
                 placeholder=""
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
               />
             </div>
-            <div className="input-container">
-              <div className="input-label">Description:</div>
-              <div>
-                <Input
-                  className="custom-input big"
-                  size="large"
-                  required
-                  placeholder=""
-                />
-              </div>
-              <div className="input-container">
-                <div className="input-label">Additional Text:</div>
-                <div>
-                  <Input
-                    className="custom-input big"
-                    size="large"
-                    required
-                    placeholder=""
-                  />
-                </div>
-              </div>
-            </div>
+          </div>
+          <div className="input-container">
+            <div className="input-label">Description:</div>
             <div>
-              <StrFinderButton btnColor="pink" textContent="CREATE" />
+              <Input
+                className="custom-input big"
+                size="large"
+                required
+                placeholder=""
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
             </div>
+          </div>
+          <div className="input-container">
+            <div className="input-label">Additional Text:</div>
+            <div>
+              <Input
+                className="custom-input big"
+                size="large"
+                required
+                placeholder=""
+                value={additionalText}
+                onChange={(e) => setAdditionalText(e.target.value)}
+              />
+            </div>
+          </div>
+          <div>
+            <StrFinderButton
+              btnColor="pink"
+              textContent="CREATE"
+              onClick={()=>handleSubmitForm()}
+            />
           </div>
         </div>
       </div>
