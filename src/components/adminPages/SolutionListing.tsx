@@ -2,16 +2,18 @@ import { Checkbox, CheckboxProps, Divider, List, Skeleton } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Collapse } from "antd";
 import StrFinderButton from "../reusableParts/StrFinderButton";
-import { useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { StrengthItem } from "../../types/types";
 import { PlusSquareOutlined } from "@ant-design/icons";
 import CreationPopUp from "../reusableParts/CreationPopUp";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSolutions } from "../../hooks/useSolutions";
+import { useCheckedSolutions } from "../../context/CheckedSoltuionsContext";
 
 const SolutionListing = () => {
-  const [checkedList, setCheckedList] = useState<string[]>([]);
+  const { checkedSolutions, setCheckedSolutions } = useCheckedSolutions();
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+  const navigate = useNavigate();
   const { type } = useParams<{ type: string }>();
   const {
     emotionalSolutions,
@@ -38,28 +40,54 @@ const SolutionListing = () => {
     default:
       break;
   }
+  let nextRoute: string;
+  switch (type) {
+    case "emotional":
+      nextRoute = "mental";
+      break;
+    case "mental":
+      nextRoute = "physical";
+      break;
+    case "physical":
+      nextRoute = "relations";
+      break;
+    case "relations":
+      nextRoute = "emotional";
+      break;
+    default:
+      break;
+  }
 
-  const checkAll = data.length > 0 && checkedList.length === data.length;
-  const indeterminate =
-    checkedList.length > 0 && checkedList.length < data.length;
+  const checkAll = useMemo(
+    () => data.length > 0 && checkedSolutions.length === data.length,
+    [data.length, checkedSolutions.length]
+  );
+  const indeterminate = useMemo(
+    () => checkedSolutions.length > 0 && checkedSolutions.length < data.length,
+    [checkedSolutions.length, data.length]
+  );
 
   const onCheckAllChange: CheckboxProps["onChange"] = (e) => {
-    setCheckedList(e.target.checked ? data.map((item) => item.title) : []);
+    setCheckedSolutions(e.target.checked ? data.map((item) => item._id) : []);
   };
 
   const togglePopUp = () => {
     setIsPopUpVisible(!isPopUpVisible);
   };
 
-  const onItemChange = (item: StrengthItem, checked: boolean) => {
-    setCheckedList((prevList) => {
-      if (checked) {
-        return [...prevList, item.title];
-      } else {
-        return prevList.filter((title) => title !== item.title);
-      }
-    });
-  };
+  const onItemChange = useCallback(
+    (item: StrengthItem, checked: boolean) => {
+      setCheckedSolutions((prevList) =>
+        checked
+          ? [...prevList, item._id]
+          : prevList.filter((id) => id !== item._id)
+      );
+    },
+    [setCheckedSolutions]
+  );
+  useEffect(() => {
+    localStorage.setItem("selectedSolutions", JSON.stringify(checkedSolutions));
+  }, [checkedSolutions]);
 
   return (
     <div className={`dashboard-container ${isPopUpVisible ? "overlay" : ""}`}>
@@ -80,7 +108,7 @@ const SolutionListing = () => {
         <div
           id="scrollableDiv"
           style={{
-            height: 400,
+            height: "58vh",
             overflow: "auto",
             border: "1px solid rgba(140, 140, 140, 0.35)",
             borderRadius: "8px",
@@ -96,6 +124,7 @@ const SolutionListing = () => {
         >
           <InfiniteScroll
             dataLength={data.length}
+            next={() => {}}
             hasMore={data.length < 0}
             loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
             endMessage={<Divider plain>No more strengths</Divider>}
@@ -121,7 +150,7 @@ const SolutionListing = () => {
                     </Collapse.Panel>
                   </Collapse>
                   <Checkbox
-                    checked={checkedList.includes(item.title)}
+                    checked={checkedSolutions.includes(item._id)}
                     onChange={(e) => onItemChange(item, e.target.checked)}
                   />
                 </List.Item>
@@ -132,7 +161,7 @@ const SolutionListing = () => {
       </div>
       <div>
         <StrFinderButton
-          onClick={() => {}}
+          onClick={() => navigate(`/solutions/${nextRoute}`)}
           btnColor="green"
           textContent="NEXT"
         />
@@ -142,6 +171,7 @@ const SolutionListing = () => {
           text="strength"
           handleSubmit={() => {}}
           onClose={togglePopUp}
+          isSolutionCard={true}
         />
       )}
     </div>

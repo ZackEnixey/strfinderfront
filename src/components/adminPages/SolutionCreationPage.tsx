@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import StrFinderButton from "../reusableParts/StrFinderButton";
 
 const SolutionCreationPage = () => {
+  const navigate = useNavigate();
   return (
     <div className="solution-page-container">
       <div className="update-solution">
@@ -12,6 +14,7 @@ const SolutionCreationPage = () => {
           btnColor="green"
           textContent="UPDATE SOLUTION CARD"
           btnHeight="18vh"
+          onClick={() => navigate("/solutions/emotional")}
         />
       </div>
       <StrFinderButton btnColor="green" textContent="NEXT" />

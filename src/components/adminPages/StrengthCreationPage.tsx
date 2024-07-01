@@ -5,14 +5,16 @@ import { Collapse } from "antd";
 import StrFinderButton from "../reusableParts/StrFinderButton";
 import { getUserId } from "../../utils/decodedToken";
 import { useFetchStrengths } from "../../hooks/useFetchStrenghts";
-import { useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { StrengthItem } from "../../types/types";
 import { PlusSquareOutlined } from "@ant-design/icons";
 import CreationPopUp from "../reusableParts/CreationPopUp";
 import { useCreateStrength } from "../../hooks/useCreateStrength";
+import { useCheckedStrengths } from "../../context/CheckedStrenghsContext";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
 
 const StrengthCreationPage = () => {
-  const [checkedList, setCheckedList] = useState<string[]>([]);
+  const { checkedStrengths, setCheckedStrengths } = useCheckedStrengths();
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const navigate = useNavigate();
@@ -21,36 +23,42 @@ const StrengthCreationPage = () => {
   const id = getUserId(token) || "";
   const { data, fetchData } = useFetchStrengths(id, type!, token, refresh);
   const { handleAddStrength } = useCreateStrength(token, setRefresh);
-
-  const checkAll = data.length > 0 && checkedList.length === data.length;
-  const indeterminate =
-    checkedList.length > 0 && checkedList.length < data.length;
-
-  const onChange = (list: string[]) => {
-    setCheckedList(list);
-  };
-
-  const onCheckAllChange: CheckboxProps["onChange"] = (e) => {
-    setCheckedList(e.target.checked ? data.map((item) => item.title) : []);
-  };
-
+  const onCheckAllChange: CheckboxProps["onChange"] = useCallback(
+    (e: CheckboxChangeEvent) => {
+      setCheckedStrengths(e.target.checked ? data.map((item) => item._id) : []);
+    },
+    [data, setCheckedStrengths]
+  );
   const handleNavigation = () => {
-    navigate("/strengths");
+    navigate("/solutions");
   };
 
   const togglePopUp = () => {
     setIsPopUpVisible(!isPopUpVisible);
   };
 
-  const onItemChange = (item: StrengthItem, checked: boolean) => {
-    setCheckedList((prevList) => {
-      if (checked) {
-        return [...prevList, item.title];
-      } else {
-        return prevList.filter((title) => title !== item.title);
-      }
-    });
-  };
+  const onItemChange = useCallback(
+    (item: StrengthItem, checked: boolean) => {
+      setCheckedStrengths((prevList) =>
+        checked
+          ? [...prevList, item._id]
+          : prevList.filter((id) => id !== item._id)
+      );
+    },
+    [setCheckedStrengths]
+  );
+  useEffect(() => {
+    localStorage.setItem("selectedStrengths", JSON.stringify(checkedStrengths));
+  }, [checkedStrengths]);
+
+  const checkAll = useMemo(
+    () => data.length > 0 && checkedStrengths.length === data.length,
+    [data.length, checkedStrengths.length]
+  );
+  const indeterminate = useMemo(
+    () => checkedStrengths.length > 0 && checkedStrengths.length < data.length,
+    [checkedStrengths.length, data.length]
+  );
 
   return (
     <div className={`dashboard-container ${isPopUpVisible ? "overlay" : ""}`}>
@@ -71,7 +79,7 @@ const StrengthCreationPage = () => {
         <div
           id="scrollableDiv"
           style={{
-            height: 400,
+            height: "58vh",
             overflow: "auto",
             border: "1px solid rgba(140, 140, 140, 0.35)",
             borderRadius: "8px",
@@ -95,7 +103,7 @@ const StrengthCreationPage = () => {
                     </Collapse.Panel>
                   </Collapse>
                   <Checkbox
-                    checked={checkedList.includes(item.title)}
+                    checked={checkedStrengths.includes(item._id)}
                     onChange={(e) => onItemChange(item, e.target.checked)}
                   />
                 </List.Item>
@@ -116,6 +124,7 @@ const StrengthCreationPage = () => {
           text="strength"
           handleSubmit={handleAddStrength}
           onClose={togglePopUp}
+          isSolutionCard={false}
         />
       )}
     </div>

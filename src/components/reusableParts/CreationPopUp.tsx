@@ -4,18 +4,30 @@ import { Input } from "antd";
 import { useState } from "react";
 
 interface CreationPopUpProps {
-  text:string
+  text: string;
   onClose: () => void;
-  handleSubmit: (title: string, description: string, additionalText: string) => void;
-
+  handleSubmit: (
+    title: string,
+    description: string,
+    additionalText: string
+  ) => void;
+  isSolutionCard: boolean;
 }
 
-const CreationPopUp: React.FC<CreationPopUpProps> = ({ text,onClose,handleSubmit }) => {
+const CreationPopUp: React.FC<CreationPopUpProps> = ({
+  text,
+  onClose,
+  handleSubmit,
+  isSolutionCard,
+}) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [additionalText, setAdditionalText] = useState("");
+  const [urlForTedTalk, setUrlForTedTalk] = useState("");
+  const [urlForLiterature, setUrlForLiterature] = useState("");
+
   const handleSubmitForm = () => {
-    handleSubmit(title,description,additionalText);
+    handleSubmit(title, description, additionalText);
     onClose();
   };
   return (
@@ -67,11 +79,41 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({ text,onClose,handleSubmit
               />
             </div>
           </div>
+          {isSolutionCard && (
+            <div className="input-container">
+              <div className="input-label">Url For Literature:</div>
+              <div>
+                <Input
+                  className="custom-input"
+                  size="large"
+                  required
+                  placeholder=""
+                  value={urlForTedTalk}
+                  onChange={(e) => setUrlForLiterature(e.target.value)}
+                />
+              </div>
+            </div>
+          )}
+          {isSolutionCard && (
+            <div className="input-container">
+              <div className="input-label">Url For Ted Talk:</div>
+              <div>
+                <Input
+                  className="custom-input"
+                  size="large"
+                  required
+                  placeholder=""
+                  value={urlForLiterature}
+                  onChange={(e) => setUrlForTedTalk(e.target.value)}
+                />
+              </div>
+            </div>
+          )}
           <div>
             <StrFinderButton
               btnColor="pink"
               textContent="CREATE"
-              onClick={()=>handleSubmitForm()}
+              onClick={() => handleSubmitForm()}
             />
           </div>
         </div>

@@ -1,14 +1,13 @@
-import React from 'react'
-import UserList from '../board/UserList'
-import CreateNewUser from '../board/CreateNewUser'
+import UserList from "../board/UserList";
+import CreateNewUser from "../board/CreateNewUser";
 
 const CRUDUsers = () => {
   return (
     <div>
-        <UserList />
-        <CreateNewUser />
+      <UserList />
+      <CreateNewUser />
     </div>
-  )
-}
+  );
+};
 
-export default CRUDUsers
+export default CRUDUsers;

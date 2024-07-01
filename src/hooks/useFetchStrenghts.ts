@@ -2,8 +2,15 @@
 import { useState, useEffect } from "react";
 import { message } from "antd";
 import { GET_STRENGTHS_URL } from "../apis/apiUrls";
-export const useFetchStrengths = (id: string, type: string, token: string,refresh:boolean) => {
-  const [data, setData] = useState([]);
+import { StrengthItem } from "../types/types";
+
+export const useFetchStrengths = (
+  id: string,
+  type: string,
+  token: string,
+  refresh: boolean
+) => {
+  const [data, setData] = useState<StrengthItem[]>([]);
   const [loading, setLoading] = useState(false);
 
   const fetchData = () => {
@@ -31,7 +38,7 @@ export const useFetchStrengths = (id: string, type: string, token: string,refres
 
   useEffect(() => {
     fetchData();
-  }, [id, type, token,refresh]);
+  }, [id, type, token, refresh]);
 
   return { data, loading, fetchData };
 };
