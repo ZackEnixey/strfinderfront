@@ -13,5 +13,8 @@ export const GET_STRENGTHS_URL = `${BASE_URL}/strength-cards`;
 //Solutions
 export const GET_SOLUTIONS_URL = `${BASE_URL}/solution-cards`;
 
+//Questions
+export const GET_QUESTIONS_URL = `${BASE_URL}/question-cards`;
 
-
+//Actions
+export const GET_ACTIONS_URL = `${BASE_URL}/action-cards`;

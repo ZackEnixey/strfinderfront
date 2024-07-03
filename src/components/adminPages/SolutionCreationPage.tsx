@@ -17,7 +17,11 @@ const SolutionCreationPage = () => {
           onClick={() => navigate("/solutions/emotional")}
         />
       </div>
-      <StrFinderButton btnColor="green" textContent="NEXT" />
+      <StrFinderButton
+        btnColor="green"
+        textContent="NEXT"
+        onClick={() => navigate("/questions")}
+      />
     </div>
   );
 };

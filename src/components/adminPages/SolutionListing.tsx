@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxProps, Divider, List, Skeleton } from "antd";
+import { Checkbox, CheckboxProps, List, Skeleton } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { Collapse } from "antd";
 import StrFinderButton from "../reusableParts/StrFinderButton";
@@ -9,12 +9,15 @@ import CreationPopUp from "../reusableParts/CreationPopUp";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSolutions } from "../../hooks/useSolutions";
 import { useCheckedSolutions } from "../../context/CheckedSoltuionsContext";
+import { useCreateSolution } from "../../hooks/useCreateSolution";
 
 const SolutionListing = () => {
   const { checkedSolutions, setCheckedSolutions } = useCheckedSolutions();
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
-  const navigate = useNavigate();
+  const token = localStorage.getItem("token") || "";
   const { type } = useParams<{ type: string }>();
+  const { handleAddSolution } = useCreateSolution(token, type);
+  const navigate = useNavigate();
   const {
     emotionalSolutions,
     mentalSolutions,
@@ -43,16 +46,16 @@ const SolutionListing = () => {
   let nextRoute: string;
   switch (type) {
     case "emotional":
-      nextRoute = "mental";
+      nextRoute = "/solutions/mental";
       break;
     case "mental":
-      nextRoute = "physical";
+      nextRoute = "/solutions/physical";
       break;
     case "physical":
-      nextRoute = "relations";
+      nextRoute = "/solutions/relations";
       break;
     case "relations":
-      nextRoute = "emotional";
+      nextRoute = "/questions";
       break;
     default:
       break;
@@ -127,7 +130,6 @@ const SolutionListing = () => {
             next={() => {}}
             hasMore={data.length < 0}
             loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-            endMessage={<Divider plain>No more strengths</Divider>}
             scrollableTarget="scrollableDiv"
           >
             <List
@@ -161,7 +163,7 @@ const SolutionListing = () => {
       </div>
       <div>
         <StrFinderButton
-          onClick={() => navigate(`/solutions/${nextRoute}`)}
+          onClick={() => navigate(`${nextRoute}`)}
           btnColor="green"
           textContent="NEXT"
         />
@@ -169,7 +171,7 @@ const SolutionListing = () => {
       {isPopUpVisible && (
         <CreationPopUp
           text="strength"
-          handleSubmit={() => {}}
+          handleSubmit={handleAddSolution}
           onClose={togglePopUp}
           isSolutionCard={true}
         />

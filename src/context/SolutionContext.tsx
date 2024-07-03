@@ -10,6 +10,7 @@ interface SolutionsContextType {
   physicalSolutions: any[];
   relationsSolutions: any[];
   loading: boolean;
+  setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
   error: Error | null;
 }
 
@@ -20,6 +21,7 @@ const initialContext: SolutionsContextType = {
   physicalSolutions: [],
   relationsSolutions: [],
   loading: true,
+  setRefresh: () => {},
   error: null,
 };
 
@@ -38,6 +40,7 @@ export const SolutionsProvider: React.FC<SolutionsProviderProps> = ({
   const [physicalSolutions, setPhysicalSolutions] = useState<any[]>([]);
   const [relationsSolutions, setRelationsSolutions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refresh, setRefresh] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const token = localStorage.getItem("token") || "";
   const id = getUserId(token);
@@ -64,7 +67,7 @@ export const SolutionsProvider: React.FC<SolutionsProviderProps> = ({
     };
 
     fetchSolutions();
-  }, []);
+  }, [refresh]);
 
   return (
     <SolutionsContext.Provider
@@ -74,6 +77,7 @@ export const SolutionsProvider: React.FC<SolutionsProviderProps> = ({
         physicalSolutions,
         relationsSolutions,
         loading,
+        setRefresh,
         error,
       }}
     >

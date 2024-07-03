@@ -9,9 +9,13 @@ interface CreationPopUpProps {
   handleSubmit: (
     title: string,
     description: string,
-    additionalText: string
+    additionalText: string,
+    urlForTedTalk?: string,
+    urlForLiterature?: string,
+    numberOfUpperTokens?: number
   ) => void;
-  isSolutionCard: boolean;
+  isSolutionCard?: boolean;
+  isActionCard?: boolean;
 }
 
 const CreationPopUp: React.FC<CreationPopUpProps> = ({
@@ -27,7 +31,17 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
   const [urlForLiterature, setUrlForLiterature] = useState("");
 
   const handleSubmitForm = () => {
-    handleSubmit(title, description, additionalText);
+    if (isSolutionCard) {
+      handleSubmit(
+        title,
+        description,
+        additionalText,
+        urlForLiterature,
+        urlForTedTalk
+      );
+    } else {
+      handleSubmit(title, description, additionalText);
+    }
     onClose();
   };
   return (
