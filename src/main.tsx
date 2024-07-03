@@ -8,6 +8,8 @@ import "./i18n/i18n.ts";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import { SolutionsProvider } from "./context/SolutionContext.tsx";
 
+>>>>>>>>> Temporary merge branch 2
+
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <GlobalContextProvider>
