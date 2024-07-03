@@ -1,10 +1,9 @@
-// useFetchStrengths.ts
 import { useState, useEffect } from "react";
 import { message } from "antd";
-import { GET_STRENGTHS_URL } from "../apis/apiUrls";
+import { GET_ACTIONS_URL } from "../apis/apiUrls";
 import { StrengthItem } from "../types/types";
 
-export const useFetchStrengths = (
+export const useFetchActions = (
   id: string,
   type: string,
   token: string,
@@ -17,7 +16,7 @@ export const useFetchStrengths = (
     if (loading) return;
 
     setLoading(true);
-    const url = `${GET_STRENGTHS_URL}/${id}?type=${type}`;
+    const url = `${GET_ACTIONS_URL}/${id}?type=${type}`;
 
     fetch(url, {
       headers: {

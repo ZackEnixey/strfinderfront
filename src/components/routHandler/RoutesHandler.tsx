@@ -8,6 +8,10 @@ import StrengthCreationPage from "../adminPages/StrengthCreationPage";
 import GameHomePage from "../gamePages/GameHomePage";
 import CreatePlayerPage from "../gamePages/CreatePlayerPage";
 import PrivateRoute from "./PrivateRoute";
+import SolutionCreationPage from "../adminPages/SolutionCreationPage";
+import SolutionListing from "../adminPages/SolutionListing";
+import QuestionCreationPage from "../adminPages/QuestionCreationPage";
+import ActionCreationPage from "../adminPages/ActionCreationPage";
 
 const RoutesHandler = () => {
   const routes = [
@@ -15,7 +19,11 @@ const RoutesHandler = () => {
     { path: "/login", element: <CreatorLoginPage /> },
     { path: "/creatorDashboardPage", element: <CreatorDashboardPage /> },
     { path: "/strengths", element: <StrengthTypePage /> },
+    { path: "/solutions", element: <SolutionCreationPage /> },
+    { path: "/solutions/:type", element: <SolutionListing /> },
     { path: "/strengths/:type", element: <StrengthCreationPage /> },
+    { path: "/questions", element: <QuestionCreationPage /> },
+    { path: "/actions", element: <ActionCreationPage /> },
     { path: "/gameHomePage", element: <GameHomePage /> },
     { path: "/createPlayerPage", element: <CreatePlayerPage /> },
     { path: "*", element: <NotFoundPage /> },

@@ -1,36 +1,36 @@
-import { Checkbox, CheckboxProps, Divider, List, Skeleton } from "antd";
+import { Checkbox, CheckboxProps, List, Skeleton } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate, useParams } from "react-router-dom";
 import { Collapse } from "antd";
 import StrFinderButton from "../reusableParts/StrFinderButton";
 import { getUserId } from "../../utils/decodedToken";
-import { useFetchStrengths } from "../../hooks/useFetchStrenghts";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { StrengthItem } from "../../types/types";
 import { PlusSquareOutlined } from "@ant-design/icons";
 import CreationPopUp from "../reusableParts/CreationPopUp";
-import { useCreateStrength } from "../../hooks/useCreateStrength";
-import { useCheckedStrengths } from "../../context/CheckedStrenghsContext";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
+import { useFetchActions } from "../../hooks/useFetchActions";
 
-const StrengthCreationPage = () => {
-  const { checkedStrengths, setCheckedStrengths } = useCheckedStrengths();
+const ActionCreationPage = () => {
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+  const [checkedActions, setCheckedActions] = useState<string[]>(() => {
+    const saved = localStorage.getItem("selectedActions");
+    return saved ? JSON.parse(saved) : [];
+  });
   const [refresh, setRefresh] = useState(false);
   const navigate = useNavigate();
   const { type } = useParams();
   const token = localStorage.getItem("token") || "";
   const id = getUserId(token) || "";
-  const { data, fetchData } = useFetchStrengths(id, type!, token, refresh);
-  const { handleAddStrength } = useCreateStrength(token, setRefresh);
+  const { data, fetchData } = useFetchActions(id, type!, token, refresh);
   const onCheckAllChange: CheckboxProps["onChange"] = useCallback(
     (e: CheckboxChangeEvent) => {
-      setCheckedStrengths(e.target.checked ? data.map((item) => item._id) : []);
+      setCheckedActions(e.target.checked ? data.map((item) => item._id) : []);
     },
-    [data, setCheckedStrengths]
+    [data, setCheckedActions]
   );
   const handleNavigation = () => {
-    navigate("/solutions");
+    navigate("/actions");
   };
 
   const togglePopUp = () => {
@@ -39,25 +39,25 @@ const StrengthCreationPage = () => {
 
   const onItemChange = useCallback(
     (item: StrengthItem, checked: boolean) => {
-      setCheckedStrengths((prevList) =>
+      setCheckedActions((prevList) =>
         checked
           ? [...prevList, item._id]
           : prevList.filter((id) => id !== item._id)
       );
     },
-    [setCheckedStrengths]
+    [setCheckedActions]
   );
   useEffect(() => {
-    localStorage.setItem("selectedStrengths", JSON.stringify(checkedStrengths));
-  }, [checkedStrengths]);
+    localStorage.setItem("selectedActions", JSON.stringify(checkedActions));
+  }, [checkedActions]);
 
   const checkAll = useMemo(
-    () => data.length > 0 && checkedStrengths.length === data.length,
-    [data.length, checkedStrengths.length]
+    () => data.length > 0 && checkedActions.length === data.length,
+    [data.length, checkedActions.length]
   );
   const indeterminate = useMemo(
-    () => checkedStrengths.length > 0 && checkedStrengths.length < data.length,
-    [checkedStrengths.length, data.length]
+    () => checkedActions.length > 0 && checkedActions.length < data.length,
+    [checkedActions.length, data.length]
   );
 
   return (
@@ -90,7 +90,6 @@ const StrengthCreationPage = () => {
             next={fetchData}
             hasMore={data.length < 0}
             loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-            endMessage={<Divider plain>No more strengths</Divider>}
             scrollableTarget="scrollableDiv"
           >
             <List
@@ -103,7 +102,7 @@ const StrengthCreationPage = () => {
                     </Collapse.Panel>
                   </Collapse>
                   <Checkbox
-                    checked={checkedStrengths.includes(item._id)}
+                    checked={checkedActions.includes(item._id)}
                     onChange={(e) => onItemChange(item, e.target.checked)}
                   />
                 </List.Item>
@@ -122,13 +121,13 @@ const StrengthCreationPage = () => {
       {isPopUpVisible && (
         <CreationPopUp
           text="strength"
-          handleSubmit={handleAddStrength}
+          handleSubmit={() => {}}
           onClose={togglePopUp}
-          isSolutionCard={false}
+          isActionCard={true}
         />
       )}
     </div>
   );
 };
 
-export default StrengthCreationPage;
+export default ActionCreationPage;

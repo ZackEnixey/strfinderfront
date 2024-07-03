@@ -4,6 +4,7 @@ import StrFinderButton from "../reusableParts/StrFinderButton";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_URL } from "../../apis/apiUrls";
+import { useAuth } from "../../context/AuthContext";
 
 const CreatorLoginPage = () => {
   const [password, setPassword] = useState("");
@@ -12,8 +13,8 @@ const CreatorLoginPage = () => {
   const [buttonLoading, setButtonLoading] = useState(false);
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const navigate = useNavigate();
-
-  //handling the submition of the login
+  const { login } = useAuth();
+  //handling the Submit of the login
   const handleSubmit = async () => {
     // Validate email and password
     if (password === "" || email === "") {
@@ -46,7 +47,7 @@ const CreatorLoginPage = () => {
         setErrorMessage("Invalid email or password"); // if the success in false then say that the email or password are invalid
       } else {
         setButtonLoading(false);
-        localStorage.setItem("token", data.accessToken);
+        login(data.accessToken);
         // Navigate to the home page upon successful login
         navigate("/");
       }
@@ -81,6 +82,7 @@ const CreatorLoginPage = () => {
           <div>
             <Input
               size="large"
+              type="password"
               required
               className="custom-input"
               placeholder="Enter your password"

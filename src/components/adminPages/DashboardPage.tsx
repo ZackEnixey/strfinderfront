@@ -20,7 +20,7 @@ const DashboardPage: React.FC = () => {
         <div
           id="scrollableDiv"
           style={{
-            height: 400,
+            height: "58vh",
             overflow: "auto",
             padding: "0 16px",
             border: "1px solid rgba(140, 140, 140, 0.35)",

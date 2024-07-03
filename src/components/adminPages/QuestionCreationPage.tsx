@@ -1,36 +1,38 @@
-import { Checkbox, CheckboxProps, Divider, List, Skeleton } from "antd";
+import { Checkbox, CheckboxProps, List, Skeleton } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate, useParams } from "react-router-dom";
 import { Collapse } from "antd";
 import StrFinderButton from "../reusableParts/StrFinderButton";
 import { getUserId } from "../../utils/decodedToken";
-import { useFetchStrengths } from "../../hooks/useFetchStrenghts";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { StrengthItem } from "../../types/types";
 import { PlusSquareOutlined } from "@ant-design/icons";
 import CreationPopUp from "../reusableParts/CreationPopUp";
-import { useCreateStrength } from "../../hooks/useCreateStrength";
-import { useCheckedStrengths } from "../../context/CheckedStrenghsContext";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
+import { useFetchQuestions } from "../../hooks/useFetchQuestions";
+import { useCreateQuestion } from "../../hooks/useCreateQuestion";
 
-const StrengthCreationPage = () => {
-  const { checkedStrengths, setCheckedStrengths } = useCheckedStrengths();
+const QuestionCreationPage = () => {
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+  const [checkedQuestions, setCheckedQuestions] = useState<string[]>(() => {
+    const saved = localStorage.getItem("selectedQuestions");
+    return saved ? JSON.parse(saved) : [];
+  });
   const [refresh, setRefresh] = useState(false);
   const navigate = useNavigate();
   const { type } = useParams();
   const token = localStorage.getItem("token") || "";
   const id = getUserId(token) || "";
-  const { data, fetchData } = useFetchStrengths(id, type!, token, refresh);
-  const { handleAddStrength } = useCreateStrength(token, setRefresh);
+  const { data, fetchData } = useFetchQuestions(id, type!, token, refresh);
+  const { handleAddQuestion } = useCreateQuestion(token, setRefresh);
   const onCheckAllChange: CheckboxProps["onChange"] = useCallback(
     (e: CheckboxChangeEvent) => {
-      setCheckedStrengths(e.target.checked ? data.map((item) => item._id) : []);
+      setCheckedQuestions(e.target.checked ? data.map((item) => item._id) : []);
     },
-    [data, setCheckedStrengths]
+    [data, setCheckedQuestions]
   );
   const handleNavigation = () => {
-    navigate("/solutions");
+    navigate("/actions");
   };
 
   const togglePopUp = () => {
@@ -39,25 +41,25 @@ const StrengthCreationPage = () => {
 
   const onItemChange = useCallback(
     (item: StrengthItem, checked: boolean) => {
-      setCheckedStrengths((prevList) =>
+      setCheckedQuestions((prevList) =>
         checked
           ? [...prevList, item._id]
           : prevList.filter((id) => id !== item._id)
       );
     },
-    [setCheckedStrengths]
+    [setCheckedQuestions]
   );
   useEffect(() => {
-    localStorage.setItem("selectedStrengths", JSON.stringify(checkedStrengths));
-  }, [checkedStrengths]);
+    localStorage.setItem("selectedQuestions", JSON.stringify(checkedQuestions));
+  }, [checkedQuestions]);
 
   const checkAll = useMemo(
-    () => data.length > 0 && checkedStrengths.length === data.length,
-    [data.length, checkedStrengths.length]
+    () => data.length > 0 && checkedQuestions.length === data.length,
+    [data.length, checkedQuestions.length]
   );
   const indeterminate = useMemo(
-    () => checkedStrengths.length > 0 && checkedStrengths.length < data.length,
-    [checkedStrengths.length, data.length]
+    () => checkedQuestions.length > 0 && checkedQuestions.length < data.length,
+    [checkedQuestions.length, data.length]
   );
 
   return (
@@ -90,7 +92,6 @@ const StrengthCreationPage = () => {
             next={fetchData}
             hasMore={data.length < 0}
             loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-            endMessage={<Divider plain>No more strengths</Divider>}
             scrollableTarget="scrollableDiv"
           >
             <List
@@ -103,7 +104,7 @@ const StrengthCreationPage = () => {
                     </Collapse.Panel>
                   </Collapse>
                   <Checkbox
-                    checked={checkedStrengths.includes(item._id)}
+                    checked={checkedQuestions.includes(item._id)}
                     onChange={(e) => onItemChange(item, e.target.checked)}
                   />
                 </List.Item>
@@ -122,13 +123,12 @@ const StrengthCreationPage = () => {
       {isPopUpVisible && (
         <CreationPopUp
           text="strength"
-          handleSubmit={handleAddStrength}
+          handleSubmit={handleAddQuestion}
           onClose={togglePopUp}
-          isSolutionCard={false}
         />
       )}
     </div>
   );
 };
 
-export default StrengthCreationPage;
+export default QuestionCreationPage;

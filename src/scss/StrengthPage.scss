@@ -4,6 +4,21 @@
   flex-direction: column;
   justify-content: center;
 }
+.overlay::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+.add-icon-container {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 10px;
+}
 .check-all-container {
   display: flex;
   justify-content: end;
@@ -24,6 +39,7 @@
   .ant-collapse-header {
     font-weight: 700 !important;
   }
+
   .ant-collapse-expand-icon {
     display: none !important;
   }
@@ -35,4 +51,7 @@
 }
 .ant-collapse-header {
   padding: 5px 15px !important;
+}
+.ant-list-item {
+  padding: 12px 10px 12px 0 !important;
 }
