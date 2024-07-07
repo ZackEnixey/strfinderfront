@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const CreatorDashboardPage = () => {
-  const navigate = useNavigate();
   const [creatorDashboard, setCreatorDashboard] = useState<number>(4);
+  const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const creatorDashboardExampleFunction = () => {
     setCreatorDashboard(creatorDashboard + 1);
@@ -16,16 +18,16 @@ const CreatorDashboardPage = () => {
 
   return (
     <div>
-      <div>Your Game Code:</div>
+      <div> {t('yourGameCode')}:</div>
       <div>
         <div>123456</div>
         <div>123457</div>
         <div>123458</div>
       </div>
-      <div>If you want to crate a new game:</div>
+      <div>{t('youCreateNewGame')}:</div>
       <div>
         <button onClick={creatorDashboardExampleFunction}>
-          Create A new Match
+          {t('createNewMatch')}
         </button>
       </div>
     </div>

@@ -1,23 +1,26 @@
-import { Checkbox, CheckboxProps, List, Skeleton } from "antd";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { Collapse } from "antd";
-import StrFinderButton from "../reusableParts/StrFinderButton";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { StrengthItem } from "../../types/types";
-import { PlusSquareOutlined } from "@ant-design/icons";
-import CreationPopUp from "../reusableParts/CreationPopUp";
+import { Checkbox, CheckboxProps, List, Skeleton, Collapse } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
+import { PlusSquareOutlined } from "@ant-design/icons";
+import { useTranslation } from 'react-i18next';
+
+import InfiniteScroll from "react-infinite-scroll-component";
+import StrFinderButton from "../reusableParts/StrFinderButton";
+import { StrengthItem } from "../../types/types";
+import CreationPopUp from "../reusableParts/CreationPopUp";
 import { useSolutions } from "../../hooks/useSolutions";
 import { useCheckedSolutions } from "../../context/CheckedSoltuionsContext";
 import { useCreateSolution } from "../../hooks/useCreateSolution";
 
 const SolutionListing = () => {
-  const { checkedSolutions, setCheckedSolutions } = useCheckedSolutions();
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+
   const token = localStorage.getItem("token") || "";
   const { type } = useParams<{ type: string }>();
   const { handleAddSolution } = useCreateSolution(token, type);
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const { checkedSolutions, setCheckedSolutions } = useCheckedSolutions();
   const {
     emotionalSolutions,
     mentalSolutions,
@@ -65,6 +68,7 @@ const SolutionListing = () => {
     () => data.length > 0 && checkedSolutions.length === data.length,
     [data.length, checkedSolutions.length]
   );
+
   const indeterminate = useMemo(
     () => checkedSolutions.length > 0 && checkedSolutions.length < data.length,
     [checkedSolutions.length, data.length]
@@ -88,6 +92,7 @@ const SolutionListing = () => {
     },
     [setCheckedSolutions]
   );
+
   useEffect(() => {
     localStorage.setItem("selectedSolutions", JSON.stringify(checkedSolutions));
   }, [checkedSolutions]);
@@ -100,7 +105,7 @@ const SolutionListing = () => {
         </div>
         <div className="check-all-container">
           <div className="check-all">
-            <div className="check-all-label">Select all</div>
+            <div className="check-all-label">{t('selectAll')}</div>
             <Checkbox
               indeterminate={indeterminate}
               onChange={onCheckAllChange}

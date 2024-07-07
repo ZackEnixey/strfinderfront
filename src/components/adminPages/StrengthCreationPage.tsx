@@ -2,6 +2,8 @@ import { Checkbox, CheckboxProps, Divider, List, Skeleton } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate, useParams } from "react-router-dom";
 import { Collapse } from "antd";
+import { useTranslation } from 'react-i18next';
+
 import StrFinderButton from "../reusableParts/StrFinderButton";
 import { getUserId } from "../../utils/decodedToken";
 import { useFetchStrengths } from "../../hooks/useFetchStrenghts";
@@ -14,15 +16,18 @@ import { useCheckedStrengths } from "../../context/CheckedStrenghsContext";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 
 const StrengthCreationPage = () => {
-  const { checkedStrengths, setCheckedStrengths } = useCheckedStrengths();
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const [refresh, setRefresh] = useState(false);
+
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { type } = useParams();
   const token = localStorage.getItem("token") || "";
   const id = getUserId(token) || "";
+
   const { data, fetchData } = useFetchStrengths(id, type!, token, refresh);
   const { handleAddStrength } = useCreateStrength(token, setRefresh);
+  const { checkedStrengths, setCheckedStrengths } = useCheckedStrengths();
   const onCheckAllChange: CheckboxProps["onChange"] = useCallback(
     (e: CheckboxChangeEvent) => {
       setCheckedStrengths(e.target.checked ? data.map((item) => item._id) : []);
@@ -47,6 +52,7 @@ const StrengthCreationPage = () => {
     },
     [setCheckedStrengths]
   );
+
   useEffect(() => {
     localStorage.setItem("selectedStrengths", JSON.stringify(checkedStrengths));
   }, [checkedStrengths]);
@@ -55,6 +61,7 @@ const StrengthCreationPage = () => {
     () => data.length > 0 && checkedStrengths.length === data.length,
     [data.length, checkedStrengths.length]
   );
+
   const indeterminate = useMemo(
     () => checkedStrengths.length > 0 && checkedStrengths.length < data.length,
     [checkedStrengths.length, data.length]
@@ -68,7 +75,7 @@ const StrengthCreationPage = () => {
         </div>
         <div className="check-all-container">
           <div className="check-all">
-            <div className="check-all-label">Select all</div>
+            <div className="check-all-label">{t('selectAll')}</div>
             <Checkbox
               indeterminate={indeterminate}
               onChange={onCheckAllChange}
@@ -90,7 +97,7 @@ const StrengthCreationPage = () => {
             next={fetchData}
             hasMore={data.length < 0}
             loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-            endMessage={<Divider plain>No more strengths</Divider>}
+            endMessage={<Divider plain>{t('noMoreStr')}</Divider>}
             scrollableTarget="scrollableDiv"
           >
             <List
@@ -116,7 +123,7 @@ const StrengthCreationPage = () => {
         <StrFinderButton
           onClick={handleNavigation}
           btnColor="green"
-          textContent="NEXT"
+          textContent={t('next').toUpperCase()}
         />
       </div>
       {isPopUpVisible && (

@@ -1,14 +1,18 @@
 import React from "react";
-import { Button, Divider, List, Skeleton } from "antd";
 import { useNavigate } from "react-router-dom";
+import { Button, Divider, List, Skeleton } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { useTranslation } from 'react-i18next';
+
+
 import StrFinderButton from "../reusableParts/StrFinderButton";
 import { useFetchUserGameCodes } from "../../hooks/useFetchUserGameCodes";
 import { useDeleteGameCode } from "../../hooks/useDeleteGameCode";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const token = localStorage.getItem("token") || "";
   const { data, fetchData, setData } = useFetchUserGameCodes(token);
   const { handleDelete } = useDeleteGameCode(token, setData);
@@ -16,7 +20,7 @@ const DashboardPage: React.FC = () => {
   return (
     <div className="dashboard-container">
       <div>
-        <div className="main-label">YOUR GAME CODES:</div>
+        <div className="main-label">{t('yourGameCodes')}:</div>
         <div
           id="scrollableDiv"
           style={{
@@ -31,7 +35,7 @@ const DashboardPage: React.FC = () => {
             next={fetchData}
             hasMore={data.length < 0}
             loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-            endMessage={<Divider plain>No more game codes</Divider>}
+            endMessage={<Divider plain>{t('noMoreGameCodes')}</Divider>}
             scrollableTarget="scrollableDiv"
           >
             <List
@@ -61,7 +65,7 @@ const DashboardPage: React.FC = () => {
         </div>
       </div>
       <div>
-        <p className="description">If you want to create a new game:</p>
+        <p className="description">{t('youCreateNewGame')}:</p>
         <div></div>
         <StrFinderButton
           onClick={() => navigate("/strengths")}
