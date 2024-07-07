@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+
 import strFinder from "../../assets/strFinder.png";
 import Languages from "../reusableParts/Languages";
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import i18n from '../../i18n/i18n';
+import { useTranslation } from 'react-i18next';
 
 // Define the type for the language options
 type LanguageOption = {
@@ -18,6 +19,8 @@ const languages: LanguageOption[] = [
 const LanguageSelector: React.FC = () => {
   const [selectedLanguage, setSelectedLanguage] = useState<string>(languages[0].value);
 
+  const { t } = useTranslation();
+
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedLanguageAbbreviation = event.target.value;
     setSelectedLanguage(selectedLanguageAbbreviation);
@@ -26,7 +29,7 @@ const LanguageSelector: React.FC = () => {
 
   return (
     <div>
-      <label htmlFor="language-select">Choose a language:</label>
+      <label htmlFor="language-select">{t('chooseLanguage')}:</label>
       <select id="language-select" value={selectedLanguage} onChange={handleChange}>
         {languages.map((language) => (
           <option key={language.value} value={language.value}>
@@ -34,7 +37,7 @@ const LanguageSelector: React.FC = () => {
           </option>
         ))}
       </select>
-      <p>Selected Language: {selectedLanguage}</p>
+      <p>{t('selectedLanguage')}: {selectedLanguage}</p>
     </div>
   );
 };
