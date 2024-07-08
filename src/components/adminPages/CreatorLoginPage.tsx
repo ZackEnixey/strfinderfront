@@ -1,8 +1,10 @@
-import { Input } from "antd";
-import { UnlockOutlined, UserOutlined } from "@ant-design/icons";
-import StrFinderButton from "../reusableParts/StrFinderButton";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Input } from "antd";
+import { UnlockOutlined, UserOutlined } from "@ant-design/icons";
+import { useTranslation } from 'react-i18next';
+
+import StrFinderButton from "../reusableParts/StrFinderButton";
 import { LOGIN_URL } from "../../apis/apiUrls";
 import { useAuth } from "../../context/AuthContext";
 
@@ -14,19 +16,21 @@ const CreatorLoginPage = () => {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { t } = useTranslation();
+
   //handling the Submit of the login
   const handleSubmit = async () => {
     // Validate email and password
     if (password === "" || email === "") {
-      setErrorMessage("Email and Password are required");
+      setErrorMessage(t('emailPasswordReq'));
       return;
     }
     if (!emailRegex.test(email)) {
-      setErrorMessage("Invalid email format");
+      setErrorMessage(t('invalidEmailForm'));
       return;
     }
     if (password.length < 8) {
-      setErrorMessage("Password must be at least 8 characters");
+      setErrorMessage(t('passwordMustBe8Char'));
       return;
     }
     setButtonLoading(true);
@@ -44,7 +48,7 @@ const CreatorLoginPage = () => {
       const data = await response.json();
       if (data.success === false) {
         setButtonLoading(false);
-        setErrorMessage("Invalid email or password"); // if the success in false then say that the email or password are invalid
+        setErrorMessage(t('invalidEmailOrPass')); // if the success in false then say that the email or password are invalid
       } else {
         setButtonLoading(false);
         login(data.accessToken);
@@ -52,7 +56,7 @@ const CreatorLoginPage = () => {
         navigate("/");
       }
     } catch (error) {
-      setErrorMessage("Something went wrong");
+      setErrorMessage(t('somethingWrong'));
       setButtonLoading(false);
     }
   };
@@ -61,7 +65,7 @@ const CreatorLoginPage = () => {
     <div className="login-container">
       <div className="inputs-container">
         <div className="input-container">
-          <div className="input-label">EMAIL:</div>
+          <div className="input-label">{t('email').toUpperCase()}:</div>
           <div>
             <Input
               className="custom-input"
@@ -78,7 +82,7 @@ const CreatorLoginPage = () => {
           </div>
         </div>
         <div className="input-container">
-          <div className="input-label">PASSWORD:</div>
+          <div className="input-label">{t('password')}:</div>
           <div>
             <Input
               size="large"
@@ -101,7 +105,7 @@ const CreatorLoginPage = () => {
         <StrFinderButton
           onClick={() => handleSubmit()}
           btnColor="green"
-          textContent={buttonLoading ? "Loading ..." : "LOGIN"}
+          textContent={buttonLoading ? `${t('loading')}...` : `${t('login')}`}
         />
       </div>
     </div>

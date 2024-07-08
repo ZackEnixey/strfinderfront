@@ -13,6 +13,7 @@ import { SolutionItem, StrengthItem } from "../../types/types";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import CreationPopUp from "../reusableParts/CreationPopUp";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useSolutions } from "../../hooks/useSolutions";
 import { useCheckedSolutions } from "../../context/CheckedSoltuionsContext";
 import { useCreateSolution } from "../../hooks/useCreateSolution";
@@ -24,6 +25,7 @@ const SolutionListing = () => {
     .trim();
   const { checkedSolutions, setCheckedSolutions } = useCheckedSolutions();
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+
   const token = localStorage.getItem("token") || "";
   const { type } = useParams<{ type: string }>();
   const [title, setTitle] = useState("");
@@ -37,6 +39,7 @@ const SolutionListing = () => {
   const { handleEditSolution } = useEditSolution(token, cardId);
 
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const {
     emotionalSolutions,
     mentalSolutions,
@@ -84,6 +87,7 @@ const SolutionListing = () => {
     () => data.length > 0 && checkedSolutions.length === data.length,
     [data.length, checkedSolutions.length]
   );
+
   const indeterminate = useMemo(
     () => checkedSolutions.length > 0 && checkedSolutions.length < data.length,
     [checkedSolutions.length, data.length]
@@ -107,6 +111,7 @@ const SolutionListing = () => {
     },
     [setCheckedSolutions]
   );
+
   useEffect(() => {
     localStorage.setItem("selectedSolutions", JSON.stringify(checkedSolutions));
   }, [checkedSolutions]);

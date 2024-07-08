@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
 type User = {
@@ -11,6 +12,8 @@ const UserList: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -27,12 +30,12 @@ const UserList: React.FC = () => {
     fetchUsers();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div>{t('loading')}...</div>;
   if (error) return <div>{error}</div>;
 
   return (
     <div>
-      <h1>User List</h1>
+      <h1>{t('userList')}</h1>
       <ul>
         {users.map(user => (
           <li key={user.id}>
