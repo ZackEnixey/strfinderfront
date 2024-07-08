@@ -1,21 +1,31 @@
-import { Checkbox, CheckboxProps, Divider, List, Skeleton } from "antd";
+import { Button, Checkbox, CheckboxProps, Divider, List, Skeleton } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate, useParams } from "react-router-dom";
 import { Collapse } from "antd";
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
 import StrFinderButton from "../reusableParts/StrFinderButton";
 import { getUserId } from "../../utils/decodedToken";
 import { useFetchStrengths } from "../../hooks/useFetchStrenghts";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { StrengthItem } from "../../types/types";
-import { PlusSquareOutlined } from "@ant-design/icons";
+import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import CreationPopUp from "../reusableParts/CreationPopUp";
 import { useCreateStrength } from "../../hooks/useCreateStrength";
 import { useCheckedStrengths } from "../../context/CheckedStrenghsContext";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
+import { useEditStrength } from "../../hooks/useEditStrength";
 
 const StrengthCreationPage = () => {
+  const darkGreenColor = getComputedStyle(document.documentElement)
+    .getPropertyValue("--btnDarkGreen")
+    .trim();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [additionalText, setAdditionalText] = useState("");
+  const [isEdit, setIsEdit] = useState(false);
+  const [cardId, setCardId] = useState("");
+  const { checkedStrengths, setCheckedStrengths } = useCheckedStrengths();
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
@@ -27,7 +37,7 @@ const StrengthCreationPage = () => {
 
   const { data, fetchData } = useFetchStrengths(id, type!, token, refresh);
   const { handleAddStrength } = useCreateStrength(token, setRefresh);
-  const { checkedStrengths, setCheckedStrengths } = useCheckedStrengths();
+  const { handleEditStrength } = useEditStrength(token, setRefresh, cardId);
   const onCheckAllChange: CheckboxProps["onChange"] = useCallback(
     (e: CheckboxChangeEvent) => {
       setCheckedStrengths(e.target.checked ? data.map((item) => item._id) : []);
@@ -66,21 +76,32 @@ const StrengthCreationPage = () => {
     () => checkedStrengths.length > 0 && checkedStrengths.length < data.length,
     [checkedStrengths.length, data.length]
   );
-
   return (
     <div className={`dashboard-container ${isPopUpVisible ? "overlay" : ""}`}>
       <div>
-        <div className="add-icon-container" onClick={togglePopUp}>
-          <PlusSquareOutlined style={{ fontSize: "20px", color: "#1C274C" }} />
+        <div
+          className="add-icon-container"
+          onClick={() => {
+            setIsEdit(false);
+            setAdditionalText("");
+            setDescription("");
+            setTitle("");
+            togglePopUp();
+          }}
+        >
+          <Button type="primary" style={{ backgroundColor: darkGreenColor }}>
+            Add
+            <PlusOutlined />
+          </Button>
         </div>
         <div className="check-all-container">
           <div className="check-all">
-            <div className="check-all-label">{t('selectAll')}</div>
             <Checkbox
               indeterminate={indeterminate}
               onChange={onCheckAllChange}
               checked={checkAll}
             />
+            <div className="check-all-label">Select all</div>
           </div>
         </div>
         <div
@@ -97,21 +118,34 @@ const StrengthCreationPage = () => {
             next={fetchData}
             hasMore={data.length < 0}
             loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-            endMessage={<Divider plain>{t('noMoreStr')}</Divider>}
+            endMessage={<Divider plain>{t("noMoreStr")}</Divider>}
             scrollableTarget="scrollableDiv"
           >
             <List
               dataSource={data}
               renderItem={(item: StrengthItem, index) => (
                 <List.Item key={index}>
+                  <Checkbox
+                    checked={checkedStrengths.includes(item._id)}
+                    onChange={(e) => onItemChange(item, e.target.checked)}
+                  />
                   <Collapse className="list-collapse-item">
                     <Collapse.Panel header={item.title} key={index}>
                       <p>{item.description}</p>
                     </Collapse.Panel>
                   </Collapse>
-                  <Checkbox
-                    checked={checkedStrengths.includes(item._id)}
-                    onChange={(e) => onItemChange(item, e.target.checked)}
+                  <Button
+                    type="text"
+                    shape="circle"
+                    icon={<EditOutlined />}
+                    onClick={() => {
+                      setIsEdit(true);
+                      setTitle(item.title);
+                      setCardId(item._id);
+                      setDescription(item.description);
+                      setAdditionalText(item.additionalText);
+                      togglePopUp();
+                    }}
                   />
                 </List.Item>
               )}
@@ -123,13 +157,17 @@ const StrengthCreationPage = () => {
         <StrFinderButton
           onClick={handleNavigation}
           btnColor="green"
-          textContent={t('next').toUpperCase()}
+          textContent={t("next").toUpperCase()}
         />
       </div>
       {isPopUpVisible && (
         <CreationPopUp
+          initialTitle={title}
+          initialDescription={description}
+          initialText={additionalText}
           text="strength"
-          handleSubmit={handleAddStrength}
+          handleSubmit={isEdit ? handleEditStrength : handleAddStrength}
+          isEdit={isEdit}
           onClose={togglePopUp}
           isSolutionCard={false}
         />
