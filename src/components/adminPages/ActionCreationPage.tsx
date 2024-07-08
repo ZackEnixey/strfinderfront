@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxProps, List, Skeleton } from "antd";
+import { Button, Checkbox, CheckboxProps, List, Skeleton } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useNavigate, useParams } from "react-router-dom";
 import { Collapse } from "antd";
@@ -6,12 +6,16 @@ import StrFinderButton from "../reusableParts/StrFinderButton";
 import { getUserId } from "../../utils/decodedToken";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { StrengthItem } from "../../types/types";
-import { PlusSquareOutlined } from "@ant-design/icons";
+import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import CreationPopUp from "../reusableParts/CreationPopUp";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useFetchActions } from "../../hooks/useFetchActions";
+import { useCreateAction } from "../../hooks/useCreateAction";
 
 const ActionCreationPage = () => {
+  const darkGreenColor = getComputedStyle(document.documentElement)
+    .getPropertyValue("--btnDarkGreen")
+    .trim();
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const [checkedActions, setCheckedActions] = useState<string[]>(() => {
     const saved = localStorage.getItem("selectedActions");
@@ -21,6 +25,7 @@ const ActionCreationPage = () => {
   const navigate = useNavigate();
   const { type } = useParams();
   const token = localStorage.getItem("token") || "";
+  const { handleAddAction } = useCreateAction(token, setRefresh);
   const id = getUserId(token) || "";
   const { data, fetchData } = useFetchActions(id, type!, token, refresh);
   const onCheckAllChange: CheckboxProps["onChange"] = useCallback(
@@ -64,16 +69,19 @@ const ActionCreationPage = () => {
     <div className={`dashboard-container ${isPopUpVisible ? "overlay" : ""}`}>
       <div>
         <div className="add-icon-container" onClick={togglePopUp}>
-          <PlusSquareOutlined style={{ fontSize: "20px", color: "#1C274C" }} />
+          <Button type="primary" style={{ backgroundColor: darkGreenColor }}>
+            Add
+            <PlusOutlined />
+          </Button>
         </div>
         <div className="check-all-container">
           <div className="check-all">
-            <div className="check-all-label">Select all</div>
             <Checkbox
               indeterminate={indeterminate}
               onChange={onCheckAllChange}
               checked={checkAll}
             />
+            <div className="check-all-label">Select all</div>
           </div>
         </div>
         <div
@@ -96,15 +104,16 @@ const ActionCreationPage = () => {
               dataSource={data}
               renderItem={(item: StrengthItem, index) => (
                 <List.Item key={index}>
+                  <Checkbox
+                    checked={checkedActions.includes(item._id)}
+                    onChange={(e) => onItemChange(item, e.target.checked)}
+                  />
                   <Collapse className="list-collapse-item">
                     <Collapse.Panel header={item.title} key={index}>
                       <p>{item.description}</p>
                     </Collapse.Panel>
                   </Collapse>
-                  <Checkbox
-                    checked={checkedActions.includes(item._id)}
-                    onChange={(e) => onItemChange(item, e.target.checked)}
-                  />
+                  <Button type="text" shape="circle" icon={<EditOutlined />} />
                 </List.Item>
               )}
             />
@@ -120,8 +129,8 @@ const ActionCreationPage = () => {
       </div>
       {isPopUpVisible && (
         <CreationPopUp
-          text="strength"
-          handleSubmit={() => {}}
+          text="action"
+          handleSubmit={handleAddAction}
           onClose={togglePopUp}
           isActionCard={true}
         />

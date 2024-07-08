@@ -1,22 +1,41 @@
-import { Checkbox, CheckboxProps, List, Skeleton } from "antd";
+import {
+  Button,
+  Checkbox,
+  CheckboxProps,
+  List,
+  Skeleton,
+  Collapse,
+} from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Collapse } from "antd";
 import StrFinderButton from "../reusableParts/StrFinderButton";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { StrengthItem } from "../../types/types";
-import { PlusSquareOutlined } from "@ant-design/icons";
+import { SolutionItem, StrengthItem } from "../../types/types";
+import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import CreationPopUp from "../reusableParts/CreationPopUp";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSolutions } from "../../hooks/useSolutions";
 import { useCheckedSolutions } from "../../context/CheckedSoltuionsContext";
 import { useCreateSolution } from "../../hooks/useCreateSolution";
+import { useEditSolution } from "../../hooks/useEditSolution";
 
 const SolutionListing = () => {
+  const darkGreenColor = getComputedStyle(document.documentElement)
+    .getPropertyValue("--btnDarkGreen")
+    .trim();
   const { checkedSolutions, setCheckedSolutions } = useCheckedSolutions();
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
   const token = localStorage.getItem("token") || "";
   const { type } = useParams<{ type: string }>();
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [additionalText, setAdditionalText] = useState("");
+  const [isEdit, setIsEdit] = useState(false);
+  const [cardId, setCardId] = useState("");
+  const [urlForLiterature, setUrlForLiterature] = useState("");
+  const [urlForTedTalk, setUrlForTedTalk] = useState("");
   const { handleAddSolution } = useCreateSolution(token, type);
+  const { handleEditSolution } = useEditSolution(token, cardId);
+
   const navigate = useNavigate();
   const {
     emotionalSolutions,
@@ -25,7 +44,7 @@ const SolutionListing = () => {
     relationsSolutions,
   } = useSolutions();
 
-  let data: StrengthItem[] = [];
+  let data: SolutionItem[] = [];
 
   switch (type) {
     case "emotional":
@@ -92,20 +111,38 @@ const SolutionListing = () => {
     localStorage.setItem("selectedSolutions", JSON.stringify(checkedSolutions));
   }, [checkedSolutions]);
 
+  useEffect(() => {
+    console.log("isEdit", cardId);
+  }, [cardId]);
+
   return (
     <div className={`dashboard-container ${isPopUpVisible ? "overlay" : ""}`}>
       <div>
-        <div className="add-icon-container" onClick={togglePopUp}>
-          <PlusSquareOutlined style={{ fontSize: "20px", color: "#1C274C" }} />
+        <div
+          className="add-icon-container"
+          onClick={() => {
+            setIsEdit(false);
+            setAdditionalText("");
+            setDescription("");
+            setTitle("");
+            togglePopUp();
+            setUrlForLiterature("");
+            setUrlForTedTalk("");
+          }}
+        >
+          <Button type="primary" style={{ backgroundColor: darkGreenColor }}>
+            Add
+            <PlusOutlined />
+          </Button>
         </div>
         <div className="check-all-container">
           <div className="check-all">
-            <div className="check-all-label">Select all</div>
             <Checkbox
               indeterminate={indeterminate}
               onChange={onCheckAllChange}
               checked={checkAll}
             />
+            <div className="check-all-label">Select all</div>
           </div>
         </div>
         <div
@@ -134,8 +171,12 @@ const SolutionListing = () => {
           >
             <List
               dataSource={data}
-              renderItem={(item: StrengthItem, index) => (
+              renderItem={(item: SolutionItem, index) => (
                 <List.Item key={index}>
+                  <Checkbox
+                    checked={checkedSolutions.includes(item._id)}
+                    onChange={(e) => onItemChange(item, e.target.checked)}
+                  />
                   <Collapse
                     className={`list-collapse-item ${
                       type === "emotional"
@@ -151,9 +192,20 @@ const SolutionListing = () => {
                       <p>{item.description}</p>
                     </Collapse.Panel>
                   </Collapse>
-                  <Checkbox
-                    checked={checkedSolutions.includes(item._id)}
-                    onChange={(e) => onItemChange(item, e.target.checked)}
+                  <Button
+                    type="text"
+                    shape="circle"
+                    icon={<EditOutlined />}
+                    onClick={() => {
+                      setIsEdit(true);
+                      setTitle(item.title);
+                      setCardId(item._id);
+                      setDescription(item.description);
+                      setAdditionalText(item.additionalText);
+                      setUrlForLiterature(item.urlForLiterature);
+                      setUrlForTedTalk(item.urlForTedTalk);
+                      togglePopUp();
+                    }}
                   />
                 </List.Item>
               )}
@@ -170,10 +222,16 @@ const SolutionListing = () => {
       </div>
       {isPopUpVisible && (
         <CreationPopUp
-          text="strength"
-          handleSubmit={handleAddSolution}
+          initialTitle={title}
+          initialDescription={description}
+          initialText={additionalText}
+          initialTedUrl={urlForLiterature}
+          initialLiteratureUrl={urlForTedTalk}
+          text="solution"
+          handleSubmit={isEdit ? handleEditSolution : handleAddSolution}
           onClose={togglePopUp}
           isSolutionCard={true}
+          isEdit={isEdit}
         />
       )}
     </div>

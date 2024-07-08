@@ -9,8 +9,10 @@ export const useCreateAction = (
   const handleAddAction = (
     title: string,
     description: string,
-    numberOfUpperTokens?: number,
-    additionalText?: string
+    additionalText: string,
+    urlForTedTalk?: string,
+    urlForLiterature?: string,
+    numberOfUpperTokens?: number
   ) => {
     const userEmail = getUserEmail(token);
     const requestBody = {
@@ -19,6 +21,7 @@ export const useCreateAction = (
       description: description,
       additionalText: additionalText,
       numberOfUpperTokens: numberOfUpperTokens,
+      custom: true,
     };
 
     fetch(GET_ACTIONS_URL, {

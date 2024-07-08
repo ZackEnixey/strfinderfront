@@ -21,7 +21,7 @@
 }
 .check-all-container {
   display: flex;
-  justify-content: end;
+  margin-left: 10px;
   margin-bottom: 10px;
   .check-all {
     display: flex;
@@ -54,4 +54,5 @@
 }
 .ant-list-item {
   padding: 12px 10px 12px 0 !important;
+  margin-left: 10px;
 }

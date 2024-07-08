@@ -1,10 +1,16 @@
 import { CloseOutlined } from "@ant-design/icons";
 import StrFinderButton from "./StrFinderButton";
-import { Input } from "antd";
+import { Input, Select } from "antd";
 import { useState } from "react";
 
 interface CreationPopUpProps {
   text: string;
+  initialTitle?: string;
+  initialDescription?: string;
+  initialText?: string;
+  initialTedUrl?: string;
+  initialLiteratureUrl?: string;
+  isEdit?: boolean;
   onClose: () => void;
   handleSubmit: (
     title: string,
@@ -20,15 +26,25 @@ interface CreationPopUpProps {
 
 const CreationPopUp: React.FC<CreationPopUpProps> = ({
   text,
+  initialTitle,
+  initialDescription,
+  initialText,
+  initialTedUrl,
+  initialLiteratureUrl,
+  isEdit,
   onClose,
   handleSubmit,
   isSolutionCard,
+  isActionCard,
 }) => {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [additionalText, setAdditionalText] = useState("");
-  const [urlForTedTalk, setUrlForTedTalk] = useState("");
-  const [urlForLiterature, setUrlForLiterature] = useState("");
+  const [title, setTitle] = useState(initialTitle || "");
+  const [description, setDescription] = useState(initialDescription || "");
+  const [additionalText, setAdditionalText] = useState(initialText || "");
+  const [urlForTedTalk, setUrlForTedTalk] = useState(initialTedUrl || "");
+  const [urlForLiterature, setUrlForLiterature] = useState(
+    initialLiteratureUrl || ""
+  );
+  const [numberOfUpperTokens, setNumberOfUpperTokens] = useState(1);
 
   const handleSubmitForm = () => {
     if (isSolutionCard) {
@@ -39,10 +55,22 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
         urlForLiterature,
         urlForTedTalk
       );
+    } else if (isActionCard) {
+      handleSubmit(
+        title,
+        description,
+        additionalText,
+        undefined,
+        undefined,
+        numberOfUpperTokens
+      );
     } else {
       handleSubmit(title, description, additionalText);
     }
     onClose();
+  };
+  const handleChange = (value: number) => {
+    setNumberOfUpperTokens(value);
   };
   return (
     <div className="pop-up-container">
@@ -123,10 +151,29 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
               </div>
             </div>
           )}
+          {isActionCard && (
+            <div className="input-container">
+              <div className="input-label">Number Of Upper Tokens:</div>
+              <div>
+                <Select
+                  value={numberOfUpperTokens}
+                  style={{ width: 100 }}
+                  onChange={handleChange}
+                  options={[
+                    { value: "1", label: "1" },
+                    { value: "2", label: "2" },
+                    { value: "3", label: "3" },
+                    { value: "4", label: "4" },
+                    { value: "5", label: "5" },
+                  ]}
+                />
+              </div>
+            </div>
+          )}
           <div>
             <StrFinderButton
               btnColor="pink"
-              textContent="CREATE"
+              textContent={isEdit ? "EDIT" : "CREATE"}
               onClick={() => handleSubmitForm()}
             />
           </div>
