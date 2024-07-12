@@ -1,25 +1,27 @@
 import { message } from "antd";
-import { GET_SOLUTIONS_URL } from "../apis/apiUrls";
-import { useSolutions } from "./useSolutions";
+import { GET_ACTIONS_URL } from "../apis/apiUrls";
 
-export const useEditSolution = (token: string, cardId: string) => {
-  const { setRefresh } = useSolutions();
-  const handleEditSolution = (
+export const useEditAction = (
+  token: string,
+  setRefresh: React.Dispatch<React.SetStateAction<boolean>>,
+  cardId: string
+) => {
+  const handleEditAction = (
     title: string,
     description: string,
     additionalText: string,
+    urlForTedTalk?: string,
     urlForLiterature?: string,
-    urlForTedTalk?: string
+    numberOfUpperTokens?: number
   ) => {
     const requestBody = {
       title,
       description,
       additionalText,
-      urlForLiterature,
-      urlForTedTalk,
+      numberOfUpperTokens,
     };
 
-    fetch(`${GET_SOLUTIONS_URL}/${cardId}`, {
+    fetch(`${GET_ACTIONS_URL}/${cardId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -28,13 +30,13 @@ export const useEditSolution = (token: string, cardId: string) => {
       body: JSON.stringify(requestBody),
     }).then((res) => {
       if (res.ok) {
-        message.success("Solution edited successfully.");
+        message.success("Action edited successfully.");
         setRefresh((prev) => !prev);
       } else {
-        message.error("Failed to edit solution");
+        message.error("Failed to edit action");
       }
     });
   };
 
-  return { handleEditSolution };
+  return { handleEditAction };
 };

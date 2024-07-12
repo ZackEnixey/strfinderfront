@@ -11,6 +11,7 @@ import CreationPopUp from "../reusableParts/CreationPopUp";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useFetchQuestions } from "../../hooks/useFetchQuestions";
 import { useCreateQuestion } from "../../hooks/useCreateQuestion";
+import { useEditQuestion } from "../../hooks/useEditQuestion";
 
 const QuestionCreationPage = () => {
   const darkGreenColor = getComputedStyle(document.documentElement)
@@ -21,6 +22,11 @@ const QuestionCreationPage = () => {
     const saved = localStorage.getItem("selectedQuestions");
     return saved ? JSON.parse(saved) : [];
   });
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [additionalText, setAdditionalText] = useState("");
+  const [isEdit, setIsEdit] = useState(false);
+  const [cardId, setCardId] = useState("");
   const [refresh, setRefresh] = useState(false);
   const navigate = useNavigate();
   const { type } = useParams();
@@ -28,6 +34,8 @@ const QuestionCreationPage = () => {
   const id = getUserId(token) || "";
   const { data, fetchData } = useFetchQuestions(id, type!, token, refresh);
   const { handleAddQuestion } = useCreateQuestion(token, setRefresh);
+  const { handleEditQuestion } = useEditQuestion(token, setRefresh, cardId);
+
   const onCheckAllChange: CheckboxProps["onChange"] = useCallback(
     (e: CheckboxChangeEvent) => {
       setCheckedQuestions(e.target.checked ? data.map((item) => item._id) : []);
@@ -68,7 +76,16 @@ const QuestionCreationPage = () => {
   return (
     <div className={`dashboard-container ${isPopUpVisible ? "overlay" : ""}`}>
       <div>
-        <div className="add-icon-container" onClick={togglePopUp}>
+        <div
+          className="add-icon-container"
+          onClick={() => {
+            setIsEdit(false);
+            setAdditionalText("");
+            setDescription("");
+            setTitle("");
+            togglePopUp();
+          }}
+        >
           <Button type="primary" style={{ backgroundColor: darkGreenColor }}>
             Add
             <PlusOutlined />
@@ -113,7 +130,19 @@ const QuestionCreationPage = () => {
                       <p>{item.description}</p>
                     </Collapse.Panel>
                   </Collapse>
-                  <Button type="text" shape="circle" icon={<EditOutlined />} />
+                  <Button
+                    type="text"
+                    shape="circle"
+                    icon={<EditOutlined />}
+                    onClick={() => {
+                      setIsEdit(true);
+                      setTitle(item.title);
+                      setCardId(item._id);
+                      setDescription(item.description);
+                      setAdditionalText(item.additionalText);
+                      togglePopUp();
+                    }}
+                  />
                 </List.Item>
               )}
             />
@@ -129,8 +158,12 @@ const QuestionCreationPage = () => {
       </div>
       {isPopUpVisible && (
         <CreationPopUp
+          initialTitle={title}
+          initialDescription={description}
+          initialText={additionalText}
           text="question"
-          handleSubmit={handleAddQuestion}
+          handleSubmit={isEdit ? handleEditQuestion : handleAddQuestion}
+          isEdit={isEdit}
           onClose={togglePopUp}
         />
       )}

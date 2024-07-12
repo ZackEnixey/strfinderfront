@@ -4,6 +4,7 @@ import { BoardContextProvider } from "./BoardContext";
 import { TestContextProvider } from "./TestContext";
 import { CheckedStrengthsProvider } from "./CheckedStrenghsContext";
 import { CheckedSolutionsProvider } from "./CheckedSoltuionsContext";
+import { ModeProvider } from "./ModeContext";
 
 interface GlobalContextProps {
   children: React.ReactNode;
@@ -12,15 +13,17 @@ interface GlobalContextProps {
 const GlobalContextProvider: FC<GlobalContextProps> = (props) => {
   return (
     <CoreContextProvider>
-      <BoardContextProvider>
-        <TestContextProvider>
-          <CheckedStrengthsProvider>
-            <CheckedSolutionsProvider>
-              {props.children}
-            </CheckedSolutionsProvider>
-          </CheckedStrengthsProvider>
-        </TestContextProvider>
-      </BoardContextProvider>
+      <ModeProvider>
+        <BoardContextProvider>
+          <TestContextProvider>
+            <CheckedStrengthsProvider>
+              <CheckedSolutionsProvider>
+                {props.children}
+              </CheckedSolutionsProvider>
+            </CheckedStrengthsProvider>
+          </TestContextProvider>
+        </BoardContextProvider>
+      </ModeProvider>
     </CoreContextProvider>
   );
 };

@@ -5,12 +5,13 @@ import { Collapse } from "antd";
 import StrFinderButton from "../reusableParts/StrFinderButton";
 import { getUserId } from "../../utils/decodedToken";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { StrengthItem } from "../../types/types";
+import { ActionItem } from "../../types/types";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import CreationPopUp from "../reusableParts/CreationPopUp";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useFetchActions } from "../../hooks/useFetchActions";
 import { useCreateAction } from "../../hooks/useCreateAction";
+import { useEditAction } from "../../hooks/useEditAction";
 
 const ActionCreationPage = () => {
   const darkGreenColor = getComputedStyle(document.documentElement)
@@ -21,12 +22,19 @@ const ActionCreationPage = () => {
     const saved = localStorage.getItem("selectedActions");
     return saved ? JSON.parse(saved) : [];
   });
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [additionalText, setAdditionalText] = useState("");
+  const [numberOfUpperTokens, setNumberOfUpperTokens] = useState(0);
+  const [isEdit, setIsEdit] = useState(false);
+  const [cardId, setCardId] = useState("");
   const [refresh, setRefresh] = useState(false);
   const navigate = useNavigate();
   const { type } = useParams();
   const token = localStorage.getItem("token") || "";
   const { handleAddAction } = useCreateAction(token, setRefresh);
   const id = getUserId(token) || "";
+  const { handleEditAction } = useEditAction(token, setRefresh, cardId);
   const { data, fetchData } = useFetchActions(id, type!, token, refresh);
   const onCheckAllChange: CheckboxProps["onChange"] = useCallback(
     (e: CheckboxChangeEvent) => {
@@ -35,7 +43,7 @@ const ActionCreationPage = () => {
     [data, setCheckedActions]
   );
   const handleNavigation = () => {
-    navigate("/actions");
+    navigate("/create-game");
   };
 
   const togglePopUp = () => {
@@ -43,7 +51,7 @@ const ActionCreationPage = () => {
   };
 
   const onItemChange = useCallback(
-    (item: StrengthItem, checked: boolean) => {
+    (item: ActionItem, checked: boolean) => {
       setCheckedActions((prevList) =>
         checked
           ? [...prevList, item._id]
@@ -68,7 +76,17 @@ const ActionCreationPage = () => {
   return (
     <div className={`dashboard-container ${isPopUpVisible ? "overlay" : ""}`}>
       <div>
-        <div className="add-icon-container" onClick={togglePopUp}>
+        <div
+          className="add-icon-container"
+          onClick={() => {
+            setIsEdit(false);
+            setAdditionalText("");
+            setDescription("");
+            setTitle("");
+            setNumberOfUpperTokens(0);
+            togglePopUp();
+          }}
+        >
           <Button type="primary" style={{ backgroundColor: darkGreenColor }}>
             Add
             <PlusOutlined />
@@ -102,7 +120,7 @@ const ActionCreationPage = () => {
           >
             <List
               dataSource={data}
-              renderItem={(item: StrengthItem, index) => (
+              renderItem={(item: ActionItem, index) => (
                 <List.Item key={index}>
                   <Checkbox
                     checked={checkedActions.includes(item._id)}
@@ -113,7 +131,20 @@ const ActionCreationPage = () => {
                       <p>{item.description}</p>
                     </Collapse.Panel>
                   </Collapse>
-                  <Button type="text" shape="circle" icon={<EditOutlined />} />
+                  <Button
+                    type="text"
+                    shape="circle"
+                    icon={<EditOutlined />}
+                    onClick={() => {
+                      setIsEdit(true);
+                      setTitle(item.title);
+                      setCardId(item._id);
+                      setDescription(item.description);
+                      setAdditionalText(item.additionalText);
+                      setNumberOfUpperTokens(item.numberOfUpperTokens);
+                      togglePopUp();
+                    }}
+                  />
                 </List.Item>
               )}
             />
@@ -129,8 +160,13 @@ const ActionCreationPage = () => {
       </div>
       {isPopUpVisible && (
         <CreationPopUp
+          initialTitle={title}
+          initialDescription={description}
+          initialText={additionalText}
+          initialNumber={numberOfUpperTokens}
           text="action"
-          handleSubmit={handleAddAction}
+          isEdit={isEdit}
+          handleSubmit={isEdit ? handleEditAction : handleAddAction}
           onClose={togglePopUp}
           isActionCard={true}
         />

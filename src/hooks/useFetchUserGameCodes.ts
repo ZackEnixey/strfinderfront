@@ -1,24 +1,20 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import { GET_USER_INFOS } from "../apis/apiUrls";
+import { GET_GAMES } from "../apis/apiUrls";
 import { getUserId } from "../utils/decodedToken";
+import { GameTemplateItem } from "../types/types";
 
-// Define the type for the fetch data response
-interface FetchDataResponse {
-  gameCodes: string[];
-}
-
-// Define the type for the return value of the hook
 interface UseFetchUserGameCodesReturn {
-  data: string[];
+  data: GameTemplateItem[];
   loading: boolean;
   fetchData: () => void;
-  setData: Dispatch<SetStateAction<string[]>>;
+  setData: Dispatch<SetStateAction<GameTemplateItem[]>>;
 }
 
 export const useFetchUserGameCodes = (
-  token: string
+  token: string,
+  refresh: boolean
 ): UseFetchUserGameCodesReturn => {
-  const [data, setData] = useState<string[]>([]);
+  const [data, setData] = useState<GameTemplateItem[]>([]);
   const [loading, setLoading] = useState(false);
 
   const fetchData = () => {
@@ -27,14 +23,14 @@ export const useFetchUserGameCodes = (
     setLoading(true);
     const userId = getUserId(token);
 
-    fetch(`${GET_USER_INFOS}/${userId}`, {
+    fetch(`${GET_GAMES}/${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
-      .then((body: FetchDataResponse) => {
-        setData(body.gameCodes);
+      .then((body) => {
+        setData(body);
         setLoading(false);
       })
       .catch(() => {
@@ -44,7 +40,7 @@ export const useFetchUserGameCodes = (
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [refresh]);
 
   return { data, loading, fetchData, setData };
 };

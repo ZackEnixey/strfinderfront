@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { message } from "antd";
 import { GET_ACTIONS_URL } from "../apis/apiUrls";
-import { StrengthItem } from "../types/types";
+import { ActionItem } from "../types/types";
 
 export const useFetchActions = (
   id: string,
@@ -9,7 +9,7 @@ export const useFetchActions = (
   token: string,
   refresh: boolean
 ) => {
-  const [data, setData] = useState<StrengthItem[]>([]);
+  const [data, setData] = useState<ActionItem[]>([]);
   const [loading, setLoading] = useState(false);
 
   const fetchData = () => {

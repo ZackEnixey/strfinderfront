@@ -12,6 +12,8 @@ import SolutionCreationPage from "../adminPages/SolutionCreationPage";
 import SolutionListing from "../adminPages/SolutionListing";
 import QuestionCreationPage from "../adminPages/QuestionCreationPage";
 import ActionCreationPage from "../adminPages/ActionCreationPage";
+import GameCreationPage from "../adminPages/GameCreationPage";
+import CreatorFinalPage from "../adminPages/CreatorFinalPage";
 
 const RoutesHandler = () => {
   const routes = [
@@ -25,6 +27,8 @@ const RoutesHandler = () => {
     { path: "/questions", element: <QuestionCreationPage /> },
     { path: "/actions", element: <ActionCreationPage /> },
     { path: "/gameHomePage", element: <GameHomePage /> },
+    { path: "/create-game", element: <GameCreationPage /> },
+    { path: "/final-page", element: <CreatorFinalPage /> },
     { path: "/createPlayerPage", element: <CreatePlayerPage /> },
     { path: "*", element: <NotFoundPage /> },
   ];

@@ -1,0 +1,38 @@
+.final-page-container {
+  height: 80vh;
+  .final-page {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .game-code {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .game-code h2 {
+      margin: 0;
+    }
+    .final-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      height: 50%;
+    }
+    .final-header {
+      margin: 0;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    .final-description {
+      font-size: 12px;
+      font-weight: 400;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+  }
+}

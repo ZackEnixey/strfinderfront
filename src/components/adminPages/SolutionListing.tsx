@@ -9,7 +9,7 @@ import {
 import InfiniteScroll from "react-infinite-scroll-component";
 import StrFinderButton from "../reusableParts/StrFinderButton";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { SolutionItem, StrengthItem } from "../../types/types";
+import { SolutionItem } from "../../types/types";
 import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import CreationPopUp from "../reusableParts/CreationPopUp";
 import { useNavigate, useParams } from "react-router-dom";
@@ -102,7 +102,7 @@ const SolutionListing = () => {
   };
 
   const onItemChange = useCallback(
-    (item: StrengthItem, checked: boolean) => {
+    (item: SolutionItem, checked: boolean) => {
       setCheckedSolutions((prevList) =>
         checked
           ? [...prevList, item._id]
@@ -206,7 +206,7 @@ const SolutionListing = () => {
                       setTitle(item.title);
                       setCardId(item._id);
                       setDescription(item.description);
-                      setAdditionalText(item.additionalText);
+                      setAdditionalText(item.info);
                       setUrlForLiterature(item.urlForLiterature);
                       setUrlForTedTalk(item.urlForTedTalk);
                       togglePopUp();

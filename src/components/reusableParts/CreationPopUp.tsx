@@ -11,6 +11,7 @@ interface CreationPopUpProps {
   initialText?: string;
   initialTedUrl?: string;
   initialLiteratureUrl?: string;
+  initialNumber?: number;
   isEdit?: boolean;
   onClose: () => void;
   handleSubmit: (
@@ -31,6 +32,7 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
   initialText,
   initialTedUrl,
   initialLiteratureUrl,
+  initialNumber,
   isEdit,
   onClose,
   handleSubmit,
@@ -44,11 +46,14 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
   const [urlForLiterature, setUrlForLiterature] = useState(
     initialLiteratureUrl || ""
   );
-  const [numberOfUpperTokens, setNumberOfUpperTokens] = useState(1);
+  const [numberOfUpperTokens, setNumberOfUpperTokens] = useState(
+    initialNumber || 0
+  );
 
   const { t } = useTranslation();
 
   const handleSubmitForm = () => {
+    console.log("text", additionalText);
     if (isSolutionCard) {
       handleSubmit(
         title,

@@ -1,0 +1,16 @@
+.game-page-container {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  .game-description {
+    font-size: 12px;
+    font-weight: 400;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .header {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+}

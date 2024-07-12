@@ -18,3 +18,6 @@ export const GET_QUESTIONS_URL = `${BASE_URL}/question-cards`;
 
 //Actions
 export const GET_ACTIONS_URL = `${BASE_URL}/action-cards`;
+
+//GameTemplate
+export const GET_GAMES = `${BASE_URL}/game-template`;
