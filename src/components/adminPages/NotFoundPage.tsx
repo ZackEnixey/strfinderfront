@@ -1,19 +1,20 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from "react-router-dom";
 
 const NotFoundPage = () => {
     const { t } = useTranslation();
-    const [notFoundPageTest, setNotFoundPageTest] = useState<number>(1);
+    const navigate = useNavigate();
 
-    const testFunction = (value: number) => {
-        setNotFoundPageTest(notFoundPageTest + value);
+    const testFunction = () => {
+        navigate("/");
     }
+
 
     return (
         <div>
             <div>{t('pageNotFoud')}</div>
             <div>{t('goBAckToStart')}</div>
-            <button onClick={() => testFunction(1)}>{t('playTheExistingGame')}</button>
+            <button onClick={testFunction}>Go Back to the initial page</button>
         </div>
     )
 }

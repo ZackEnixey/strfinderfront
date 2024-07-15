@@ -1,17 +1,24 @@
 import { FC } from "react";
+import useIsMobile from "../../hooks/useIsMobile";
 
 interface StrFinderButtonProps {
-  textContent?: string;
+  textContent?: any;
   btnHeight?: string;
+  btnWidth?: string;
+  btnMargin?: string;
   btnColor?: string;
   onClick?: () => void;
 }
 
 const StrFinderButton: FC<StrFinderButtonProps> = (props) => {
-  const { textContent, btnHeight, btnColor, onClick } = props;
+  const isMobileVersion = useIsMobile();
+    
+  const { textContent, btnHeight, btnWidth, btnMargin, btnColor, onClick } = props;
   const textContentLocal = textContent ?? "Default Text";
   const btnHeightLocal = btnHeight ?? "8vh";
+  const btnWidthLocal = isMobileVersion ? "80vw" : btnWidth ?? "80vw";
   const btnColorLocal = btnColor ?? "default";
+  const btnMarginLocal = btnMargin ?? "10px";
 
   let btnLight = "";
   let btnDark = "";
@@ -45,10 +52,8 @@ const StrFinderButton: FC<StrFinderButtonProps> = (props) => {
   }
 
   return (
-    <div className="button_holder full_center" onClick={onClick}>
-      {" "}
-      {/* Attach the onClick handler here */}
-      <div className="button_wrapper" style={{ height: btnHeightLocal }}>
+    <div className="button_holder" onClick={onClick}>
+      <div className="button_wrapper" style={{ height: btnHeightLocal, width: btnWidthLocal, margin: btnMarginLocal }}>
         <div
           className="button_shadow"
           style={{ backgroundColor: btnDark }}
@@ -60,8 +65,8 @@ const StrFinderButton: FC<StrFinderButtonProps> = (props) => {
             borderBottom: `5px solid ${btnDark}`,
           }}
         ></div>
+        <p className="str_button_text">{textContentLocal}</p>
       </div>
-      <p className="str_button_text">{textContentLocal}</p>
     </div>
   );
 };

@@ -1,0 +1,61 @@
+.loader_border {
+    width: 100%;
+    border: 1px solid #21623a;
+    border-radius: 50px;
+    overflow: hidden;
+
+    .loader {
+        background-color: #41aa69 ;
+        padding: 0 10px;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+.strength_survery_title {
+    margin: 40px 0 20px;
+    max-width: 500px;
+    width: 100%;
+    min-height: 40px;
+}
+
+.survey_bottom {
+    display: flex;
+    justify-content: space-between;
+    max-width: 500px;
+    width: 100%;
+
+    .arrow_go_holder {
+        width: 50px;
+        position: relative;
+        cursor: pointer;
+    }
+}
+
+.strength_info_wrapper {
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    min-height: 100px;
+    margin-top: 40px;
+    overflow: auto;
+}
+
+.str_names {
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 10px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.survey_bottom_return {
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}

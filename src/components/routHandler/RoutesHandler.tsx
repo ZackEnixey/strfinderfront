@@ -12,12 +12,18 @@ import SolutionCreationPage from "../adminPages/SolutionCreationPage";
 import SolutionListing from "../adminPages/SolutionListing";
 import QuestionCreationPage from "../adminPages/QuestionCreationPage";
 import ActionCreationPage from "../adminPages/ActionCreationPage";
-import GameCreationPage from "../adminPages/GameCreationPage";
-import CreatorFinalPage from "../adminPages/CreatorFinalPage";
+import InitialPage from "../gamePages/InitialPage";
+import GameStrengths from "../gamePages/GameStrengths";
+import GameTemplateCodeInsertion from "../gamePages/GameTemplateCodeInsertion";
+import GameGroups from "../gamePages/GameGroups";
+import GameStrengthManager from "../gamePages/GameStrengthManager";
+import PsychologicalSurvey from "../gamePages/PsychologicalSurvey";
+import KnowMyStrengths from "../gamePages/KnowMyStrengths";
 
 const RoutesHandler = () => {
   const routes = [
-    { path: "/", element: <DashboardPage /> },
+    { path: "/", element: <InitialPage /> },
+    { path: "/dashboard", element: <DashboardPage /> },
     { path: "/login", element: <CreatorLoginPage /> },
     { path: "/creatorDashboardPage", element: <CreatorDashboardPage /> },
     { path: "/strengths", element: <StrengthTypePage /> },
@@ -26,17 +32,23 @@ const RoutesHandler = () => {
     { path: "/strengths/:type", element: <StrengthCreationPage /> },
     { path: "/questions", element: <QuestionCreationPage /> },
     { path: "/actions", element: <ActionCreationPage /> },
+    
     { path: "/gameHomePage", element: <GameHomePage /> },
-    { path: "/create-game", element: <GameCreationPage /> },
-    { path: "/final-page", element: <CreatorFinalPage /> },
-    { path: "/createPlayerPage", element: <CreatePlayerPage /> },
+
+    { path: "/game/createPlayer", element: <CreatePlayerPage /> },
+    { path: "/game/gameStrengths", element: <GameStrengths /> },
+    { path: "/game/gameStrengthManager", element: <GameStrengthManager /> }, // 2 BUTTONS: I know my strengths / I want to do Psychological survey 
+    { path: "/game/psychologicalSurvey", element: <PsychologicalSurvey /> },
+    { path: "/game/knowMyStrengths", element: <KnowMyStrengths /> },
+    { path: "/game/gameTemplateCodeInsertion", element: <GameTemplateCodeInsertion /> },
+    { path: "/game/gameGroups", element: <GameGroups /> },
+
     { path: "*", element: <NotFoundPage /> },
   ];
 
   return (
     <div>
       <Routes>
-        {/* Map over the routes array */}
         {routes.map(({ path, element }) => (
           <Route
             key={path}

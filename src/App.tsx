@@ -6,13 +6,23 @@ function App() {
   return (
     <>
       <div id="app_wrapper" className="app_wrapper">
-        <div className="background-image" />
-        <div className="app_content full_center">
+        {/* <div className="background-image" /> */}
+        <div className="app_content">
           <Header />
-          <div id="router_wrapper">
+          <div className="router_wrapper">
             <RoutesHandler />
           </div>
         </div>
+
+        <div className="game_background">
+          <div className="line line1">
+            <div className="glare delay_long"></div>
+          </div>
+          <div className="line line2">
+            <div className="glare delay_short"></div>
+          </div>
+        </div>
+
       </div>
     </>
   );

@@ -9,10 +9,20 @@
 
     .logo_wrapper {
         width: 100%;
-
+        display: flex;
+        align-items: start;
+        margin-top: 15px;
+        
         .logo_img {
-            width: 100px;
+            width: 150px;
+            margin: 0px;
         }
+    }
+
+
+    .back_img {
+        width: 50px;
+        margin: 10px;
     }
 
     .header_left {
@@ -25,6 +35,7 @@
         .language_icon {
             width: 50px;
             height: 50px;
+            margin: 10px;
             cursor: pointer;
         }
     }
@@ -46,6 +57,7 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
+            max-width: 500px;
 
             .language_close_icon {
                 height: 10%;
@@ -78,6 +90,11 @@
                 }
 
                 .language_item:active {
+                    background-color: var(--btnDarkGrassGreen);
+                    color: white;
+                }
+                
+                .language_item:hover {
                     background-color: var(--btnDarkGrassGreen);
                     color: white;
                 }
