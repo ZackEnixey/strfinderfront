@@ -1,7 +1,12 @@
 .button_holder {
+  position: relative;
+
   .button_wrapper {
     position: relative;
     margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
   }
 
@@ -51,10 +56,12 @@
 
   .str_button_text {
     position: absolute;
-    width: 300px;
-    color: white;
+    width: 90%;
+    color: #ffffff;
     font-size: 20px;
     font-family: "Roboto Mono", sans-serif;
     text-align: center;
+    margin-top: 15px;
+    cursor: pointer;
   }
 }

@@ -23,6 +23,7 @@ const DashboardPage: React.FC = () => {
   useEffect(() => {
     updateMode("create");
   }, []);
+  
   return (
     <div className="dashboard-container">
       <div>

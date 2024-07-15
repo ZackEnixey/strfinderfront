@@ -35,6 +35,20 @@
     "urlForTedTalk": "Url For Ted Talk",
     "additionalText": "Additional Text",
     "createNewCard": "Create a new {text} Card",
+    "createNewGameInfo": "If you are a creator and need to create a new game or to update an exiting one",
+    "alreadyHaveCode": "If you already have a CODE",
+    "createNewGame": "CREATE A NEW GAME",
+    "enterNickname": "Enter a nickname",
+    "enterYourEmail": "Enter your email",
+    "nicknameMustBe20char": "Nickname must be less than 20 char",
+    "pleaseFillPlayerData": "Nickname or players email is empty, please fill it up",
+    "startTheGame": "Start the game",
+    "updateStrengths": "Update your strengths",
+    "gameCode": "Game Code",
+    "enterTheGameCode": "Enter the game code",
+    "passCodePageDescription": "Use your strengths and play with positive psychology to unleash your potential and elevate your workout experience.",
+    "discoverStrengths": "Discover your strengths",
+    "alreadyKnowStrengths": "I know my strengths",
     "somethingWrong": "Something went wrong"
 
 

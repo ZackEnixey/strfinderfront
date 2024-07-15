@@ -21,3 +21,9 @@ export const GET_ACTIONS_URL = `${BASE_URL}/action-cards`;
 
 //GameTemplate
 export const GET_GAMES = `${BASE_URL}/game-template`;
+
+//////////////////////////////////////
+////////////// GAME //////////////////
+//////////////////////////////////////
+
+export const CREATE_PLAYER = `${BASE_URL}/create-player`;

@@ -62,7 +62,7 @@ const CreatorLoginPage = () => {
   };
 
   return (
-    <div className="login-container">
+    <div className="login_container_wrapper">
       <div className="inputs-container">
         <div className="input-container">
           <div className="input-label">{t('email').toUpperCase()}:</div>
@@ -78,11 +78,11 @@ const CreatorLoginPage = () => {
                 setEmail(event.target.value);
                 setErrorMessage("");
               }}
-            />{" "}
+            />
           </div>
         </div>
         <div className="input-container">
-          <div className="input-label">{t('password')}:</div>
+          <div className="input-label">{t('password').toUpperCase()}:</div>
           <div>
             <Input
               size="large"
@@ -96,7 +96,7 @@ const CreatorLoginPage = () => {
                 setPassword(event.target.value);
                 setErrorMessage("");
               }}
-            />{" "}
+            />
           </div>
           {errorMessage && <p id="error-text">{errorMessage}</p>}
         </div>

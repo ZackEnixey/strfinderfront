@@ -1,0 +1,58 @@
+@import 'variables';
+
+.game_initial_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.generic_game_content_holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+
+    .game_input_holder {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        max-width: 500px;
+    }
+}
+
+.label_wrapper {
+    margin: 20px 0 5px;
+}
+
+.generic_button_holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.strength_update_title {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+
+    .update_str_title {
+        font-size: 18px;
+        margin-bottom: 20px;   
+    }
+}
+
+.mr_40 {
+    margin-top: 40px;
+}
+
+.mr_20 {
+    margin-right: 20px;
+}

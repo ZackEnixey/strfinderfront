@@ -1,8 +1,9 @@
-.login-container {
+.login_container_wrapper {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 80vh;
+  height: 100%;
+
   .inputs-container {
     #error-text {
       color: red;
