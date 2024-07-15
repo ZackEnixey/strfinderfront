@@ -42,10 +42,16 @@
     justify-content: end;
     align-items: center;
     width: 100%;
-
+    
     .update_str_title {
         font-size: 18px;
         margin-bottom: 20px;   
+    }
+    
+    .game_group_title {
+        color: blue;
+        font-size: 24px;
+        margin-top: 20px;
     }
 }
 

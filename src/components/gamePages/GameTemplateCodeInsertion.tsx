@@ -49,7 +49,7 @@ const GameTemplateCodeInsertion = () => {
             </div>
 
             <div className='generic_button_holder'>
-                <div>{t('gameCode')}</div>
+                <div className='font_size_25'>{t('gameCode')}</div>
                 <div className='responsive_width' style={{ margin: "10px 0 20px" }}>
                     <Input
                         size="large"
@@ -60,6 +60,7 @@ const GameTemplateCodeInsertion = () => {
                         prefix={<UserOutlined />}
                         value={gameCode}
                         onChange={(event) => setGameCode(event.target.value)}
+                        style={{ height: '70px' }}
                     />
                 </div>
                 <div className='generic_button_holder'>

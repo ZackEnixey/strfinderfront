@@ -1,0 +1,198 @@
+{
+  "answers": {
+    "StronglyDisagree": -2,
+    "Disagree": -1,
+    "Neutral": 0,
+    "Agree": 1,
+    "StronglyAgree": 2
+  },
+  "questions": [
+    {
+      "id": 1,
+      "text": "I enjoy competing with others to achieve the best results.",
+      "relatedStrengths": ["Competition", "Achiever"]
+    },
+    {
+      "id": 2,
+      "text": "I am always eager to learn new things and improve myself.",
+      "relatedStrengths": ["Learner", "Achiever"]
+    },
+    {
+      "id": 3,
+      "text": "Helping others grow and develop is important and fulfilling to me.",
+      "relatedStrengths": ["Developer", "Empathy"]
+    },
+    {
+      "id": 4,
+      "text": "I often think about how current actions will impact future outcomes.",
+      "relatedStrengths": ["Futuristic", "Strategic"]
+    },
+    {
+      "id": 5,
+      "text": "I pay attention to details and strive for accuracy in my work.",
+      "relatedStrengths": ["Analytical", "Discipline"]
+    },
+    {
+      "id": 6,
+      "text": "Keeping promises and fulfilling commitments is a top priority for me.",
+      "relatedStrengths": ["Responsibility", "Consistency"]
+    },
+    {
+      "id": 7,
+      "text": "I enjoy analyzing complex problems to find solutions.",
+      "relatedStrengths": ["Analytical", "Input"]
+    },
+    {
+      "id": 8,
+      "text": "Creating strategies for future success is something I find rewarding.",
+      "relatedStrengths": ["Strategic", "Futuristic"]
+    },
+    {
+      "id": 9,
+      "text": "I enjoy understanding and supporting others' unique needs and strengths.",
+      "relatedStrengths": ["Individualization", "Empathy"]
+    },
+    {
+      "id": 10,
+      "text": "Following a consistent routine helps me stay organized and efficient.",
+      "relatedStrengths": ["Discipline", "Consistency"]
+    },
+    {
+      "id": 11,
+      "text": "I often set ambitious goals and work hard to achieve them.",
+      "relatedStrengths": ["Achiever", "Competition"]
+    },
+    {
+      "id": 12,
+      "text": "I find satisfaction in helping others achieve their goals.",
+      "relatedStrengths": ["Developer", "Empathy"]
+    },
+    {
+      "id": 13,
+      "text": "Planning ahead is crucial to achieving my desired outcomes.",
+      "relatedStrengths": ["Strategic", "Futuristic"]
+    },
+    {
+      "id": 14,
+      "text": "I value honesty and integrity in all my interactions.",
+      "relatedStrengths": ["Integrity", "Fairness"]
+    },
+    {
+      "id": 15,
+      "text": "Exploring new ideas and gathering information is exciting to me.",
+      "relatedStrengths": ["Input", "Learner"]
+    },
+    {
+      "id": 16,
+      "text": "I strive to find innovative solutions to challenges.",
+      "relatedStrengths": ["Innovation", "Creativity"]
+    },
+    {
+      "id": 17,
+      "text": "Being empathetic towards others' emotions is natural for me.",
+      "relatedStrengths": ["Empathy", "Individualization"]
+    },
+    {
+      "id": 18,
+      "text": "Maintaining order and structure in my environment is important.",
+      "relatedStrengths": ["Order", "Structure"]
+    },
+    {
+      "id": 19,
+      "text": "I enjoy mentoring others and helping them develop their skills.",
+      "relatedStrengths": ["Developer", "Empathy"]
+    },
+    {
+      "id": 20,
+      "text": "Taking calculated risks is necessary for achieving greater success.",
+      "relatedStrengths": ["Risk-taking", "Adaptability"]
+    },
+    {
+      "id": 21,
+      "text": "I value fairness and justice in all situations.",
+      "relatedStrengths": ["Fairness", "Justice"]
+    },
+    {
+      "id": 22,
+      "text": "I find joy in organizing information and keeping records.",
+      "relatedStrengths": ["Organizer", "Structure"]
+    },
+    {
+      "id": 23,
+      "text": "Being able to adapt quickly to changes is a strength of mine.",
+      "relatedStrengths": ["Adaptability", "Flexibility"]
+    },
+    {
+      "id": 24,
+      "text": "I am driven by a strong sense of purpose in everything I do.",
+      "relatedStrengths": ["Purpose", "Meaning"]
+    },
+    {
+      "id": 25,
+      "text": "I enjoy exploring different perspectives and viewpoints.",
+      "relatedStrengths": ["Open-mindedness", "Perspective"]
+    },
+    {
+      "id": 26,
+      "text": "I am committed to continuous improvement in my work and personal life.",
+      "relatedStrengths": ["ContinuousImprovement", "Growth"]
+    },
+    {
+      "id": 27,
+      "text": "I find satisfaction in creating and maintaining strong relationships.",
+      "relatedStrengths": ["Relationships", "Connection"]
+    },
+    {
+      "id": 28,
+      "text": "I take pride in delivering high-quality work and results.",
+      "relatedStrengths": ["Quality", "Excellence"]
+    },
+    {
+      "id": 29,
+      "text": "I enjoy creating innovative solutions to complex problems.",
+      "relatedStrengths": ["Innovation", "Creativity"]
+    },
+    {
+      "id": 30,
+      "text": "I am naturally curious and enjoy learning about a wide range of topics.",
+      "relatedStrengths": ["Curiosity", "Learner"]
+    }
+  ],
+  "strengths": [
+    { "name": "Achiever", "points": 0 },
+    { "name": "Activator", "points": 0 },
+    { "name": "Adaptability", "points": 0 },
+    { "name": "Analytical", "points": 0 },
+    { "name": "Arranger", "points": 0 },
+    { "name": "Belief", "points": 0 },
+    { "name": "Command", "points": 0 },
+    { "name": "Communication", "points": 0 },
+    { "name": "Competition", "points": 0 },
+    { "name": "Connectedness", "points": 0 },
+    { "name": "Consistency", "points": 0 },
+    { "name": "Context", "points": 0 },
+    { "name": "Deliberative", "points": 0 },
+    { "name": "Developer", "points": 0 },
+    { "name": "Discipline", "points": 0 },
+    { "name": "Empathy", "points": 0 },
+    { "name": "Fairness", "points": 0 },
+    { "name": "Focus", "points": 0 },
+    { "name": "Futuristic", "points": 0 },
+    { "name": "Harmony", "points": 0 },
+    { "name": "Ideation", "points": 0 },
+    { "name": "Includer", "points": 0 },
+    { "name": "Individualization", "points": 0 },
+    { "name": "Input", "points": 0 },
+    { "name": "Intellection", "points": 0 },
+    { "name": "Learner", "points": 0 },
+    { "name": "Maximizer", "points": 0 },
+    { "name": "Positivity", "points": 0 },
+    { "name": "Relator", "points": 0 },
+    { "name": "Responsibility", "points": 0 },
+    { "name": "Restorative", "points": 0 },
+    { "name": "Self-Assurance", "points": 0 },
+    { "name": "Significance", "points": 0 },
+    { "name": "Strategic", "points": 0 },
+    { "name": "Woo", "points": 0 }
+  ]
+}

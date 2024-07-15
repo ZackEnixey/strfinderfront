@@ -14,12 +14,31 @@ const GameStrengths = () => {
 
 	return (
 		<div className='generic_game_content_holder'>
+
 			<div className='strength_update_title'>
-				<div>Group</div>
-                <div>
-                    <div>Payer 1</div>
-                    <div>Payer 2</div>
-                    <div>Payer 3</div>
+				<div className='game_group_title'>Group 1</div>
+                <div className='flex_direction_column '>
+                    <div className='game_group_element'>Stephan</div>
+                    <div className='game_group_element'>Maria</div>
+                    <div className='game_group_element'>Angelina</div>
+                    <div className='game_group_element'>Shien</div>
+                </div>
+
+				<div className='game_group_title'>Group 2</div>
+                <div className='flex_direction_column '>
+                    <div className='game_group_element'>Anna</div>
+                    <div className='game_group_element'>Zachary</div>
+                    <div className='game_group_element'>Victor</div>
+                </div>
+
+				<div className='game_group_title'>Group 3</div>
+                <div className='flex_direction_column '>
+                    <div className='game_group_element'>Paul</div>
+                    <div className='game_group_element'>Elisabeth</div>
+                    <div className='game_group_element'>Angelina</div>
+                    <div className='game_group_element'>Mia</div>
+                    <div className='game_group_element'>Hana</div>
+                    <div className='game_group_element'>Voctoria</div>
                 </div>
 			</div>
 			<div className='generic_button_holder'>

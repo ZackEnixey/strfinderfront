@@ -24,6 +24,8 @@
     "loading": "loading",
     "login": "login",
     "next": "next",
+    "update": "update",
+    "start": "start",
     "userList": "User List",
     "noMoreStr": "No more strengths",
     "selectedLanguage": "Selected Language",
@@ -49,7 +51,16 @@
     "passCodePageDescription": "Use your strengths and play with positive psychology to unleash your potential and elevate your workout experience.",
     "discoverStrengths": "Discover your strengths",
     "alreadyKnowStrengths": "I know my strengths",
+    "strengths": "strengths",
+    "back": "back",
+    "finish": "finish",
+    "StronglyDisagree": "Strongly Disagree",
+    "Disagree": "Disagree",
+    "Neutral": "Neutral",
+    "Agree": "Agree",
+    "StronglyAgree": "Strongly Agree",
+    "goBackToTheGame": "Go back to the game",
+    "yourTop5Str": "Your top 5 strengths",
+    "strInformation": "Based on your answers, your top 5 strengths are",
     "somethingWrong": "Something went wrong"
-
-
 }
