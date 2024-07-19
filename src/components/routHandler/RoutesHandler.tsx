@@ -32,15 +32,18 @@ const RoutesHandler = () => {
     { path: "/strengths/:type", element: <StrengthCreationPage /> },
     { path: "/questions", element: <QuestionCreationPage /> },
     { path: "/actions", element: <ActionCreationPage /> },
-    
+
     { path: "/gameHomePage", element: <GameHomePage /> },
 
     { path: "/game/createPlayer", element: <CreatePlayerPage /> },
     { path: "/game/gameStrengths", element: <GameStrengths /> },
-    { path: "/game/gameStrengthManager", element: <GameStrengthManager /> }, // 2 BUTTONS: I know my strengths / I want to do Psychological survey 
+    { path: "/game/gameStrengthManager", element: <GameStrengthManager /> }, // 2 BUTTONS: I know my strengths / I want to do Psychological survey
     { path: "/game/psychologicalSurvey", element: <PsychologicalSurvey /> },
     { path: "/game/knowMyStrengths", element: <KnowMyStrengths /> },
-    { path: "/game/gameTemplateCodeInsertion", element: <GameTemplateCodeInsertion /> },
+    {
+      path: "/game/gameTemplateCodeInsertion",
+      element: <GameTemplateCodeInsertion />,
+    },
     { path: "/game/gameGroups", element: <GameGroups /> },
 
     { path: "*", element: <NotFoundPage /> },

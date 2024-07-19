@@ -26,4 +26,4 @@ export const GET_GAMES = `${BASE_URL}/game-template`;
 ////////////// GAME //////////////////
 //////////////////////////////////////
 
-export const CREATE_PLAYER = `${BASE_URL}/create-player`;
+export const CREATE_PLAYER = `${BASE_URL}/player`;

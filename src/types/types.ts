@@ -28,3 +28,14 @@ export interface GameTemplateItem {
   preselectedQuestionIds: string[];
   preselectedActionIds: string[];
 }
+export interface Player {
+  _id: string;
+  nickName: string;
+  email: string;
+  isReady: boolean;
+}
+export interface Group {
+  groupCode: string;
+  gameCode: string;
+  players: Player[];
+}
