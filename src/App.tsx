@@ -6,7 +6,6 @@ function App() {
   return (
     <>
       <div id="app_wrapper" className="app_wrapper">
-        {/* <div className="background-image" /> */}
         <div className="app_content">
           <Header />
           <div className="router_wrapper">

@@ -10,7 +10,7 @@ export const useFetchQuestions = (
   refresh: boolean
 ) => {
   const [data, setData] = useState<StrengthItem[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const fetchData = () => {
     if (loading) return;

@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import DashboardPage from "../adminPages/DashboardPage";
+
+import AdminDashboardPage from "../adminPages/AdminDashboardPage";
 import NotFoundPage from "../adminPages/NotFoundPage";
 import CreatorLoginPage from "../adminPages/CreatorLoginPage";
-import CreatorDashboardPage from "../adminPages/CreatorDashboardPage";
 import StrengthTypePage from "../adminPages/StrengthTypePage";
 import StrengthCreationPage from "../adminPages/StrengthCreationPage";
 import GameHomePage from "../gamePages/GameHomePage";
@@ -19,31 +19,32 @@ import GameGroups from "../gamePages/GameGroups";
 import GameStrengthManager from "../gamePages/GameStrengthManager";
 import PsychologicalSurvey from "../gamePages/PsychologicalSurvey";
 import KnowMyStrengths from "../gamePages/KnowMyStrengths";
+import GameCreationPage from "../adminPages/GameCreationPage";
+import CreatorFinalPage from "../adminPages/CreatorFinalPage";
 
 const RoutesHandler = () => {
   const routes = [
     { path: "/", element: <InitialPage /> },
-    { path: "/dashboard", element: <DashboardPage /> },
+
     { path: "/login", element: <CreatorLoginPage /> },
-    { path: "/creatorDashboardPage", element: <CreatorDashboardPage /> },
+    { path: "/adminDashboardPage", element: <AdminDashboardPage /> },
     { path: "/strengths", element: <StrengthTypePage /> },
+    { path: "/strengths/:type", element: <StrengthCreationPage /> },
     { path: "/solutions", element: <SolutionCreationPage /> },
     { path: "/solutions/:type", element: <SolutionListing /> },
-    { path: "/strengths/:type", element: <StrengthCreationPage /> },
     { path: "/questions", element: <QuestionCreationPage /> },
     { path: "/actions", element: <ActionCreationPage /> },
+    { path: "/gameCreationPage", element: <GameCreationPage /> },
+    { path: "/creatorFinalPage", element: <CreatorFinalPage /> },
 
     { path: "/gameHomePage", element: <GameHomePage /> },
 
     { path: "/game/createPlayer", element: <CreatePlayerPage /> },
     { path: "/game/gameStrengths", element: <GameStrengths /> },
-    { path: "/game/gameStrengthManager", element: <GameStrengthManager /> }, // 2 BUTTONS: I know my strengths / I want to do Psychological survey
+    { path: "/game/gameStrengthManager", element: <GameStrengthManager /> },
     { path: "/game/psychologicalSurvey", element: <PsychologicalSurvey /> },
     { path: "/game/knowMyStrengths", element: <KnowMyStrengths /> },
-    {
-      path: "/game/gameTemplateCodeInsertion",
-      element: <GameTemplateCodeInsertion />,
-    },
+    { path: "/game/gameTemplateCodeInsertion", element: <GameTemplateCodeInsertion /> },
     { path: "/game/gameGroups", element: <GameGroups /> },
 
     { path: "*", element: <NotFoundPage /> },

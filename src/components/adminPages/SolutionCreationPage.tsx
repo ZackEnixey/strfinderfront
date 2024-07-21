@@ -7,21 +7,22 @@ const SolutionCreationPage = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="solution-page-container">
-      <div className="update-solution">
-        <p className="description">
-          {t('ifYouWantUpdateSolution')}:
-        </p>
+    <div className="generic_game_content_holder">
+      <div className="game_input_holder">
+        <div>{t('ifYouWantUpdateSolution')}</div>
         <StrFinderButton
           btnColor="green"
           textContent={t('updateCards')}
           btnHeight="18vh"
+          btnWidth="revert-layer"
+          btnMargin="20px 0 0 0"
           onClick={() => navigate("/solutions/emotional")}
         />
       </div>
       <StrFinderButton
         btnColor="green"
         textContent="NEXT"
+        btnWidth="revert-layer"
         onClick={() => navigate("/questions")}
       />
     </div>

@@ -8,7 +8,7 @@ const InitialPage = () => {
 
     return (
       <div className="game_initial_container">
-        <div>{t('alreadyHaveCode')}:</div>
+        <div>{t('alreadyHaveCode')}</div>
         <StrFinderButton
           onClick={() => navigate("/game/createPlayer")}
           btnColor="green"
@@ -17,7 +17,7 @@ const InitialPage = () => {
           btnWidth="revert-layer"
         />
 
-        <div className="mr_40">{t('createNewGameInfo')}:</div>
+        <div className="mr_40">{t('createNewGameInfo')}</div>
         <StrFinderButton
           onClick={() => navigate("/login")}
           btnColor="green"

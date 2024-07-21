@@ -35,7 +35,7 @@
 .list-collapse-item {
   flex: 1;
   border: none;
-  background-color: white;
+  
   .ant-collapse-header {
     font-weight: 700 !important;
   }
@@ -47,12 +47,15 @@
 .ant-checkbox-inner {
   width: 20px !important;
   height: 20px !important;
-  border-radius: 10px !important;
 }
+
 .ant-collapse-header {
   padding: 5px 15px !important;
 }
+
 .ant-list-item {
   padding: 12px 10px 12px 0 !important;
   margin-left: 10px;
+  display: flex;
+  align-items: start;
 }

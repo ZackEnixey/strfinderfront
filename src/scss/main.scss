@@ -1,7 +1,9 @@
+// GENERAL STYLE
 @import "../scss/General.scss";
 @import "../scss/NextButton.scss";
 @import "../scss/Header.scss";
-@import "../scss/NextButton.scss";
+
+// ADMIN PAGE
 @import "../scss/LoginPage.scss";
 @import "../scss//DashboardPage.scss";
 @import "../scss//StrengthPage.scss";
@@ -9,5 +11,6 @@
 @import "../scss//GameTemplate.scss";
 @import "../scss//FinalPage.scss";
 
+// PLAYER PAGE
 @import "../scss/Strengths.scss";
 @import "../scss/Game.scss";

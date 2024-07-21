@@ -15,7 +15,7 @@ export const useFetchUserGameCodes = (
   refresh: boolean
 ): UseFetchUserGameCodesReturn => {
   const [data, setData] = useState<GameTemplateItem[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const fetchData = () => {
     if (loading) return;

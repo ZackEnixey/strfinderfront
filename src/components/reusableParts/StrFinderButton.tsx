@@ -53,7 +53,7 @@ const StrFinderButton: FC<StrFinderButtonProps> = (props) => {
 
   return (
     <div className="button_holder" onClick={onClick}>
-      <div className="button_wrapper" style={{ height: btnHeightLocal, width: btnWidthLocal, margin: btnMarginLocal }}>
+      <div className="button_wrapper max_width_500" style={{ height: btnHeightLocal, width: btnWidthLocal, margin: btnMarginLocal }}>
         <div
           className="button_shadow"
           style={{ backgroundColor: btnDark }}

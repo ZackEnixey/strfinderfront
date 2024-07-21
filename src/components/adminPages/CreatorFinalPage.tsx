@@ -1,16 +1,17 @@
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import StrFinderButton from "../reusableParts/StrFinderButton";
+import { useNavigate } from "react-router-dom";
 import { Button, message } from "antd";
 import { CopyOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+
+import StrFinderButton from "../reusableParts/StrFinderButton";
 
 const CreatorFinalPage = () => {
   const { t } = useTranslation();
   const [messageApi, contextHolder] = message.useMessage();
   const navigate = useNavigate();
 
-  const [gameCode, setGameCode] = useState("");
+  const [gameCode, setGameCode] = useState<string>("");
 
   useEffect(() => {
     setGameCode(localStorage.getItem("gameCode") || "");
@@ -26,13 +27,13 @@ const CreatorFinalPage = () => {
   };
 
   return (
-    <div className="final-page-container">
+    <div className="generic_game_content_holder">
       {contextHolder}
-      <div className="final-page">
-        <div className="final-text">
+      <div className="game_input_holder">
+        <div>
           <div>
-            <h2 className="final-header">CONGRATULATIONS</h2>
-            <p className="final-description">
+            <h2 className="">CONGRATULATIONS</h2>
+            <p className="">
               {t("Copy the code and share it with the players.")}:
             </p>
           </div>
@@ -49,16 +50,15 @@ const CreatorFinalPage = () => {
             </Button>
           </div>
         </div>
-        <div>
-          <StrFinderButton
-            btnColor="green"
-            textContent={t("GO TO DASHBOARD")}
-            onClick={() => {
-              navigate("/");
-            }}
-          />
-        </div>
       </div>
+       
+      <StrFinderButton
+        btnColor="green"
+        textContent={t("GO TO DASHBOARD")}
+        onClick={() => {
+          navigate("/adminDashboardPage");
+        }}
+      />
     </div>
   );
 };

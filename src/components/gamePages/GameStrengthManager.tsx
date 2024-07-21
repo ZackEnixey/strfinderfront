@@ -18,7 +18,7 @@ const GameStrengthManager = () => {
 
 	return (
 		<div className="game_initial_container">
-			<div>{t('alreadyHaveCode')}:</div>
+			<div>{t('alreadyHaveCode')}</div>
 			<StrFinderButton
 				onClick={handleDiscoverStrengths}
 				btnColor="green"
@@ -27,7 +27,7 @@ const GameStrengthManager = () => {
 				btnWidth="revert-layer"
 			/>
 
-			<div className="mr_40">{t('createNewGameInfo')}:</div>
+			<div className="mr_40">{t('createNewGameInfo')}</div>
 			<StrFinderButton
 				onClick={handleKnowStrengths}
 				btnColor="green"

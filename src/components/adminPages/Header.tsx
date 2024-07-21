@@ -33,7 +33,7 @@ const Header = () => {
 			<div className="header_left div_test_border">
 				{!isInitialPage && <>{returnButton()}</>}
 			</div>
-			<div className="logo_wrapper full_center">
+			<div className="logo_wrapper full_center cursor_pointer">
 				<img src={temporaryLogo} alt="STRfinder logo" className="logo_img" onClick={handleLogo} />
 			</div>
 			<div className="header_right div_test_border">

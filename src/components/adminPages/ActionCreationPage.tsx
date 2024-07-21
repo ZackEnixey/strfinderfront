@@ -1,14 +1,15 @@
-import { Button, Checkbox, CheckboxProps, List, Skeleton } from "antd";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Collapse } from "antd";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
+import { EditOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, Checkbox, CheckboxProps, List, Skeleton, Collapse } from "antd";
+import { useTranslation } from "react-i18next";
+
 import StrFinderButton from "../reusableParts/StrFinderButton";
 import { getUserId } from "../../utils/decodedToken";
-import { useCallback, useEffect, useMemo, useState } from "react";
 import { ActionItem } from "../../types/types";
-import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import CreationPopUp from "../reusableParts/CreationPopUp";
-import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useFetchActions } from "../../hooks/useFetchActions";
 import { useCreateAction } from "../../hooks/useCreateAction";
 import { useEditAction } from "../../hooks/useEditAction";
@@ -17,33 +18,37 @@ const ActionCreationPage = () => {
   const darkGreenColor = getComputedStyle(document.documentElement)
     .getPropertyValue("--btnDarkGreen")
     .trim();
-  const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+  const [isPopUpVisible, setIsPopUpVisible] = useState<boolean>(false);
   const [checkedActions, setCheckedActions] = useState<string[]>(() => {
     const saved = localStorage.getItem("selectedActions");
     return saved ? JSON.parse(saved) : [];
   });
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [additionalText, setAdditionalText] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [additionalText, setAdditionalText] = useState<string>("");
   const [numberOfUpperTokens, setNumberOfUpperTokens] = useState(0);
-  const [isEdit, setIsEdit] = useState(false);
-  const [cardId, setCardId] = useState("");
-  const [refresh, setRefresh] = useState(false);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [cardId, setCardId] = useState<string>("");
+  const [refresh, setRefresh] = useState<boolean>(false);
+
+  const { t } = useTranslation();
+  const token = localStorage.getItem("token") || "";
+  const id = getUserId(token) || "";
   const navigate = useNavigate();
   const { type } = useParams();
-  const token = localStorage.getItem("token") || "";
   const { handleAddAction } = useCreateAction(token, setRefresh);
-  const id = getUserId(token) || "";
   const { handleEditAction } = useEditAction(token, setRefresh, cardId);
   const { data, fetchData } = useFetchActions(id, type!, token, refresh);
+
   const onCheckAllChange: CheckboxProps["onChange"] = useCallback(
     (e: CheckboxChangeEvent) => {
       setCheckedActions(e.target.checked ? data.map((item) => item._id) : []);
     },
     [data, setCheckedActions]
   );
+
   const handleNavigation = () => {
-    navigate("/create-game");
+    navigate("/gameCreationPage");
   };
 
   const togglePopUp = () => {
@@ -60,6 +65,7 @@ const ActionCreationPage = () => {
     },
     [setCheckedActions]
   );
+
   useEffect(() => {
     localStorage.setItem("selectedActions", JSON.stringify(checkedActions));
   }, [checkedActions]);
@@ -68,14 +74,15 @@ const ActionCreationPage = () => {
     () => data.length > 0 && checkedActions.length === data.length,
     [data.length, checkedActions.length]
   );
+
   const indeterminate = useMemo(
     () => checkedActions.length > 0 && checkedActions.length < data.length,
     [checkedActions.length, data.length]
   );
 
   return (
-    <div className={`dashboard-container ${isPopUpVisible ? "overlay" : ""}`}>
-      <div>
+    <div className={`generic_game_content_holder ${isPopUpVisible ? "overlay" : ""}`}>
+     <div className="game_input_holder">
         <div
           className="add-icon-container"
           onClick={() => {
@@ -88,7 +95,7 @@ const ActionCreationPage = () => {
           }}
         >
           <Button type="primary" style={{ backgroundColor: darkGreenColor }}>
-            Add
+            {t('all')}
             <PlusOutlined />
           </Button>
         </div>
@@ -99,17 +106,12 @@ const ActionCreationPage = () => {
               onChange={onCheckAllChange}
               checked={checkAll}
             />
-            <div className="check-all-label">Select all</div>
+            <div className="check-all-label">{t('selectAll')}</div>
           </div>
         </div>
         <div
           id="scrollableDiv"
-          style={{
-            height: "58vh",
-            overflow: "auto",
-            border: "1px solid rgba(140, 140, 140, 0.35)",
-            borderRadius: "8px",
-          }}
+          className="scrollable_cards_wrapper"
         >
           <InfiniteScroll
             dataLength={data.length}
@@ -151,13 +153,13 @@ const ActionCreationPage = () => {
           </InfiniteScroll>
         </div>
       </div>
-      <div>
-        <StrFinderButton
-          onClick={handleNavigation}
-          btnColor="green"
-          textContent="NEXT"
-        />
-      </div>
+     
+      <StrFinderButton
+        onClick={handleNavigation}
+        btnColor="green"
+        textContent="NEXT"
+      />
+
       {isPopUpVisible && (
         <CreationPopUp
           initialTitle={title}

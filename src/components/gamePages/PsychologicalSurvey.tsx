@@ -11,7 +11,7 @@ import seeStrengths from "../../assets/seeStrengths.svg";
 const PsychologicalSurvey = () => {
 	const [strengths, setStrengths] = useState(questionsAndStrengths.strengths);
 	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-	const [seeMyStrengths, setSeeMyStrengths] = useState(false);
+	const [seeMyStrengths, setSeeMyStrengths] = useState<boolean>(false);
 
 const navigate = useNavigate();
 
@@ -68,7 +68,7 @@ const navigate = useNavigate();
 			<div className='generic_game_content_holder'>
 				<div className='strength_info_wrapper'>
 					<div>{t('yourTop5Str')}</div>
-					<div>{t('strInformation')}:</div>
+					<div>{t('strInformation')}</div>
 				</div>
 				<div style={{ width: "100%"}}>
 					<div style={{ width: "100%"}}>

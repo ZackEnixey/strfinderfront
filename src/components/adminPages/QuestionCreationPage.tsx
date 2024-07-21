@@ -1,14 +1,15 @@
-import { Button, Checkbox, CheckboxProps, List, Skeleton } from "antd";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Collapse } from "antd";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { Button, Checkbox, CheckboxProps, List, Skeleton, Collapse } from "antd";
+import { EditOutlined, PlusOutlined } from "@ant-design/icons";
+import { CheckboxChangeEvent } from "antd/es/checkbox";
+import { useTranslation } from 'react-i18next';
+
 import StrFinderButton from "../reusableParts/StrFinderButton";
 import { getUserId } from "../../utils/decodedToken";
-import { useCallback, useEffect, useMemo, useState } from "react";
 import { StrengthItem } from "../../types/types";
-import { EditOutlined, PlusOutlined } from "@ant-design/icons";
 import CreationPopUp from "../reusableParts/CreationPopUp";
-import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useFetchQuestions } from "../../hooks/useFetchQuestions";
 import { useCreateQuestion } from "../../hooks/useCreateQuestion";
 import { useEditQuestion } from "../../hooks/useEditQuestion";
@@ -17,21 +18,23 @@ const QuestionCreationPage = () => {
   const darkGreenColor = getComputedStyle(document.documentElement)
     .getPropertyValue("--btnDarkGreen")
     .trim();
-  const [isPopUpVisible, setIsPopUpVisible] = useState(false);
+  const [isPopUpVisible, setIsPopUpVisible] = useState<boolean>(false);
   const [checkedQuestions, setCheckedQuestions] = useState<string[]>(() => {
     const saved = localStorage.getItem("selectedQuestions");
     return saved ? JSON.parse(saved) : [];
   });
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [additionalText, setAdditionalText] = useState("");
-  const [isEdit, setIsEdit] = useState(false);
-  const [cardId, setCardId] = useState("");
-  const [refresh, setRefresh] = useState(false);
-  const navigate = useNavigate();
-  const { type } = useParams();
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [additionalText, setAdditionalText] = useState<string>("");
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [cardId, setCardId] = useState<string>("");
+  const [refresh, setRefresh] = useState<boolean>(false);
+
+  const { t } = useTranslation();
   const token = localStorage.getItem("token") || "";
   const id = getUserId(token) || "";
+  const navigate = useNavigate();
+  const { type } = useParams();
   const { data, fetchData } = useFetchQuestions(id, type!, token, refresh);
   const { handleAddQuestion } = useCreateQuestion(token, setRefresh);
   const { handleEditQuestion } = useEditQuestion(token, setRefresh, cardId);
@@ -60,6 +63,7 @@ const QuestionCreationPage = () => {
     },
     [setCheckedQuestions]
   );
+
   useEffect(() => {
     localStorage.setItem("selectedQuestions", JSON.stringify(checkedQuestions));
   }, [checkedQuestions]);
@@ -74,89 +78,86 @@ const QuestionCreationPage = () => {
   );
 
   return (
-    <div className={`dashboard-container ${isPopUpVisible ? "overlay" : ""}`}>
-      <div>
-        <div
-          className="add-icon-container"
-          onClick={() => {
-            setIsEdit(false);
-            setAdditionalText("");
-            setDescription("");
-            setTitle("");
-            togglePopUp();
-          }}
-        >
-          <Button type="primary" style={{ backgroundColor: darkGreenColor }}>
-            Add
-            <PlusOutlined />
-          </Button>
-        </div>
-        <div className="check-all-container">
-          <div className="check-all">
-            <Checkbox
-              indeterminate={indeterminate}
-              onChange={onCheckAllChange}
-              checked={checkAll}
-            />
-            <div className="check-all-label">Select all</div>
-          </div>
-        </div>
-        <div
-          id="scrollableDiv"
-          style={{
-            height: "58vh",
-            overflow: "auto",
-            border: "1px solid rgba(140, 140, 140, 0.35)",
-            borderRadius: "8px",
-          }}
-        >
-          <InfiniteScroll
-            dataLength={data.length}
-            next={fetchData}
-            hasMore={data.length < 0}
-            loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-            scrollableTarget="scrollableDiv"
+    <div className={`generic_game_content_holder ${isPopUpVisible ? "overlay" : ""}`}>
+      
+      <div className="game_input_holder">
+          <div
+            className="add-icon-container"
+            onClick={() => {
+              setIsEdit(false);
+              setAdditionalText("");
+              setDescription("");
+              setTitle("");
+              togglePopUp();
+            }}
           >
-            <List
-              dataSource={data}
-              renderItem={(item: StrengthItem, index) => (
-                <List.Item key={index}>
-                  <Checkbox
-                    checked={checkedQuestions.includes(item._id)}
-                    onChange={(e) => onItemChange(item, e.target.checked)}
-                  />
-                  <Collapse className="list-collapse-item">
-                    <Collapse.Panel header={item.title} key={index}>
-                      <p>{item.description}</p>
-                    </Collapse.Panel>
-                  </Collapse>
-                  <Button
-                    type="text"
-                    shape="circle"
-                    icon={<EditOutlined />}
-                    onClick={() => {
-                      setIsEdit(true);
-                      setTitle(item.title);
-                      setCardId(item._id);
-                      setDescription(item.description);
-                      setAdditionalText(item.additionalText);
-                      togglePopUp();
-                    }}
-                  />
-                </List.Item>
-              )}
-            />
-          </InfiniteScroll>
-        </div>
+            <Button type="primary" style={{ backgroundColor: darkGreenColor }}>
+              {t('all')}
+              <PlusOutlined />
+            </Button>
+          </div>
+          <div className="check-all-container">
+            <div className="check-all">
+              <Checkbox
+                indeterminate={indeterminate}
+                onChange={onCheckAllChange}
+                checked={checkAll}
+              />
+              <div className="check-all-label">{t('selectAll')}</div>
+            </div>
+          </div>
+          <div
+            id="scrollableDiv"
+            className="scrollable_cards_wrapper"
+          >
+            <InfiniteScroll
+              dataLength={data.length}
+              next={fetchData}
+              hasMore={data.length < 0}
+              loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
+              scrollableTarget="scrollableDiv"
+            >
+              <List
+                dataSource={data}
+                renderItem={(item: StrengthItem, index) => (
+                  <List.Item key={index}>
+                    <Checkbox
+                      checked={checkedQuestions.includes(item._id)}
+                      onChange={(e) => onItemChange(item, e.target.checked)}
+                    />
+                    <Collapse className="list-collapse-item">
+                      <Collapse.Panel header={item.title} key={index}>
+                        <p>{item.description}</p>
+                      </Collapse.Panel>
+                    </Collapse>
+                    <Button
+                      type="text"
+                      shape="circle"
+                      icon={<EditOutlined />}
+                      onClick={() => {
+                        setIsEdit(true);
+                        setTitle(item.title);
+                        setCardId(item._id);
+                        setDescription(item.description);
+                        setAdditionalText(item.additionalText);
+                        togglePopUp();
+                      }}
+                    />
+                  </List.Item>
+                )}
+              />
+            </InfiniteScroll>
+          </div>
       </div>
-      <div>
-        <StrFinderButton
-          onClick={handleNavigation}
-          btnColor="green"
-          textContent="NEXT"
-        />
-      </div>
-      {isPopUpVisible && (
+
+      <StrFinderButton
+        onClick={handleNavigation}
+        btnColor="green"
+        textContent="NEXT"
+        btnWidth="revert-layer"
+      />
+
+    {isPopUpVisible && (
         <CreationPopUp
           initialTitle={title}
           initialDescription={description}

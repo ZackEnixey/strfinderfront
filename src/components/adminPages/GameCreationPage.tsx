@@ -19,47 +19,45 @@ const GameCreationPage = () => {
   const { handleAddGame } = useCreateGame(token);
   const { handleUpdateGame } = useUpdateGame(token);
 
+  const handleMode = () => {
+    if (mode === "create") {
+      handleAddGame(gameTitle);
+      navigate("/creatorFinalPage");
+      return; 
+    }
+
+    handleUpdateGame(gameTitle);
+    navigate("/");
+  }
+
   return (
-    <div className="game-page-container">
-      <div className="game-creation">
-        <h2 className="header">CONGRATULATIONS</h2>
-        <p className="game-description">
-          {t(
-            "you have set all the card and you are ready to create the CODE for the game"
-          )}
-          :
-        </p>
+    <div className="generic_game_content_holder">
+      <div className="game_input_holder height_100">
+        
+        <h2 className="header">{t('congratulations').toUpperCase()}</h2>
+        <div className="game-description">{t("youSetAllTheCards")}</div>
         <div className="input-container">
-          <div className="input-label">{t("Game name")}:</div>
-          <div>
-            <Input
-              size="large"
-              type="text"
-              required
-              className="custom-input"
-              placeholder="Enter the game title"
-              value={gameTitle}
-              onChange={(event) => {
-                setGameTitle(event.target.value);
-              }}
-            />{" "}
-          </div>
+          <div className="label_wrapper">{t("gameName")}</div>
+          <Input
+            size="large"
+            type="text"
+            required
+            className="custom-input"
+            placeholder="Enter the game title"
+            value={gameTitle}
+            onChange={(event) => {
+              setGameTitle(event.target.value);
+            }}
+          />
         </div>
-        <StrFinderButton
-          btnColor="green"
-          textContent={t(mode === "edit" ? "UPDATE GAME" : "CREATE THE GAME")}
-          btnHeight="18vh"
-          onClick={() => {
-            if (mode === "create") {
-              handleAddGame(gameTitle);
-              navigate("/final-page");
-            } else {
-              handleUpdateGame(gameTitle);
-              navigate("/");
-            }
-          }}
-        />
       </div>
+
+      <StrFinderButton
+          btnColor="green"
+          textContent={t(mode === "edit" ? t('updateGame') : t('createGame'))}
+          btnHeight="18vh"
+          onClick={() => handleMode()}
+        />
     </div>
   );
 };

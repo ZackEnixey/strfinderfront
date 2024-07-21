@@ -20,7 +20,7 @@ const GameStrengths = () => {
 	return (
 		<div className='generic_game_content_holder'>
 			<div className='strength_update_title'>
-				<div className='update_str_title'>{t('updateStrengths')}:</div>
+				<div className='update_str_title'>{t('updateStrengths')}</div>
 				<div>
 					<StrFinderButton
 						onClick={handleUpdate}

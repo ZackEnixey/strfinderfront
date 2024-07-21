@@ -10,7 +10,7 @@ export const useFetchActions = (
   refresh: boolean
 ) => {
   const [data, setData] = useState<ActionItem[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const fetchData = () => {
     if (loading) return;

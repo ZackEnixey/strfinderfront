@@ -8,6 +8,8 @@ $lightYellow: #FFFFE0;
 $darkYellow: #FFD700;
 $grassGreen: #7ac272;
 $darkGrassGreen: #556B2F;
+$scrollbarDark: #767676; 
+$scrollbarLight: #cccccc;
 
 :root {
     --header_side_chunk_width: 80px;
@@ -21,5 +23,7 @@ $darkGrassGreen: #556B2F;
     --btnDarkYellow: #{$darkYellow};
     --btnGrassGreen: #{$grassGreen};
     --btnDarkGrassGreen: #{$darkGrassGreen};
+    --scrollbarDark: #{$scrollbarDark};
+    --scrollbarLight: #{$scrollbarLight};
 }
   

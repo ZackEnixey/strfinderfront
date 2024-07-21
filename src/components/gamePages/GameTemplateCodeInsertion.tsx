@@ -9,8 +9,8 @@ import happyPeople from "../../assets/happyPeople.svg";
 import { socket } from "../../socket/socket";
 
 const GameTemplateCodeInsertion = () => {
-  const [gameCode, setGameCode] = useState("RQ974T");
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [gameCode, setGameCode] = useState<string>("RQ974T");
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const player = JSON.parse(localStorage.getItem("player") || "");
 
   const { t } = useTranslation();

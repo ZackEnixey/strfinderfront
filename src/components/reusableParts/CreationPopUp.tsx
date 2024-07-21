@@ -1,8 +1,9 @@
-import { CloseOutlined } from "@ant-design/icons";
-import StrFinderButton from "./StrFinderButton";
-import { Input, Select } from "antd";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { CloseOutlined } from "@ant-design/icons";
+import { Input, Select } from "antd";
+
+import StrFinderButton from "./StrFinderButton";
 
 interface CreationPopUpProps {
   text: string;
@@ -90,7 +91,7 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
       <div className="pop-up-content">
         <div className="pop-up-inputs">
           <div className="input-container">
-            <div className="input-label">Title:</div>
+            <div className="input-label">{t('Title')}</div>
             <div>
               <Input
                 className="custom-input"
@@ -103,7 +104,7 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
             </div>
           </div>
           <div className="input-container">
-            <div className="input-label">{t("description")}:</div>
+            <div className="input-label">{t("description")}</div>
             <div>
               <Input
                 className="custom-input big"
@@ -116,7 +117,7 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
             </div>
           </div>
           <div className="input-container">
-            <div className="input-label">{t("additionalText")}:</div>
+            <div className="input-label">{t("additionalText")}</div>
             <div>
               <Input
                 className="custom-input big"
@@ -130,7 +131,7 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
           </div>
           {isSolutionCard && (
             <div className="input-container">
-              <div className="input-label">{t("urlForLit")}:</div>
+              <div className="input-label">{t("urlForLit")}</div>
               <div>
                 <Input
                   className="custom-input"
@@ -145,7 +146,7 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
           )}
           {isSolutionCard && (
             <div className="input-container">
-              <div className="input-label">{t("urlForTedTalk")}:</div>
+              <div className="input-label">{t("urlForTedTalk")}</div>
               <div>
                 <Input
                   className="custom-input"
@@ -160,7 +161,7 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
           )}
           {isActionCard && (
             <div className="input-container">
-              <div className="input-label">Number Of Upper Tokens:</div>
+              <div className="input-label">{t('numOfTokens')}</div>
               <div>
                 <Select
                   value={numberOfUpperTokens}

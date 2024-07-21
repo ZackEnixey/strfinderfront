@@ -8,14 +8,15 @@ import { Input } from "antd";
 import { CREATE_PLAYER } from "../../apis/apiUrls";
 
 const CreatePlayerPage = () => {
-  const [nickname, setNickname] = useState("test");
-  const [email, setEmail] = useState("test@gmail.com");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [buttonLoading, setButtonLoading] = useState(false);
+  const [nickname, setNickname] = useState<string>("test");
+  const [email, setEmail] = useState<string>("test@gmail.com");
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [buttonLoading, setButtonLoading] = useState<boolean>(false);
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n} = useTranslation();
+	const currentLanguage = i18n.language;
 
   const handleSubmit = async () => {
     if (nickname === "" || email === "") {
@@ -64,11 +65,19 @@ const CreatePlayerPage = () => {
     navigate("/game/gameStrengths");
   };
 
+  const labelByLanguage = (language: string, text: string) => {
+		if (language === "ar" || language == "he") {
+			return <div className="label_wrapper text_align_right">:{text}</div>;
+		}
+
+		return <div className="label_wrapper">{text}:</div>;
+	}
+
   return (
     <div className="generic_game_content_holder">
       <div className="game_input_holder">
-        <div className="label_wrapper">{t("nickname").toUpperCase()}</div>
-        <div>
+        <div className="input-container">
+          {labelByLanguage(currentLanguage, t('nickname').toUpperCase())}
           <Input
             size="large"
             type="text"
@@ -83,9 +92,8 @@ const CreatePlayerPage = () => {
             }}
           />
         </div>
-
-        <div className="label_wrapper">{t("email").toUpperCase()}</div>
-        <div>
+        <div className="input-container">
+          {labelByLanguage(currentLanguage, t('email').toUpperCase())}
           <Input
             size="large"
             type="email"
@@ -100,7 +108,7 @@ const CreatePlayerPage = () => {
             }}
           />
         </div>
-        <div>{errorMessage && <p id="error-text">{errorMessage}</p>}</div>
+        {errorMessage && (<div className="red_text">{errorMessage}</div>)}
       </div>
 
       <div className="generic_button_holder">
@@ -108,9 +116,7 @@ const CreatePlayerPage = () => {
           onClick={() => handleSubmit()}
           btnColor="green"
           btnWidth="revert-layer"
-          textContent={
-            buttonLoading ? `${t("loading")}...` : `${t("next").toUpperCase()}`
-          }
+          textContent={ buttonLoading ? `${t("loading")}...` : `${t("next").toUpperCase()}`}
         />
       </div>
     </div>
