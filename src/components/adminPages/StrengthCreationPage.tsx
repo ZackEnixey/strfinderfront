@@ -162,7 +162,7 @@ const StrengthCreationPage = () => {
           </div>
         </div>
 
-        <div className="width_100">
+        <div>
           <ProgressBarGameTemplate />
           <StrFinderButton
             onClick={handleNavigation}

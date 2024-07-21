@@ -4,6 +4,7 @@ import { CloseOutlined } from "@ant-design/icons";
 import { Input, Select } from "antd";
 
 import StrFinderButton from "./StrFinderButton";
+import StrFinderButtonPopUp from "./StrFinderButtonPopup";
 
 interface CreationPopUpProps {
   text: string;
@@ -178,13 +179,14 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
               </div>
             </div>
           )}
-          <div>
-            <StrFinderButton
-              btnColor="pink"
-              textContent={isEdit ? "EDIT" : "CREATE"}
-              onClick={() => handleSubmitForm()}
-            />
-          </div>
+
+          <StrFinderButtonPopUp
+            btnColor="pink"
+            textContent={isEdit ? "EDIT" : "CREATE"}
+            btnWidth="80vw"
+            btnMargin="10px 0 0 0"
+            onClick={() => handleSubmitForm()}
+          />
         </div>
       </div>
     </div>
