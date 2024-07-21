@@ -3,15 +3,15 @@
   flex-direction: column;
   justify-content: space-between;
   height: 80vh;
-  .main-label {
-    font-size: 12px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-  }
+
   .buttons {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
+}
+
+.main-label {
+  text-transform: uppercase;
+  margin-bottom: 10px;
 }

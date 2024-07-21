@@ -248,6 +248,11 @@ body {
   align-items: center;
 }
 
+.flex_justify_center {
+  display: flex;
+  justify-content: center;
+}
+
 .responsive_width {
   max-width: 500px;
   width: -webkit-fill-available;
@@ -255,6 +260,10 @@ body {
 
 .font_size_25 {
   font-size: 25px;
+}
+
+.text_align_center {
+  text-align: center;
 }
 
 .display_flex {
@@ -286,6 +295,10 @@ body {
 
 .text_align_right {
   text-align: right;
+}
+
+.mt_100 {
+  margin-top: 100px;
 }
 
 /////////////////////////

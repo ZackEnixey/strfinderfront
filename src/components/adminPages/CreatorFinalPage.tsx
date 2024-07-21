@@ -30,25 +30,23 @@ const CreatorFinalPage = () => {
     <div className="generic_game_content_holder">
       {contextHolder}
       <div className="game_input_holder">
-        <div>
-          <div>
-            <h2 className="">CONGRATULATIONS</h2>
-            <p className="">
-              {t("Copy the code and share it with the players.")}:
-            </p>
-          </div>
 
-          <div className="game-code">
-            <h2>{gameCode}</h2>
-            <Button
-              type="dashed"
-              onClick={success}
-              icon={<CopyOutlined />}
-              iconPosition="end"
-            >
-              {t("Copy")}
-            </Button>
-          </div>
+        <div className="game_code">
+          <div className="congrats">{t('congratulations')}</div>
+          <div className="text_align_center">{t("copyTheCode")}:</div>
+        </div>
+
+        <div className="game_code mt_100">
+          <div>{gameCode}</div>
+          <Button
+            type="primary"
+            style={{ backgroundColor: "#53bd8b" }}
+            onClick={success}
+            icon={<CopyOutlined />}
+            iconPosition="end"
+          >
+            {t("copy")}
+          </Button>
         </div>
       </div>
        

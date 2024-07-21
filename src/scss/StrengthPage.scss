@@ -56,6 +56,6 @@
 .ant-list-item {
   padding: 12px 10px 12px 0 !important;
   margin-left: 10px;
-  display: flex;
-  align-items: start;
+  display: flex !important;
+  align-items: start !important;
 }

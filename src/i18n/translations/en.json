@@ -69,10 +69,12 @@
     "createNewMatch": "create a new game template",
     "numOfTokens": "Number Of Upper Tokens",
     "title": "Title",
-    "congratulations": "congratulations",
+    "congratulations": "Congratulations",
     "gameName": "Game name",
     "updateGame":  "UPDATE GAME",
     "createGame": "CREATE GAME",
+    "copy": "copy",
+    "copyTheCode": "You set it all up, and the game is created. Copy the code and share it with the players ",
     "notification": {
         "noNameTitle": "empty name field",
         "noNameInfo": "You need to enter the name of the game"
