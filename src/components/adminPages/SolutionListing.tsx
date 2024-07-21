@@ -19,6 +19,7 @@ import { useSolutions } from "../../hooks/useSolutions";
 import { useCheckedSolutions } from "../../context/CheckedSoltuionsContext";
 import { useCreateSolution } from "../../hooks/useCreateSolution";
 import { useEditSolution } from "../../hooks/useEditSolution";
+import ProgressBarGameTemplate from "./ProgressBarGameTemplate";
 
 const SolutionListing = () => {
   const darkGreenColor = getComputedStyle(document.documentElement)
@@ -125,8 +126,19 @@ const SolutionListing = () => {
 
   return (
     <div className={`generic_game_content_holder ${isPopUpVisible ? "overlay" : ""}`}>
-      
       <div className="game_input_holder">
+
+        <div className="admin_bar_wrapper">
+          <div className="check-all-container">
+            <div className="check-all">
+              <Checkbox
+                indeterminate={indeterminate}
+                onChange={onCheckAllChange}
+                checked={checkAll}
+              />
+              <div className="check-all-label">{t('selectAll')}</div>
+            </div>
+          </div>
           <div
             className="add-icon-container"
             onClick={() => {
@@ -144,16 +156,8 @@ const SolutionListing = () => {
               <PlusOutlined />
             </Button>
           </div>
-          <div className="check-all-container">
-            <div className="check-all">
-              <Checkbox
-                indeterminate={indeterminate}
-                onChange={onCheckAllChange}
-                checked={checkAll}
-              />
-              <div className="check-all-label">{t('selectAll')}</div>
-            </div>
-          </div>
+        </div>
+
           <div
             id="scrollableDiv"
             className="scrollable_cards_wrapper"
@@ -222,12 +226,14 @@ const SolutionListing = () => {
         
       </div>
 
-      <div>
+      <div className="width_100">
+        <ProgressBarGameTemplate />
           <StrFinderButton
             onClick={() => navigate(`${nextRoute}`)}
             btnColor="green"
             textContent="NEXT"
             btnWidth="revert-layer"
+            btnMargin="10px 0"
           />
         </div>
 

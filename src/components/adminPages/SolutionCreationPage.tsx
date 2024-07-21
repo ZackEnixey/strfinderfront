@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import StrFinderButton from "../reusableParts/StrFinderButton";
+import ProgressBarGameTemplate from "./ProgressBarGameTemplate";
 
 const SolutionCreationPage = () => {
   const navigate = useNavigate();
@@ -19,12 +20,15 @@ const SolutionCreationPage = () => {
           onClick={() => navigate("/solutions/emotional")}
         />
       </div>
-      <StrFinderButton
-        btnColor="green"
-        textContent="NEXT"
-        btnWidth="revert-layer"
-        onClick={() => navigate("/questions")}
-      />
+      <div>
+        <ProgressBarGameTemplate />
+        <StrFinderButton
+          btnColor="green"
+          textContent="NEXT"
+          btnWidth="revert-layer"
+          onClick={() => navigate("/questions")}
+        />
+      </div>
     </div>
   );
 };

@@ -14,6 +14,7 @@ import { useCreateStrength } from "../../hooks/useCreateStrength";
 import { useCheckedStrengths } from "../../context/CheckedStrenghsContext";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useEditStrength } from "../../hooks/useEditStrength";
+import ProgressBarGameTemplate from "./ProgressBarGameTemplate";
 
 const StrengthCreationPage = () => {
   const darkGreenColor = getComputedStyle(document.documentElement)
@@ -82,32 +83,37 @@ const StrengthCreationPage = () => {
   return (
     <div className={`generic_game_content_holder ${isPopUpVisible ? "overlay" : ""}`}>
         <div className="game_input_holder width_100">
-          <div
-            className="add-icon-container"
-            onClick={() => {
-              setIsEdit(false);
-              setAdditionalText("");
-              setDescription("");
-              setTitle("");
-              togglePopUp();
-            }}
-          >
-            <Button type="primary" style={{ backgroundColor: darkGreenColor }}>
-              {t('add')}
-              <PlusOutlined />
-            </Button>
-          </div>
+          
+          <div className="admin_bar_wrapper">
 
-          <div className="check-all-container">
-            <div className="check-all">
-              <Checkbox
-                indeterminate={indeterminate}
-                onChange={onCheckAllChange}
-                checked={checkAll}
-              />
-              <div className="check-all-label">{t('selectAll')}</div>
+            <div className="check-all-container">
+              <div className="check-all">
+                <Checkbox
+                  indeterminate={indeterminate}
+                  onChange={onCheckAllChange}
+                  checked={checkAll}
+                />
+                <div className="check-all-label">{t('selectAll')}</div>
+              </div>
+            </div>
+
+            <div
+              className="add-icon-container"
+              onClick={() => {
+                setIsEdit(false);
+                setAdditionalText("");
+                setDescription("");
+                setTitle("");
+                togglePopUp();
+              }}
+            >
+              <Button type="primary" style={{ backgroundColor: darkGreenColor }}>
+                {t('add')}
+                <PlusOutlined />
+              </Button>
             </div>
           </div>
+
           <div
             id="scrollableDiv"
             className="scrollable_cards_wrapper"
@@ -156,11 +162,13 @@ const StrengthCreationPage = () => {
           </div>
         </div>
 
-        <div>
+        <div className="width_100">
+          <ProgressBarGameTemplate />
           <StrFinderButton
             onClick={handleNavigation}
             btnColor="green"
             btnWidth="revert-layer"
+            btnMargin="20px 0 10px 0"
             textContent={t("next").toUpperCase()}
           />
         </div>

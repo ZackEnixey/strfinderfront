@@ -72,6 +72,10 @@
     "congratulations": "congratulations",
     "gameName": "Game name",
     "updateGame":  "UPDATE GAME",
-    "crateGame": "CREATE GAME",
+    "createGame": "CREATE GAME",
+    "notification": {
+        "noNameTitle": "empty name field",
+        "noNameInfo": "You need to enter the name of the game"
+    },
     "somethingWrong": "Something went wrong"
 }

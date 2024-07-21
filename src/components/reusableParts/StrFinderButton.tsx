@@ -16,7 +16,7 @@ const StrFinderButton: FC<StrFinderButtonProps> = (props) => {
   const { textContent, btnHeight, btnWidth, btnMargin, btnColor, onClick } = props;
   const textContentLocal = textContent ?? "Default Text";
   const btnHeightLocal = btnHeight ?? "8vh";
-  const btnWidthLocal = isMobileVersion ? "80vw" : btnWidth ?? "80vw";
+  const btnWidthLocal = isMobileVersion ? "90vw" : btnWidth ?? "90vw";
   const btnColorLocal = btnColor ?? "default";
   const btnMarginLocal = btnMargin ?? "10px";
 

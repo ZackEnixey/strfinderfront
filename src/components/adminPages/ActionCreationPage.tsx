@@ -13,6 +13,7 @@ import CreationPopUp from "../reusableParts/CreationPopUp";
 import { useFetchActions } from "../../hooks/useFetchActions";
 import { useCreateAction } from "../../hooks/useCreateAction";
 import { useEditAction } from "../../hooks/useEditAction";
+import ProgressBarGameTemplate from "./ProgressBarGameTemplate";
 
 const ActionCreationPage = () => {
   const darkGreenColor = getComputedStyle(document.documentElement)
@@ -83,6 +84,18 @@ const ActionCreationPage = () => {
   return (
     <div className={`generic_game_content_holder ${isPopUpVisible ? "overlay" : ""}`}>
      <div className="game_input_holder">
+
+      <div className="admin_bar_wrapper">
+        <div className="check-all-container">
+          <div className="check-all">
+            <Checkbox
+              indeterminate={indeterminate}
+              onChange={onCheckAllChange}
+              checked={checkAll}
+            />
+            <div className="check-all-label">{t('selectAll')}</div>
+          </div>
+        </div>
         <div
           className="add-icon-container"
           onClick={() => {
@@ -99,16 +112,8 @@ const ActionCreationPage = () => {
             <PlusOutlined />
           </Button>
         </div>
-        <div className="check-all-container">
-          <div className="check-all">
-            <Checkbox
-              indeterminate={indeterminate}
-              onChange={onCheckAllChange}
-              checked={checkAll}
-            />
-            <div className="check-all-label">{t('selectAll')}</div>
-          </div>
-        </div>
+      </div>
+        
         <div
           id="scrollableDiv"
           className="scrollable_cards_wrapper"
@@ -154,11 +159,14 @@ const ActionCreationPage = () => {
         </div>
       </div>
      
-      <StrFinderButton
-        onClick={handleNavigation}
-        btnColor="green"
-        textContent="NEXT"
-      />
+      <div>
+        <ProgressBarGameTemplate />
+        <StrFinderButton
+          onClick={handleNavigation}
+          btnColor="green"
+          textContent="NEXT"
+        />
+      </div>
 
       {isPopUpVisible && (
         <CreationPopUp

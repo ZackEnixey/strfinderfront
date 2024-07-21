@@ -1,11 +1,13 @@
 import { useTranslation } from "react-i18next";
-import StrFinderButton from "../reusableParts/StrFinderButton";
-import { Input } from "antd";
+import { Input, notification } from "antd";
 import { useState } from "react";
-import { useCreateGame } from "../../hooks/useCreateGame";
 import { useNavigate } from "react-router-dom";
+
+import StrFinderButton from "../reusableParts/StrFinderButton";
+import { useCreateGame } from "../../hooks/useCreateGame";
 import { useMode } from "../../context/ModeContext";
 import { useUpdateGame } from "../../hooks/useUpdateGame";
+import ProgressBarGameTemplate from "./ProgressBarGameTemplate";
 
 const GameCreationPage = () => {
   const { mode } = useMode();
@@ -20,6 +22,15 @@ const GameCreationPage = () => {
   const { handleUpdateGame } = useUpdateGame(token);
 
   const handleMode = () => {
+    if (!gameTitle) {
+      notification.open({
+        message: t('notification.noNameTitle'),
+        description: t('notification.noNameInfo'),
+        type: 'warning',
+      });
+      return;
+    }
+    
     if (mode === "create") {
       handleAddGame(gameTitle);
       navigate("/creatorFinalPage");
@@ -52,12 +63,15 @@ const GameCreationPage = () => {
         </div>
       </div>
 
-      <StrFinderButton
+      <div>
+        <ProgressBarGameTemplate />
+        <StrFinderButton
           btnColor="green"
           textContent={t(mode === "edit" ? t('updateGame') : t('createGame'))}
           btnHeight="18vh"
           onClick={() => handleMode()}
         />
+      </div>
     </div>
   );
 };

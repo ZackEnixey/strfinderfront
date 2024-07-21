@@ -13,6 +13,7 @@ import CreationPopUp from "../reusableParts/CreationPopUp";
 import { useFetchQuestions } from "../../hooks/useFetchQuestions";
 import { useCreateQuestion } from "../../hooks/useCreateQuestion";
 import { useEditQuestion } from "../../hooks/useEditQuestion";
+import ProgressBarGameTemplate from "./ProgressBarGameTemplate";
 
 const QuestionCreationPage = () => {
   const darkGreenColor = getComputedStyle(document.documentElement)
@@ -79,8 +80,19 @@ const QuestionCreationPage = () => {
 
   return (
     <div className={`generic_game_content_holder ${isPopUpVisible ? "overlay" : ""}`}>
-      
       <div className="game_input_holder">
+
+        <div className="admin_bar_wrapper">
+          <div className="check-all-container">
+            <div className="check-all">
+              <Checkbox
+                indeterminate={indeterminate}
+                onChange={onCheckAllChange}
+                checked={checkAll}
+              />
+              <div className="check-all-label">{t('selectAll')}</div>
+            </div>
+          </div>
           <div
             className="add-icon-container"
             onClick={() => {
@@ -96,66 +108,60 @@ const QuestionCreationPage = () => {
               <PlusOutlined />
             </Button>
           </div>
-          <div className="check-all-container">
-            <div className="check-all">
-              <Checkbox
-                indeterminate={indeterminate}
-                onChange={onCheckAllChange}
-                checked={checkAll}
-              />
-              <div className="check-all-label">{t('selectAll')}</div>
-            </div>
-          </div>
-          <div
-            id="scrollableDiv"
-            className="scrollable_cards_wrapper"
+        </div>
+        <div
+          id="scrollableDiv"
+          className="scrollable_cards_wrapper"
+        >
+          <InfiniteScroll
+            dataLength={data.length}
+            next={fetchData}
+            hasMore={data.length < 0}
+            loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
+            scrollableTarget="scrollableDiv"
           >
-            <InfiniteScroll
-              dataLength={data.length}
-              next={fetchData}
-              hasMore={data.length < 0}
-              loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-              scrollableTarget="scrollableDiv"
-            >
-              <List
-                dataSource={data}
-                renderItem={(item: StrengthItem, index) => (
-                  <List.Item key={index}>
-                    <Checkbox
-                      checked={checkedQuestions.includes(item._id)}
-                      onChange={(e) => onItemChange(item, e.target.checked)}
-                    />
-                    <Collapse className="list-collapse-item">
-                      <Collapse.Panel header={item.title} key={index}>
-                        <p>{item.description}</p>
-                      </Collapse.Panel>
-                    </Collapse>
-                    <Button
-                      type="text"
-                      shape="circle"
-                      icon={<EditOutlined />}
-                      onClick={() => {
-                        setIsEdit(true);
-                        setTitle(item.title);
-                        setCardId(item._id);
-                        setDescription(item.description);
-                        setAdditionalText(item.additionalText);
-                        togglePopUp();
-                      }}
-                    />
-                  </List.Item>
-                )}
-              />
-            </InfiniteScroll>
-          </div>
+            <List
+              dataSource={data}
+              renderItem={(item: StrengthItem, index) => (
+                <List.Item key={index}>
+                  <Checkbox
+                    checked={checkedQuestions.includes(item._id)}
+                    onChange={(e) => onItemChange(item, e.target.checked)}
+                  />
+                  <Collapse className="list-collapse-item">
+                    <Collapse.Panel header={item.title} key={index}>
+                      <p>{item.description}</p>
+                    </Collapse.Panel>
+                  </Collapse>
+                  <Button
+                    type="text"
+                    shape="circle"
+                    icon={<EditOutlined />}
+                    onClick={() => {
+                      setIsEdit(true);
+                      setTitle(item.title);
+                      setCardId(item._id);
+                      setDescription(item.description);
+                      setAdditionalText(item.additionalText);
+                      togglePopUp();
+                    }}
+                  />
+                </List.Item>
+              )}
+            />
+          </InfiniteScroll>
+      </div>
       </div>
 
-      <StrFinderButton
-        onClick={handleNavigation}
-        btnColor="green"
-        textContent="NEXT"
-        btnWidth="revert-layer"
-      />
+      <div>
+        <ProgressBarGameTemplate />
+        <StrFinderButton
+          onClick={handleNavigation}
+          btnColor="green"
+          textContent="NEXT"
+          btnWidth="revert-layer"
+        />
+      </div>
 
     {isPopUpVisible && (
         <CreationPopUp
