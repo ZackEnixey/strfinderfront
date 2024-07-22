@@ -29,6 +29,7 @@ const SolutionListing = () => {
   const { checkedSolutions, setCheckedSolutions } = useCheckedSolutions();
   const [isPopUpVisible, setIsPopUpVisible] = useState<boolean>(false);
   const { type } = useParams<{ type: string }>();
+  const solutionType: string = type ?? "emotional";
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [additionalText, setAdditionalText] = useState<string>("");
@@ -42,50 +43,27 @@ const SolutionListing = () => {
 
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const {
-    emotionalSolutions,
-    mentalSolutions,
-    physicalSolutions,
-    relationsSolutions,
-  } = useSolutions();
+  const { emotionalSolutions, mentalSolutions, physicalSolutions, relationsSolutions } = useSolutions();
 
-  let data: SolutionItem[] = [];
-
-  switch (type) {
-    case "emotional":
-      data = emotionalSolutions;
-      break;
-    case "mental":
-      data = mentalSolutions;
-      break;
-    case "physical":
-      data = physicalSolutions;
-      break;
-    case "relations":
-      data = relationsSolutions;
-      break;
-    default:
-      break;
+  const solutionData : { [key: string]: any } = {
+    emotional: emotionalSolutions,
+    mental: mentalSolutions,
+    physical: physicalSolutions,
+    relations: relationsSolutions,
+    default: relationsSolutions
   }
 
-  let nextRoute: string;
+  const data: SolutionItem[] = solutionData[solutionType] || solutionData.default;
 
-  switch (type) {
-    case "emotional":
-      nextRoute = "/solutions/mental";
-      break;
-    case "mental":
-      nextRoute = "/solutions/physical";
-      break;
-    case "physical":
-      nextRoute = "/solutions/relations";
-      break;
-    case "relations":
-      nextRoute = "/questions";
-      break;
-    default:
-      break;
-  }
+  const nextRouteMap: { [key: string]: string } = {
+    emotional: "/solutions/mental",
+    mental: "/solutions/physical",
+    physical: "/solutions/relations",
+    relations: "/questions",
+    default: "/questions"
+  };
+
+  const nextRoute = nextRouteMap[solutionType] || nextRouteMap.default;
 
   const checkAll = useMemo(
     () => data.length > 0 && checkedSolutions.length === data.length,
@@ -123,6 +101,30 @@ const SolutionListing = () => {
   useEffect(() => {
     console.log("isEdit", cardId);
   }, [cardId]);
+
+  const backgroundColor1Map: { [key: string]: string } = {
+    emotional: "#FF859F",
+    mental: "#70B1E6",
+    physical: "#53BD8B",
+    relations: "#FFD700",
+    default: "#FFD700"
+  };
+
+  const backgroundColor2Map: { [key: string]: string } = {
+    emotional: "bg-pink",
+    mental: "bg-blue",
+    physical: "bg-green",
+    relations: "bg-yellow",
+    default: "bg-yellow",
+  };
+
+  const backgroundColor3Map: { [key: string]: string } = {
+    emotional: "pink",
+    mental: "blue",
+    physical: "green",
+    relations: "yellow",
+    default: "yellow",
+  };
 
   return (
     <div className={`generic_game_content_holder ${isPopUpVisible ? "overlay" : ""}`}>
@@ -162,14 +164,7 @@ const SolutionListing = () => {
             id="scrollableDiv"
             className="scrollable_cards_wrapper"
             style={{
-              backgroundColor:
-                type === "emotional"
-                  ? "#FF859F"
-                  : type === "mental"
-                  ? "#70B1E6"
-                  : type === "physical"
-                  ? "#53BD8B"
-                  : "#FFD700",
+              backgroundColor: backgroundColor1Map[solutionType]
             }}
           >
             <InfiniteScroll
@@ -187,17 +182,7 @@ const SolutionListing = () => {
                       checked={checkedSolutions.includes(item._id)}
                       onChange={(e) => onItemChange(item, e.target.checked)}
                     />
-                    <Collapse
-                      className={`list-collapse-item ${
-                        type === "emotional"
-                          ? "bg-pink"
-                          : type === "mental"
-                          ? "bg-blue"
-                          : type === "physical"
-                          ? "bg-green"
-                          : "bg-yellow"
-                      }`}
-                    >
+                    <Collapse className={`list-collapse-item ${backgroundColor2Map[solutionType]}`}>
                       <Collapse.Panel header={item.title} key={index}>
                         <p>{item.description}</p>
                       </Collapse.Panel>
@@ -226,7 +211,7 @@ const SolutionListing = () => {
         
       </div>
 
-      <div className="width_100">
+      <div>
         <ProgressBarGameTemplate />
           <StrFinderButton
             onClick={() => navigate(`${nextRoute}`)}
@@ -249,6 +234,7 @@ const SolutionListing = () => {
           onClose={togglePopUp}
           isSolutionCard={true}
           isEdit={isEdit}
+          popUpColor={backgroundColor3Map[solutionType]}
         />
       )}
     </div>

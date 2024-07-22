@@ -58,11 +58,9 @@ const RoutesHandler = () => {
             key={path}
             path={path}
             element={
-              path === "/login" ? (
-                element
-              ) : (
-                <PrivateRoute>{element}</PrivateRoute>
-              )
+              path === "/login" 
+              ? (element) 
+              : (<PrivateRoute>{element}</PrivateRoute>)
             }
           />
         ))}

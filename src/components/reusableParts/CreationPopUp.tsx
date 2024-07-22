@@ -4,7 +4,9 @@ import { CloseOutlined } from "@ant-design/icons";
 import { Input, Select } from "antd";
 
 import StrFinderButton from "./StrFinderButton";
-import StrFinderButtonPopUp from "./StrFinderButtonPopup";
+import { getBackgroundColors } from "../reusableParts/getButtonColors.ts";
+
+const { TextArea } = Input;
 
 interface CreationPopUpProps {
   text: string;
@@ -26,6 +28,7 @@ interface CreationPopUpProps {
   ) => void;
   isSolutionCard?: boolean;
   isActionCard?: boolean;
+  popUpColor?: string;
 }
 
 const CreationPopUp: React.FC<CreationPopUpProps> = ({
@@ -40,22 +43,19 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
   handleSubmit,
   isSolutionCard,
   isActionCard,
+  popUpColor
 }) => {
-  const [title, setTitle] = useState(initialTitle || "");
-  const [description, setDescription] = useState(initialDescription || "");
-  const [additionalText, setAdditionalText] = useState(initialText || "");
-  const [urlForTedTalk, setUrlForTedTalk] = useState(initialTedUrl || "");
-  const [urlForLiterature, setUrlForLiterature] = useState(
-    initialLiteratureUrl || ""
-  );
-  const [numberOfUpperTokens, setNumberOfUpperTokens] = useState(
-    initialNumber || 0
-  );
+  const [title, setTitle] = useState<string>(initialTitle || "");
+  const [description, setDescription] = useState<string>(initialDescription || "");
+  const [additionalText, setAdditionalText] = useState<string>(initialText || "");
+  const [urlForTedTalk, setUrlForTedTalk] = useState<string>(initialTedUrl || "");
+  const [urlForLiterature, setUrlForLiterature] = useState<string>(initialLiteratureUrl || "");
+  const [numberOfUpperTokens, setNumberOfUpperTokens] = useState<number>(initialNumber || 0);
 
+  const { bgLight, bgDark } = getBackgroundColors(popUpColor);
   const { t } = useTranslation();
 
   const handleSubmitForm = () => {
-    console.log("text", additionalText);
     if (isSolutionCard) {
       handleSubmit(
         title,
@@ -64,7 +64,10 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
         urlForLiterature,
         urlForTedTalk
       );
-    } else if (isActionCard) {
+      onClose();
+      return;
+    } 
+    if (isActionCard) {
       handleSubmit(
         title,
         description,
@@ -73,63 +76,69 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
         undefined,
         numberOfUpperTokens
       );
-    } else {
-      handleSubmit(title, description, additionalText);
-    }
+      onClose();
+      return;
+    } 
+
+    handleSubmit(title, description, additionalText);
     onClose();
   };
+
   const handleChange = (value: number) => {
     setNumberOfUpperTokens(value);
   };
+  
   return (
-    <div className="pop-up-container">
+    <div className="pop-up-container" style={{ backgroundColor: bgLight}}>
+
       <div className="pop-up-header">
         <h3>{t("createNewCard", { text: "Example" })}</h3>
         <div onClick={onClose}>
-          <CloseOutlined style={{ fontSize: "30px", color: "#AA4258" }} />
+          <CloseOutlined style={{ fontSize: "30px", color: bgDark }} />
         </div>
       </div>
+
       <div className="pop-up-content">
         <div className="pop-up-inputs">
+
           <div className="input-container">
             <div className="input-label">{t('Title')}</div>
-            <div>
-              <Input
-                className="custom-input"
-                size="large"
-                required
-                placeholder=""
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
+            <Input
+              className="custom-input"
+              size="large"
+              required
+              placeholder=""
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </div>
+
           <div className="input-container">
-            <div className="input-label">{t("description")}</div>
-            <div>
-              <Input
-                className="custom-input big"
-                size="large"
-                required
-                placeholder=""
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              />
-            </div>
+            <div className="input-label">{t('description')}</div>
+            <TextArea
+              className="custom-textarea"
+              size="large"
+              required
+              placeholder=""
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={4} // Adjust the number of rows as needed
+            />
           </div>
+
           <div className="input-container">
-            <div className="input-label">{t("additionalText")}</div>
-            <div>
-              <Input
-                className="custom-input big"
-                size="large"
-                required
-                placeholder=""
-                value={additionalText}
-                onChange={(e) => setAdditionalText(e.target.value)}
-              />
-            </div>
+            <div className="input-label">{t('additionalText')}</div>
+            <TextArea
+              className="custom-textarea"
+              size="large"
+              required
+              placeholder=""
+              value={additionalText}
+              onChange={(e) => setAdditionalText(e.target.value)}
+              rows={4} // Adjust the number of rows as needed
+            />
           </div>
+
           {isSolutionCard && (
             <div className="input-container">
               <div className="input-label">{t("urlForLit")}</div>
@@ -145,6 +154,7 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
               </div>
             </div>
           )}
+
           {isSolutionCard && (
             <div className="input-container">
               <div className="input-label">{t("urlForTedTalk")}</div>
@@ -160,6 +170,7 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
               </div>
             </div>
           )}
+
           {isActionCard && (
             <div className="input-container">
               <div className="input-label">{t('numOfTokens')}</div>
@@ -180,13 +191,14 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
             </div>
           )}
 
-          <StrFinderButtonPopUp
-            btnColor="pink"
+          <StrFinderButton
+            btnColor={popUpColor}
             textContent={isEdit ? "EDIT" : "CREATE"}
             btnWidth="80vw"
             btnMargin="10px 0 0 0"
             onClick={() => handleSubmitForm()}
           />
+          
         </div>
       </div>
     </div>

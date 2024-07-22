@@ -172,6 +172,7 @@ const QuestionCreationPage = () => {
           handleSubmit={isEdit ? handleEditQuestion : handleAddQuestion}
           isEdit={isEdit}
           onClose={togglePopUp}
+          popUpColor="green"
         />
       )}
     </div>

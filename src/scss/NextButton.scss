@@ -1,5 +1,7 @@
 .button_holder {
   position: relative;
+  display: flex;
+  justify-content: center;
 
   .button_wrapper {
     position: relative;
