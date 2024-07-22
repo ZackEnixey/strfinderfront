@@ -34,7 +34,7 @@
     "urlForLit": "קישור לספרות",
     "urlForTedTalk": "קישור להרצאת TED",
     "additionalText": "טקסט נוסף",
-    "createNewCard": "צור קלף {text} חדש",
+    "createNewCard": "צור קלף{{text}} חדש",
     "createNewGameInfo": "אם אתה יוצר ורוצה ליצור משחק חדש או לעדכן אחד קיים",
     "alreadyHaveCode": "אם כבר יש לך קוד",
     "createNewGame": "צור משחק חדש",

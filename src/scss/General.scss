@@ -157,7 +157,6 @@ body {
 .pop-up-container {
   position: fixed;
   top: 50%;
-  background-color: #ffd8e0;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
@@ -165,6 +164,8 @@ body {
   z-index: 1000;
   padding: 20px;
   border-radius: 8px;
+  width: 86vw;
+  max-width: 700px;
 }
 
 .pop-up-header {

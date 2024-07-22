@@ -34,7 +34,7 @@
     "urlForLit": "URL za literaturu",
     "urlForTedTalk": "URL za TED razgovor",
     "additionalText": "Dodatni tekst",
-    "createNewCard": "Napravi novu kartu {text}",
+    "createNewCard": "Napravi novu kartu{{text}}",
     "createNewGameInfo": "Ako ste kreator i želite da napravite novu igru ili ažurirate postojeću",
     "alreadyHaveCode": "Ako već imate KOD",
     "createNewGame": "NAPRAVI NOVU IGRI",

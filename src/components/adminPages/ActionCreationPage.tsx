@@ -179,6 +179,7 @@ const ActionCreationPage = () => {
           handleSubmit={isEdit ? handleEditAction : handleAddAction}
           onClose={togglePopUp}
           isActionCard={true}
+          popUpColor="green"
         />
       )}
     </div>

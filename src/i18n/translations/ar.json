@@ -34,7 +34,7 @@
     "urlForLit": "رابط الأدب",
     "urlForTedTalk": "رابط TED Talk",
     "additionalText": "نص إضافي",
-    "createNewCard": "إنشاء بطاقة {text} جديدة",
+    "createNewCard": "إنشاء بطاقة{{text}} جديدة",
     "createNewGameInfo": "إذا كنت مُنشئًا وتحتاج إلى إنشاء لعبة جديدة أو تحديث واحدة موجودة",
     "alreadyHaveCode": "إذا كان لديك بالفعل رمز",
     "createNewGame": "إنشاء لعبة جديدة",

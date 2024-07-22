@@ -183,6 +183,7 @@ const StrengthCreationPage = () => {
             isEdit={isEdit}
             onClose={togglePopUp}
             isSolutionCard={false}
+            popUpColor="green"
           />
         )}
     </div>     
