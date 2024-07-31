@@ -27,3 +27,6 @@ export const GET_GAMES = `${BASE_URL}/game-template`;
 //////////////////////////////////////
 
 export const CREATE_PLAYER = `${BASE_URL}/player`;
+export const GET_QUESTIONS_BY_IDS = `${BASE_URL}/get-questions`;
+export const GET_ACTIONS_BY_IDS = `${BASE_URL}/get-actions`;
+export const GET_SOLUTIONS_BY_IDS = `${BASE_URL}/get-solutions`;

@@ -7,16 +7,29 @@ interface StrFinderButtonProps {
   btnWidth?: string;
   btnMargin?: string;
   btnColor?: string;
+  smallButton?: boolean;
   onClick?: () => void;
 }
 
 const StrFinderButton: FC<StrFinderButtonProps> = (props) => {
   const isMobileVersion = useIsMobile();
-    
-  const { textContent, btnHeight, btnWidth, btnMargin, btnColor, onClick } = props;
+
+  const {
+    textContent,
+    smallButton,
+    btnHeight,
+    btnWidth,
+    btnMargin,
+    btnColor,
+    onClick,
+  } = props;
   const textContentLocal = textContent ?? "Default Text";
   const btnHeightLocal = btnHeight ?? "8vh";
-  const btnWidthLocal = isMobileVersion ? "90vw" : btnWidth ?? "90vw";
+  const btnWidthLocal = smallButton
+    ? "53vw"
+    : isMobileVersion
+    ? "90vw"
+    : btnWidth ?? "90vw";
   const btnColorLocal = btnColor ?? "default";
   const btnMarginLocal = btnMargin ?? "10px";
 
@@ -25,8 +38,8 @@ const StrFinderButton: FC<StrFinderButtonProps> = (props) => {
 
   switch (btnColorLocal) {
     case "blue": {
-      btnLight = "#ADD8E6"; // Light pastel blue
-      btnDark = "#4169E1"; // Dark pastel blue
+      btnLight = "#4F94CD"; // Light pastel blue
+      btnDark = "#3A6F9C"; // Dark pastel blue
       break;
     }
     case "green": {
@@ -40,8 +53,13 @@ const StrFinderButton: FC<StrFinderButtonProps> = (props) => {
       break;
     }
     case "yellow": {
-      btnLight = "#FFFFE0"; // Light pastel yellow
-      btnDark = "#FFD700"; // Dark pastel yellow
+      btnLight = "#FFD700"; // Light pastel yellow
+      btnDark = "#B59903"; // Dark pastel yellow
+      break;
+    }
+    case "black": {
+      btnLight = "#1D1D1D"; // Light pastel yellow
+      btnDark = "#282D2B"; // Dark pastel yellow
       break;
     }
     default: {
@@ -53,7 +71,14 @@ const StrFinderButton: FC<StrFinderButtonProps> = (props) => {
 
   return (
     <div className="button_holder" onClick={onClick}>
-      <div className="button_wrapper max_width_500" style={{ height: btnHeightLocal, width: btnWidthLocal, margin: btnMarginLocal }}>
+      <div
+        className="button_wrapper max_width_500"
+        style={{
+          height: btnHeightLocal,
+          width: btnWidthLocal,
+          margin: btnMarginLocal,
+        }}
+      >
         <div
           className="button_shadow"
           style={{ backgroundColor: btnDark }}

@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import StrFinderButton from "../reusableParts/StrFinderButton";
 import { Player, Group } from "../../types/types";
 import { socket } from "../../socket/socket";
+import { useGameTemplate } from "../../hooks/game/useGameTemplate";
+import { useIsDilemmaOwner } from "../../context/IsDilemmaOwnerContext";
 
 const GameStrengths = () => {
   const gameCode = localStorage.getItem("gameCode");
@@ -11,6 +13,8 @@ const GameStrengths = () => {
   const navigate = useNavigate();
   const [groups, setGroups] = useState<{ [key: string]: Group }>({});
   const playerId = JSON.parse(localStorage.getItem("player") || "")._id;
+  const { setGameTemplate } = useGameTemplate();
+  const { setIsDilemmaOwner } = useIsDilemmaOwner();
 
   useEffect(() => {
     // Listen for groups data updates
@@ -28,14 +32,33 @@ const GameStrengths = () => {
 
   const handleNext = () => {
     const group = findGroupForPlayer(playerId);
+    localStorage.setItem("groupCode", group?.groupCode || "");
 
     // Emit playerReady event to indicate player is ready
     socket.emit("playerReady", {
       groupCode: group?.groupCode,
-      playerId: "6694e46843b8af95dc157f28",
+      playerId: playerId,
     });
+
+    // Listen for gameTemplate data updates
+    socket.on("gameTemplate", (data) => {
+      console.log("Received gameTemplate data:", data);
+      setGameTemplate(data);
+    });
+
+    socket.on("isDilemmaOwner", (data) => {
+      console.log("is Dilemma owner:", data);
+      setIsDilemmaOwner(data);
+    });
+
     // Navigate to the next page
-    navigate("/game/gameStrengthManager");
+    navigate("/game/chooseQuestion");
+
+    // Clean up the socket listener on component unmount
+    return () => {
+      socket.off("gameTemplate");
+      socket.off("isDilemmaOwner");
+    };
   };
 
   const findGroupForPlayer = (playerId: string) => {

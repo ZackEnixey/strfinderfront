@@ -2,8 +2,6 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { CloseOutlined } from "@ant-design/icons";
 import { Input, Select } from "antd";
-
-import StrFinderButton from "./StrFinderButton";
 import StrFinderButtonPopUp from "./StrFinderButtonPopup";
 
 interface CreationPopUpProps {
@@ -92,7 +90,7 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
       <div className="pop-up-content">
         <div className="pop-up-inputs">
           <div className="input-container">
-            <div className="input-label">{t('Title')}</div>
+            <div className="input-label">{t("Title")}</div>
             <div>
               <Input
                 className="custom-input"
@@ -162,7 +160,7 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
           )}
           {isActionCard && (
             <div className="input-container">
-              <div className="input-label">{t('numOfTokens')}</div>
+              <div className="input-label">{t("numOfTokens")}</div>
               <div>
                 <Select
                   value={numberOfUpperTokens}
