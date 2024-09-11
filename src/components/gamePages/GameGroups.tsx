@@ -46,9 +46,9 @@ const GameStrengths = () => {
       setGameTemplate(data);
     });
 
-    socket.on("isDilemmaOwner", (data) => {
-      console.log("is Dilemma owner:", data);
-      setIsDilemmaOwner(data);
+    socket.on("DilemmaOwner", (dilemmaOwnerId) => {
+      console.log("is Dilemma owner:", dilemmaOwnerId);
+      setIsDilemmaOwner(dilemmaOwnerId === playerId);
     });
 
     // Navigate to the next page

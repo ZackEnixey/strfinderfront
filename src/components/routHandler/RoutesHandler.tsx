@@ -24,6 +24,7 @@ import CreatorFinalPage from "../adminPages/CreatorFinalPage";
 import QuestionsPage from "../gamePages/QuestionsPage";
 import SolutionSelection from "../gamePages/SolutionSelection";
 import ProposedSolution from "../gamePages/ProposedSolution";
+import OfferedStrengths from "../gamePages/OfferedStrengths";
 
 const RoutesHandler = () => {
   const routes = [
@@ -55,6 +56,7 @@ const RoutesHandler = () => {
     { path: "/game/chooseQuestion", element: <QuestionsPage /> },
     { path: "/game/chooseSolution", element: <SolutionSelection /> },
     { path: "/game/proposedSolutions", element: <ProposedSolution /> },
+    { path: "/game/offeredStrengths", element: <OfferedStrengths /> },
 
     { path: "*", element: <NotFoundPage /> },
   ];

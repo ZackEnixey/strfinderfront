@@ -48,8 +48,8 @@ const QuestionsPage = () => {
   }, [isQuestionType, questionsIds, actionsIds]);
 
   useEffect(() => {
-    socket.on("itemSelected", () => {
-      console.log("item selected");
+    socket.on("itemSelected", (item) => {
+      localStorage.setItem("questionSelected", item);
       navigate("/game/chooseSolution");
     });
 

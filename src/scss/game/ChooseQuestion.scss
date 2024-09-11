@@ -2,7 +2,7 @@
   background-color: white;
   border-radius: 15px;
   height: 50%;
-  min-width: 80%;
+  min-width: 90%;
 }
 .question-container {
   display: flex;
@@ -74,4 +74,19 @@
   height: 8rem;
   width: 100%;
   border: 1px solid #ececec;
+}
+.solution-card {
+  background-color: white;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin-bottom: 2rem;
+}
+.solution-card-text {
+  margin: 0;
+  font-size: 15px;
+}
+.solution-card-description {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
 }

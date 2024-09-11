@@ -13,6 +13,7 @@ export interface SolutionItem {
   urlForLiterature?: string;
 }
 export interface ProposedSolution {
+  solutionId: string;
   solutionDescription: string;
   solutionTitle: string;
   playerName: string;

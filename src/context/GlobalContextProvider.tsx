@@ -7,6 +7,7 @@ import { CheckedSolutionsProvider } from "./CheckedSoltuionsContext";
 import { ModeProvider } from "./ModeContext";
 import { GameTemplateProvider } from "./GameTemplateContext";
 import { IsDilemmaOwnerProvider } from "./IsDilemmaOwnerContext";
+import { QuestionProvider } from "./QuestionContext";
 
 interface GlobalContextProps {
   children: React.ReactNode;
@@ -22,7 +23,7 @@ const GlobalContextProvider: FC<GlobalContextProps> = (props) => {
               <CheckedSolutionsProvider>
                 <GameTemplateProvider>
                   <IsDilemmaOwnerProvider>
-                    {props.children}
+                    <QuestionProvider>{props.children}</QuestionProvider>
                   </IsDilemmaOwnerProvider>
                 </GameTemplateProvider>
               </CheckedSolutionsProvider>

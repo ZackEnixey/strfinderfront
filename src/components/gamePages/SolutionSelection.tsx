@@ -5,8 +5,9 @@ import StrFinderCard from "./StrFinderCard";
 import { SolutionItem } from "../../types/types";
 import { fetchSolutionsByIds } from "../../hooks/game/get-solutions";
 import { useGameTemplate } from "../../hooks/game/useGameTemplate";
-import { socket } from "../../socket/socket"; // Import your socket instance
+import { socket } from "../../socket/socket";
 import { useNavigate } from "react-router-dom";
+import { useQuestion } from "../../context/QuestionContext";
 
 const SolutionSelection = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,6 +19,7 @@ const SolutionSelection = () => {
   const [physical, setPhysical] = useState<SolutionItem[]>([]);
   const [relations, setRelations] = useState<SolutionItem[]>([]);
   const { gameTemplate } = useGameTemplate();
+  const { questionTitle, questionDescription } = useQuestion();
   const solutionIds = gameTemplate?.preselectedSolutionIds || [];
   const isDilemmaOwner = localStorage.getItem("isDilemmaOwner") === "true";
   const playerName = JSON.parse(localStorage.getItem("player") || "").nickName;
@@ -76,6 +78,7 @@ const SolutionSelection = () => {
     socket.emit("solutionSelected", {
       solutionTitle: selectedSolution.title,
       solutionDescription: selectedSolution.description,
+      solutionId: selectedSolution._id,
       playerName: playerName,
       groupCode,
     });
@@ -97,8 +100,8 @@ const SolutionSelection = () => {
     <div className="generic_game_content_holder">
       <div className="question-container">
         <StrFinderCard
-          title="Manager challenges"
-          content="My manager wants to get involved in the smallest details; it offends me and slows the work down."
+          title={questionTitle}
+          content={questionDescription}
           isDilemma={false}
           onCardSelect={() => {}}
         />
