@@ -21,6 +21,10 @@ import PsychologicalSurvey from "../gamePages/PsychologicalSurvey";
 import KnowMyStrengths from "../gamePages/KnowMyStrengths";
 import GameCreationPage from "../adminPages/GameCreationPage";
 import CreatorFinalPage from "../adminPages/CreatorFinalPage";
+import QuestionsPage from "../gamePages/QuestionsPage";
+import SolutionSelection from "../gamePages/SolutionSelection";
+import ProposedSolution from "../gamePages/ProposedSolution";
+import OfferedStrengths from "../gamePages/OfferedStrengths";
 
 const RoutesHandler = () => {
   const routes = [
@@ -44,8 +48,15 @@ const RoutesHandler = () => {
     { path: "/game/gameStrengthManager", element: <GameStrengthManager /> },
     { path: "/game/psychologicalSurvey", element: <PsychologicalSurvey /> },
     { path: "/game/knowMyStrengths", element: <KnowMyStrengths /> },
-    { path: "/game/gameTemplateCodeInsertion", element: <GameTemplateCodeInsertion /> },
+    {
+      path: "/game/gameTemplateCodeInsertion",
+      element: <GameTemplateCodeInsertion />,
+    },
     { path: "/game/gameGroups", element: <GameGroups /> },
+    { path: "/game/chooseQuestion", element: <QuestionsPage /> },
+    { path: "/game/chooseSolution", element: <SolutionSelection /> },
+    { path: "/game/proposedSolutions", element: <ProposedSolution /> },
+    { path: "/game/offeredStrengths", element: <OfferedStrengths /> },
 
     { path: "*", element: <NotFoundPage /> },
   ];

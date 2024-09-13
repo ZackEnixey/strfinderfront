@@ -8,9 +8,16 @@ export interface SolutionItem {
   _id: string;
   title: string;
   description: string;
-  info: string;
-  urlForTedTalk: string;
-  urlForLiterature: string;
+  info?: string;
+  urlForTedTalk?: string;
+  urlForLiterature?: string;
+}
+export interface ProposedSolution {
+  solutionId: string;
+  solutionDescription: string;
+  solutionTitle: string;
+  playerName: string;
+  likes: number;
 }
 export interface ActionItem {
   _id: string;
@@ -18,6 +25,12 @@ export interface ActionItem {
   description: string;
   additionalText: string;
   numberOfUpperTokens: number;
+}
+export interface QuestionItem {
+  _id: string;
+  title: string;
+  description: string;
+  language: string;
 }
 export interface GameTemplateItem {
   _id: string;

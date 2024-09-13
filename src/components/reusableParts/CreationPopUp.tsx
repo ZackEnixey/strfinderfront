@@ -102,15 +102,17 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
         <div className="pop-up-inputs">
 
           <div className="input-container">
-            <div className="input-label">{t('Title')}</div>
-            <Input
-              className="custom-input"
-              size="large"
-              required
-              placeholder=""
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
+            <div className="input-label">{t("Title")}</div>
+            <div>
+              <Input
+                className="custom-input"
+                size="large"
+                required
+                placeholder=""
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
           </div>
 
           <div className="input-container">
@@ -173,7 +175,7 @@ const CreationPopUp: React.FC<CreationPopUpProps> = ({
 
           {isActionCard && (
             <div className="input-container">
-              <div className="input-label">{t('numOfTokens')}</div>
+              <div className="input-label">{t("numOfTokens")}</div>
               <div>
                 <Select
                   value={numberOfUpperTokens}

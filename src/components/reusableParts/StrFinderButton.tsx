@@ -9,22 +9,79 @@ interface StrFinderButtonProps {
   btnWidth?: string;
   btnMargin?: string;
   btnColor?: string;
+  smallButton?: boolean;
   onClick?: () => void;
 }
 
 const StrFinderButton: FC<StrFinderButtonProps> = (props) => {
   const isMobileVersion = useIsMobile();
-    
-  const { textContent, btnHeight, btnWidth, btnMargin, btnColor, onClick } = props;
+
+  const {
+    textContent,
+    smallButton,
+    btnHeight,
+    btnWidth,
+    btnMargin,
+    btnColor,
+    onClick,
+  } = props;
   const textContentLocal = textContent ?? "Default Text";
   const btnHeightLocal = btnHeight ?? "8vh";
-  const btnWidthLocal = isMobileVersion ? "90vw" : btnWidth ?? "90vw";
-  const btnMarginLocal = btnMargin ?? "10px";
-  const { btnLight, btnDark } = getButtonColors(btnColor);
   
+  const btnWidthLocal = smallButton
+    ? "53vw"
+    : isMobileVersion
+    ? "90vw"
+    : btnWidth ?? "90vw";
+  const btnColorLocal = btnColor ?? "default";
+  const btnMarginLocal = btnMargin ?? "10px";
+
+  let btnLight = "";
+  let btnDark = "";
+
+  switch (btnColorLocal) {
+    case "blue": {
+      btnLight = "#4F94CD"; // Light pastel blue
+      btnDark = "#3A6F9C"; // Dark pastel blue
+      break;
+    }
+    case "green": {
+      btnLight = "#53BD8B"; // Light pastel green
+      btnDark = "#3D9169"; // Dark pastel green
+      break;
+    }
+    case "pink": {
+      btnLight = "#FF6E8D"; // Light pastel red
+      btnDark = "#AA4258"; // Dark pastel red
+      break;
+    }
+    case "yellow": {
+      btnLight = "#FFD700"; // Light pastel yellow
+      btnDark = "#B59903"; // Dark pastel yellow
+      break;
+    }
+    case "black": {
+      btnLight = "#1D1D1D"; // Light pastel yellow
+      btnDark = "#282D2B"; // Dark pastel yellow
+      break;
+    }
+    default: {
+      btnLight = "#7CFC00"; // Light pastel grassgreen (default color)
+      btnDark = "#556B2F"; // Dark pastel grassgreen (default color)
+      break;
+    }
+  }
+
   return (
     <div className="button_holder" onClick={onClick}>
-      <div className="button_wrapper max_width_500" style={{ height: btnHeightLocal, width: btnWidthLocal, margin: btnMarginLocal }}>
+      <div
+        className="button_wrapper max_width_500"
+        style={{
+          height: btnHeightLocal,
+          width: btnWidthLocal,
+          margin: btnMarginLocal,
+        }}
+      >
         <div
           className="button_shadow"
           style={{ backgroundColor: btnDark }}

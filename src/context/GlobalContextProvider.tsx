@@ -5,6 +5,9 @@ import { TestContextProvider } from "./TestContext";
 import { CheckedStrengthsProvider } from "./CheckedStrenghsContext";
 import { CheckedSolutionsProvider } from "./CheckedSoltuionsContext";
 import { ModeProvider } from "./ModeContext";
+import { GameTemplateProvider } from "./GameTemplateContext";
+import { IsDilemmaOwnerProvider } from "./IsDilemmaOwnerContext";
+import { QuestionProvider } from "./QuestionContext";
 
 interface GlobalContextProps {
   children: React.ReactNode;
@@ -18,7 +21,11 @@ const GlobalContextProvider: FC<GlobalContextProps> = (props) => {
           <TestContextProvider>
             <CheckedStrengthsProvider>
               <CheckedSolutionsProvider>
-                {props.children}
+                <GameTemplateProvider>
+                  <IsDilemmaOwnerProvider>
+                    <QuestionProvider>{props.children}</QuestionProvider>
+                  </IsDilemmaOwnerProvider>
+                </GameTemplateProvider>
               </CheckedSolutionsProvider>
             </CheckedStrengthsProvider>
           </TestContextProvider>
